@@ -24,10 +24,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    import time
+    # a simple page that returns current time
+    @app.route('/time')
+    def current_time():
+        return {'time': time.time()}
 
     from . import db
     db.init_app(app)
