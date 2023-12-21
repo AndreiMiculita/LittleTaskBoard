@@ -1,3 +1,8 @@
+body {
+  /* if the viewport is too big, we make the body fill the screen */
+  height: 100vh;
+}
+
 .App {
   text-align: center;
 }
@@ -15,12 +20,10 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
@@ -32,7 +35,88 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.headerBar {
+  background-color: #282c34;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 100%;
+}
+
+.userProfileButton, .sidebarButton {
+  background-color: #0079bf;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px;
+}
+
+.sidebar {
+  background-color: #fff;
+  flex: 0 0 200px;
+  border-right: 1px solid #ddd;
+  z-index: 1;
+}
+
+.sidebarLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebarLink {
+  background-color: #0079bf;
+  padding: 1rem;
+}
+
+.sidebarLink a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.column {
+  flex: 1;
+  min-width: 0;
+  padding: 0 0.5rem;
+  box-shadow: 0 2px 3px rgba(9, 30, 66, 0.25);
+}
+
+.task {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(9, 30, 66, 0.25);
+  display: block;
+  margin-bottom: 0.5rem;
+  max-width: 100%;
+  min-height: 20px;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  position: relative;
+  text-decoration: none;
+  z-index: 0;
 }
