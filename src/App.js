@@ -137,16 +137,28 @@ function HeaderBar(props) {
     return (
         <div className="headerBar">
             <button className='sidebarButton' onClick={props.onClickSidebarButton}>Sidebar</button>
-            <h1>Header Bar</h1>
+            <h1>Little Task Board</h1>
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
         </div>
     );
 }
 
 function Task(props) {
+    // Assign priority color based on max priority among all tasks
+    // find the max priority among all tasks
+    const maxPriority = 4;
+    // assign a color based on the priority, scaled to the max priority
+    const priorityColor = `hsl(${props.task.priority * 360 / maxPriority}, 100%, 50%)`;
+
     return (
         <div className="task">
-            {props.task.title}
+            <div className="taskTitle">
+                {props.task.title}
+            </div>
+            <div className="taskPriority">
+                <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
+                <div className="taskPriorityNumber">{props.task.priority}</div>
+            </div>
         </div>
     );
 }
@@ -167,7 +179,7 @@ function Column(props) {
 
 function SidebarLink(props) {
     return (
-        <div className="sidebarLink" onClick={() => alert(props.link.title)}>
+        <div className="sidebarLink">
             <a href={props.link.url}>{props.link.title}</a>
         </div>
     );
@@ -204,9 +216,7 @@ function App() {
                 <HeaderBar onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)} />
             </header>
             <div className="content">
-                <div className="sidebar">
-                    <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
-                </div>
+                <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
 
                 <div className="board">
                     {board.columns.map(column => <Column key={column.id} column={column} />)}

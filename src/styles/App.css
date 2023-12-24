@@ -1,6 +1,7 @@
 body {
   /* if the viewport is too big, we make the body fill the screen */
   height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .App {
@@ -46,7 +47,6 @@ body {
   color: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
   width: 100%;
 }
 
@@ -60,11 +60,14 @@ body {
   padding: 0.5rem 1rem;
 }
 
+.userProfileButton:hover, .sidebarButton:hover {
+  background-color: #005ea2;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1000px;
 }
 
 .sidebar {
@@ -72,6 +75,7 @@ body {
   flex: 0 0 200px;
   border-right: 1px solid #ddd;
   z-index: 1;
+  height: 100%;
 }
 
 .sidebarLinks {
@@ -85,6 +89,10 @@ body {
   padding: 1rem;
 }
 
+.sidebarLink:hover {
+  background-color: #005ea2;
+}
+
 .sidebarLink a {
   color: #fff;
   text-decoration: none;
@@ -93,24 +101,27 @@ body {
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  max-width: 500px;
+  gap: 1rem;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 0;
+  padding: 20px 0;
   list-style: none;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
 
 .column {
   flex: 1;
   min-width: 0;
   padding: 0 0.5rem;
-  box-shadow: 0 2px 3px rgba(9, 30, 66, 0.25);
+  box-shadow: 0 0px 3px rgba(9, 30, 66, 0.15);
 }
 
 .task {
   background-color: #fff;
   border-radius: 3px;
-  box-shadow: 0 2px 3px rgba(9, 30, 66, 0.25);
+  box-shadow: 0 0px 3px rgba(9, 30, 66, 0.15);
   display: block;
   margin-bottom: 0.5rem;
   max-width: 100%;
@@ -119,4 +130,22 @@ body {
   position: relative;
   text-decoration: none;
   z-index: 0;
+}
+
+.task:hover {
+  background-color: #f4f5f7;
+}
+
+.taskPriority{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+/* Task priority colors */
+.taskPriorityColor{
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
 }
