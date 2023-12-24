@@ -123,53 +123,50 @@ const exampleSidebarResponse = {
     ]
 };
 
-function UserProfileButton(props) {
+function UserProfileButton({ onClickUserProfileButton }) {
     return (
-        <button className='userProfileButton' onClick={props.onClickUserProfileButton}>User Profile</button>
+        <button className='userProfileButton' onClick={onClickUserProfileButton}>User Profile</button>
     );
 }
 
-function HeaderBar(props) {
+function HeaderBar({ onClickSidebarButton }) {
     function onClickUserProfileButton() {
         alert('User profile clicked (WIP)!');
     }
 
     return (
         <div className="headerBar">
-            <button className='sidebarButton' onClick={props.onClickSidebarButton}>Sidebar</button>
+            <button className='sidebarButton' onClick={onClickSidebarButton}>Sidebar</button>
             <h1>Little Task Board</h1>
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
         </div>
     );
 }
 
-function Task(props) {
-    // Assign priority color based on max priority among all tasks
-    // find the max priority among all tasks
+function Task({ task }) {
     const maxPriority = 4;
-    // assign a color based on the priority, scaled to the max priority
-    const priorityColor = `hsl(${props.task.priority * 360 / maxPriority}, 100%, 50%)`;
+    const priorityColor = `hsl(${task.priority * 360 / maxPriority}, 100%, 50%)`;
 
     return (
         <div className="task">
             <div className="taskTitle">
-                {props.task.title}
+                {task.title}
             </div>
             <div className="taskPriority">
                 <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
-                <div className="taskPriorityNumber">{props.task.priority}</div>
+                <div className="taskPriorityNumber">{task.priority}</div>
             </div>
         </div>
     );
 }
 
-function Column(props) {
-    const tasks = props.column.tasks;
+function Column({ column }) {
+    const tasks = column.tasks;
     tasks.sort((a, b) => a.priority - b.priority);
 
     return (
         <div className="column">
-            <h2>{props.column.title}</h2>
+            <h2>{column.title}</h2>
             <div className="tasks">
                 {tasks.map(task => <Task key={task.id} task={task} />)}
             </div>
@@ -177,30 +174,30 @@ function Column(props) {
     );
 }
 
-function SidebarLink(props) {
+function SidebarLink({ link }) {
     return (
         <div className="sidebarLink">
-            <a href={props.link.url}>{props.link.title}</a>
+            <a href={link.url}>{link.title}</a>
         </div>
     );
 }
 
-function SidebarLinkCategory(props) {
+function SidebarLinkCategory({ linkCategory }) {
     return (
         <div className="sidebarLinkCategory">
-            <h3>{props.linkCategory.title}</h3>
-            {props.linkCategory.links.map(link => <SidebarLink key={link.id} link={link} />)}
+            <h3>{linkCategory.title}</h3>
+            {linkCategory.links.map(link => <SidebarLink key={link.id} link={link} />)}
         </div>
     );
 }
 
-function Sidebar(props) {
-    if (!props.isSidebarOpen) {
+function Sidebar({ sidebar, isSidebarOpen }) {
+    if (!isSidebarOpen) {
         return null;
     }
     return (
         <div className="sidebar">
-            {props.sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
+            {sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
         </div>
     );
 }
