@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 import './styles/App.css';
 
 /* Start with mock data; 3 columns, 4 tasks each */
@@ -148,15 +148,25 @@ function Task({ task }) {
     const priorityColor = `hsl(${task.priority * 360 / maxPriority}, 100%, 50%)`;
 
     return (
-        <div className="task">
-            <div className="taskTitle">
-                {task.title}
-            </div>
-            <div className="taskPriority">
-                <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
-                <div className="taskPriorityNumber">{task.priority}</div>
-            </div>
-        </div>
+        <Draggable draggableId={task.id.toString()} index={task.priority - 1}>
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                >
+                    <div className="task">
+                        <div className="taskTitle">
+                            {task.title}
+                        </div>
+                        <div className="taskPriority">
+                            <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
+                            <div className="taskPriorityNumber">{task.priority}</div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </Draggable>
     );
 }
 
@@ -167,9 +177,19 @@ function Column({ column }) {
     return (
         <div className="column">
             <h2>{column.title}</h2>
-            <div className="tasks">
-                {tasks.map(task => <Task key={task.id} task={task} />)}
-            </div>
+            <Droppable droppableId={column.id.toString()}>
+                {(provided) => (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                    >
+                        <div className="tasks">
+                            {tasks.map(task => <Task key={task.id} task={task} />)}
+                        </div>
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         </div>
     );
 }
@@ -207,19 +227,25 @@ function App() {
     const [sidebar, setSidebar] = useState(exampleSidebarResponse);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-    return (
-        <div className="App">
-            <header className="App-header">
-                <HeaderBar onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)} />
-            </header>
-            <div className="content">
-                <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
+    function onDragEnd(result) {
+        // TODO
+    }
 
-                <div className="board">
-                    {board.columns.map(column => <Column key={column.id} column={column} />)}
+    return (
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="App">
+                <header className="App-header">
+                    <HeaderBar onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)} />
+                </header>
+                <div className="content">
+                    <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
+
+                    <div className="board">
+                        {board.columns.map(column => <Column key={column.id} column={column} />)}
+                    </div>
                 </div>
             </div>
-        </div>
+        </DragDropContext>
     );
 }
 
