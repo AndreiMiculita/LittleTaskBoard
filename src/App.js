@@ -11,22 +11,22 @@ const exampleBoardResponse = {
             tasks: [
                 {
                     id: 1,
-                    title: 'Feed the cat',
+                    title: 'Feed the cat, dog, and fish',
                     priority: 1
                 },
                 {
                     id: 2,
-                    title: 'Clean the house',
+                    title: 'Clean the house; vacuum, dust, mop',
                     priority: 2
                 },
                 {
                     id: 3,
-                    title: 'Water the plants',
+                    title: 'Water the plants and flowers',
                     priority: 3
                 },
                 {
                     id: 4,
-                    title: 'Buy tea',
+                    title: 'Buy tea, coffee, and milk',
                     priority: 4
                 }
             ]
