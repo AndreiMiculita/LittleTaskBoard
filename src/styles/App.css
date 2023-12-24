@@ -118,12 +118,20 @@ body {
   box-shadow: 0 0px 3px rgba(9, 30, 66, 0.15);
 }
 
+.tasks {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .task {
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 0px 3px rgba(9, 30, 66, 0.15);
-  display: block;
-  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
   min-height: 20px;
   padding: 0.5rem 0.5rem 0.5rem 0.75rem;
@@ -134,6 +142,16 @@ body {
 
 .task:hover {
   background-color: #f4f5f7;
+}
+
+.taskTitle {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+  text-align: left;
 }
 
 .taskPriority{
