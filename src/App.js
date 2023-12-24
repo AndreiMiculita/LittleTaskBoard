@@ -11,22 +11,22 @@ const exampleBoardResponse = {
             tasks: [
                 {
                     id: 1,
-                    title: 'Task 1',
+                    title: 'Feed the cat',
                     priority: 1
                 },
                 {
                     id: 2,
-                    title: 'Task 2',
+                    title: 'Clean the house',
                     priority: 2
                 },
                 {
                     id: 3,
-                    title: 'Task 3',
+                    title: 'Water the plants',
                     priority: 3
                 },
                 {
                     id: 4,
-                    title: 'Task 4',
+                    title: 'Buy tea',
                     priority: 4
                 }
             ]
@@ -37,22 +37,22 @@ const exampleBoardResponse = {
             tasks: [
                 {
                     id: 5,
-                    title: 'Task 5',
+                    title: 'Write a book',
                     priority: 1
                 },
                 {
                     id: 6,
-                    title: 'Task 6',
+                    title: 'Quit smoking',
                     priority: 2
                 },
                 {
                     id: 7,
-                    title: 'Task 7',
+                    title: 'Update resume',
                     priority: 3
                 },
                 {
                     id: 8,
-                    title: 'Task 8',
+                    title: 'Organize the shed',
                     priority: 4
                 }
             ]
@@ -63,22 +63,22 @@ const exampleBoardResponse = {
             tasks: [
                 {
                     id: 9,
-                    title: 'Task 9',
+                    title: 'Visit the dentist',
                     priority: 1
                 },
                 {
                     id: 10,
-                    title: 'Task 10',
+                    title: 'Install new light bulbs',
                     priority: 2
                 },
                 {
                     id: 11,
-                    title: 'Task 11',
+                    title: 'Call electrician',
                     priority: 3
                 },
                 {
                     id: 12,
-                    title: 'Task 12',
+                    title: '3D print a new phone case',
                     priority: 4
                 }
             ]
