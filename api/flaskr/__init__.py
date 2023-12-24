@@ -40,4 +40,10 @@ def create_app(test_config=None):
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import sidebar
+    app.register_blueprint(sidebar.bp)
+
+    from . import tasks
+    app.register_blueprint(tasks.bp)
+
     return app

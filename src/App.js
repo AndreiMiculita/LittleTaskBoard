@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 import './styles/App.css';
 
@@ -7,7 +7,7 @@ const exampleBoardResponse = {
     columns: [
         {
             id: 1,
-            title: 'To do',
+            title: 'Placeholder',
             tasks: [
                 {
                     id: 1,
@@ -97,28 +97,28 @@ const exampleSidebarResponse = {
     linksByCategory: [
         {
             id: 1,
-            title: 'Category 1',
+            title: 'Placeholder',
             links: [
                 {
                     id: 1,
-                    title: 'Board 1',
+                    title: 'Placeholder',
                     url: '/board/1'
                 },
                 {
                     id: 2,
-                    title: 'Board 2',
+                    title: 'Placeholder',
                     url: '/board/2'
                 },
                 {
                     id: 3,
-                    title: 'Board 3',
+                    title: 'Placeholder',
                     url: '/board/3'
                 }
             ]
         },
         {
             id: 2,
-            title: 'Category 2',
+            title: 'Placeholder',
             links: [
                 {
                     id: 4,
@@ -287,6 +287,18 @@ function App() {
     const [board, setBoard] = useState(exampleBoardResponse);
     const [sidebar, setSidebar] = useState(exampleSidebarResponse);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    useEffect(() => {
+        fetch('/sidebar').then(res => res.json()).then(data => {
+            setSidebar(data);
+        });
+    }, []);
+
+    useEffect(() => {
+        fetch('/tasks').then(res => res.json()).then(data => {
+            setBoard(data);
+        });
+    }, []);
 
     function onDragEnd(result) {
         // TODO
