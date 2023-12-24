@@ -12,17 +12,24 @@ const exampleBoardResponse = {
                 {
                     id: 1,
                     title: 'Feed the cat, dog, and fish',
-                    priority: 1
+                    priority: 1,
+                    plannedAt: '2021-01-01T12:00:00Z',
+                    duration: 30
+
                 },
                 {
                     id: 2,
                     title: 'Clean the house; vacuum, dust, mop',
-                    priority: 2
+                    priority: 2,
+                    plannedAt: '2021-01-01T13:00:00Z',
+                    duration: 120
                 },
                 {
                     id: 3,
                     title: 'Water the plants and flowers',
-                    priority: 3
+                    priority: 3,
+                    plannedAt: '2021-01-01T15:00:00Z',
+                    duration: 30
                 },
                 {
                     id: 4,
@@ -136,9 +143,62 @@ function HeaderBar({ onClickSidebarButton }) {
 
     return (
         <div className="headerBar">
-            <button className='sidebarButton' onClick={onClickSidebarButton}>Sidebar</button>
+            <button className='sidebarButton' onClick={onClickSidebarButton}>Menu</button>
             <h1>Little Task Board</h1>
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
+        </div>
+    );
+}
+
+function Planning({ plannedAt, duration }) {
+
+    function builtInFormatTime(date) {
+        const options = { hour: 'numeric', minute: 'numeric' };
+        return date.toLocaleTimeString([], options);
+    }
+
+    function builtInFormatDate(date) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString([], options);
+    }
+
+    if (!plannedAt) {
+        return null;
+    }
+
+    const plannedAtDate = new Date(plannedAt);
+    // We format the date in a user friendly way; if it is today, we show the time, otherwise we show the date
+    // The date is formatted in a user friendly way, based on the user's locale; e.g. January 1, 2021 or 1 January 2021
+    const today = new Date();
+    let plannedAtString = '';
+    if (plannedAtDate.toDateString() === today.toDateString()) {
+        plannedAtString = builtInFormatTime(plannedAtDate);
+    }
+    else {
+        plannedAtString = builtInFormatDate(plannedAtDate);
+    }
+
+    // Duration should be shown in minutes, or hours and minutes if it is more than 60 minutes
+    if (duration > 60) {
+        const hours = Math.floor(duration / 60);
+        const minutes = duration % 60;
+        if (minutes === 0) {
+            duration = `${hours}h`;
+        } else {
+            duration = `${hours}h ${minutes}m`;
+        }
+    } else {
+        duration = `${duration}m`;
+    }
+
+    return (
+        <div className="planning">
+            <div className="plannedAt">
+                {plannedAtString}
+            </div>
+            <div className="duration">
+                {duration}
+            </div>
         </div>
     );
 }
@@ -163,6 +223,7 @@ function Task({ task }) {
                             <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
                             <div className="taskPriorityNumber">{task.priority}</div>
                         </div>
+                        <Planning plannedAt={task.plannedAt} duration={task.duration} />
                     </div>
                 </div>
             )}
