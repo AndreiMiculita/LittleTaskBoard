@@ -295,7 +295,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        fetch('/tasks').then(res => res.json()).then(data => {
+        fetch('/boards').then(res => res.json()).then(data => {
             setBoard(data);
         });
     }, []);

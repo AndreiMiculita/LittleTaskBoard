@@ -43,7 +43,7 @@ def create_app(test_config=None):
     from . import sidebar
     app.register_blueprint(sidebar.bp)
 
-    from . import tasks
-    app.register_blueprint(tasks.bp)
+    from . import boards
+    app.register_blueprint(boards.bp)
 
     return app

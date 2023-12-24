@@ -6,10 +6,10 @@ from werkzeug.exceptions import abort
 from .auth import login_required
 from .db import get_db
 
-bp = Blueprint('tasks', __name__)
+bp = Blueprint('boards', __name__)
 
 
-@bp.route('/tasks', methods=['GET'])
+@bp.route('/boards', methods=['GET'])
 def index():
     db = get_db()
     posts = db.execute(
