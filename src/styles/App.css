@@ -122,6 +122,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 0px 10px rgba(9, 30, 66, 0.04);
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.column > div {
+  flex: auto;
 }
 
 .tasks {
@@ -155,6 +162,16 @@ body {
   background-color: #eaeaea;
 }
 
+.task:hover .taskLinkButton {
+  background-color: #eaeaea;
+}
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .taskTitle {
   font-size: 1rem;
   font-weight: 400;
@@ -163,6 +180,15 @@ body {
   padding: 0;
   word-wrap: break-word;
   text-align: left;
+}
+
+.taskLinkButton {
+  background-color: #f4f5f7;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #555;
 }
 
 .taskPriority{
