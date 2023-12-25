@@ -105,7 +105,6 @@ body {
 }
 
 .sidebarLink {
-  background-color: #d9e5ec9c;
   padding: 1rem;
   display: flex;
   justify-content: left;
@@ -181,7 +180,7 @@ body {
 
 .column {
   flex: 1;
-  min-width: 0;
+  min-width: 100;
   padding: 0 0.5rem;
   border-radius: 10px;
   box-shadow: 0 0px 10px rgba(9, 30, 66, 0.04);
