@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Column from './components/Column';
+import HeaderBar from './components/HeaderBar';
 import NewTaskForm from './components/NewTaskForm';
+import Column from './components/Column';
 import './styles/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faTableList, faTableCells, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faTableList, faChartSimple, faTableCells } from '@fortawesome/free-solid-svg-icons';
 
 /* Start with mock data; 3 columns, 4 tasks each */
 const exampleBoardResponse = {
@@ -133,33 +134,6 @@ const exampleSidebarResponse = {
         }
     ]
 };
-
-function UserProfileButton({ onClickUserProfileButton }) {
-    return (
-        <a className="userProfileButton" href='/user' style={{ textDecoration: 'none', color: 'inherit' }}>
-            <FontAwesomeIcon icon={faUser} />
-            Profile
-        </a>
-        
-    );
-}
-
-function HeaderBar({ onClickSidebarButton }) {
-    function onClickUserProfileButton() {
-        alert('User profile clicked (WIP)!');
-    }
-
-    return (
-        <div className="headerBar">
-            <button className='sidebarButton' onClick={onClickSidebarButton}>
-                <FontAwesomeIcon icon={faBars} />
-                Menu
-                </button>
-            <h1>Little Task Board</h1>
-            <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
-        </div>
-    );
-}
 
 function SidebarLink({ link }) {
     let icon = null;
