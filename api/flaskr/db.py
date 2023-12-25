@@ -2,9 +2,10 @@ import sqlite3
 
 import click
 from flask import current_app, g
+from typing import Optional
 
 
-def get_db():
+def get_db() -> sqlite3.Connection:
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -15,14 +16,14 @@ def get_db():
     return g.db
 
 
-def close_db(e=None):
+def close_db(error: Optional[Exception] = None) -> None:
     db = g.pop('db', None)
 
     if db is not None:
         db.close()
 
 
-def init_db():
+def init_db() -> None:
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
