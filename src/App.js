@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Column from './components/Column';
+import NewTaskForm from './components/NewTaskForm';
 import './styles/App.css';
 
 /* Start with mock data; 3 columns, 4 tasks each */
@@ -208,8 +210,11 @@ function App() {
                 <div className="content">
                     <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
 
-                    <div className="board">
-                        {board.columns.map(column => <Column key={column.id} column={column} />)}
+                    <div className="main">
+                        <NewTaskForm onCreate={onCreateTask} />
+                        <div className="board">
+                            {board.columns.map(column => <Column key={column.id} column={column} />)}
+                        </div>
                     </div>
                 </div>
             </div>
