@@ -1,22 +1,49 @@
 import React, { useState } from 'react';
 
+const FIELDS = [
+    {
+        type: 'number',
+        min: 1,
+        max: 4,
+        placeholder: 'Task priority (1-4) (Optional)',
+        state: 'priority',
+    },
+    {
+        type: 'datetime-local',
+        placeholder: 'Planned at (Optional)',
+        state: 'plannedAt',
+    },
+    {
+        type: 'number',
+        min: 1,
+        placeholder: 'Duration (minutes) (Optional)',
+        state: 'duration',
+    },
+];
+
 function NewTaskForm({ onCreate }) {
     const [title, setTitle] = useState('');
-    const [priority, setPriority] = useState(1);
+    const [priority, setPriority] = useState('');
     const [plannedAt, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
+
+    const stateSetters = {
+        priority: setPriority,
+        plannedAt: setPlannedAt,
+        duration: setDuration,
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         onCreate({ title, priority, plannedAt, duration });
         setTitle('');
-        setPriority(1);
+        setPriority('');
         setPlannedAt('');
         setDuration('');
     };
 
     return (
-        <form className="newTaskForm" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="newTaskForm">
             <input
                 type="text"
                 value={title}
@@ -25,27 +52,17 @@ function NewTaskForm({ onCreate }) {
                 required
             />
             <div className="taskDetails">
-                <input
-                    type="number"
-                    min="1"
-                    max="4"
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
-                    placeholder="Task priority (1-4) (Optional)"
-                />
-                <input
-                    type="datetime-local"
-                    value={plannedAt}
-                    onChange={(e) => setPlannedAt(e.target.value)}
-                    placeholder="Planned at (Optional)"
-                />
-                <input
-                    type="number"
-                    min="1"
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    placeholder="Duration (minutes) (Optional)"
-                />
+                {FIELDS.map(({ type, min, max, placeholder, state }) => (
+                    <input
+                        key={state}
+                        type={type}
+                        min={min}
+                        max={max}
+                        value={{ priority, plannedAt, duration }[state]}
+                        onChange={(e) => stateSetters[state](e.target.value)}
+                        placeholder={placeholder}
+                    />
+                ))}
             </div>
             <button type="submit">Add Task</button>
         </form>
