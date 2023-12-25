@@ -122,6 +122,24 @@ body {
   margin: 0 auto;
 }
 
+.newTaskForm input,
+.newTaskForm textarea,
+.newTaskForm button {
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+}
+
+.newTaskForm button {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.newTaskForm button:hover {
+  background-color: #eaeaea;
+}
+
 .taskDetails {
   display: flex;
   gap: 1rem;
