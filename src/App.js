@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import HeaderBar from './components/HeaderBar';
+import Sidebar from './components/Sidebar';
 import NewTaskForm from './components/NewTaskForm';
 import Column from './components/Column';
 import './styles/App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faTableList, faChartSimple, faTableCells } from '@fortawesome/free-solid-svg-icons';
 
 /* Start with mock data; 3 columns, 4 tasks each */
 const exampleBoardResponse = {
@@ -134,44 +133,6 @@ const exampleSidebarResponse = {
         }
     ]
 };
-
-function SidebarLink({ link }) {
-    let icon = null;
-    if (link.title === 'Calendar') {
-        icon = <FontAwesomeIcon icon={faCalendarAlt} />
-    }
-    if (link.title === 'Tasks') {
-        icon = <FontAwesomeIcon icon={faTableList} />
-    }
-    if (icon === null) {
-        icon = <FontAwesomeIcon icon={faTableCells} />
-    }
-    return (
-        <a href={link.url} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="sidebarLink">
-                {icon}
-                {link.title}
-            </div>
-        </a>
-    );
-}
-
-function SidebarLinkCategory({ linkCategory }) {
-    return (
-        <div className="sidebarLinkCategory">
-            <h3>{linkCategory.title}</h3>
-            {linkCategory.links.map(link => <SidebarLink key={link.id} link={link} />)}
-        </div>
-    );
-}
-
-function Sidebar({ sidebar, isSidebarOpen }) {
-    return (
-        <div className={`sidebar ${isSidebarOpen ? '' : 'hide'}`}>
-            {sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
-        </div>
-    );
-}
 
 function App() {
     const [board, setBoard] = useState(exampleBoardResponse);
