@@ -180,11 +180,8 @@ function SidebarLinkCategory({ linkCategory }) {
 }
 
 function Sidebar({ sidebar, isSidebarOpen }) {
-    if (!isSidebarOpen) {
-        return null;
-    }
     return (
-        <div className="sidebar">
+        <div className={`sidebar ${isSidebarOpen ? '' : 'hide'}`}>
             {sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
         </div>
     );
