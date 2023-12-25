@@ -4,7 +4,7 @@ import Column from './components/Column';
 import NewTaskForm from './components/NewTaskForm';
 import './styles/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faTableList, faTableCells } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faTableList, faTableCells, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
 
 /* Start with mock data; 3 columns, 4 tasks each */
 const exampleBoardResponse = {
@@ -136,7 +136,11 @@ const exampleSidebarResponse = {
 
 function UserProfileButton({ onClickUserProfileButton }) {
     return (
-        <button className='userProfileButton' onClick={onClickUserProfileButton}>User Profile</button>
+        <a className="userProfileButton" href='/user' style={{ textDecoration: 'none', color: 'inherit' }}>
+            <FontAwesomeIcon icon={faUser} />
+            Profile
+        </a>
+        
     );
 }
 
@@ -147,7 +151,10 @@ function HeaderBar({ onClickSidebarButton }) {
 
     return (
         <div className="headerBar">
-            <button className='sidebarButton' onClick={onClickSidebarButton}>Menu</button>
+            <button className='sidebarButton' onClick={onClickSidebarButton}>
+                <FontAwesomeIcon icon={faBars} />
+                Menu
+                </button>
             <h1>Little Task Board</h1>
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
         </div>
