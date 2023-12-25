@@ -4,7 +4,7 @@ import Column from './components/Column';
 import NewTaskForm from './components/NewTaskForm';
 import './styles/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faTableList } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faTableList, faTableCells } from '@fortawesome/free-solid-svg-icons';
 
 /* Start with mock data; 3 columns, 4 tasks each */
 const exampleBoardResponse = {
@@ -162,11 +162,16 @@ function SidebarLink({ link }) {
     if (link.title === 'Tasks') {
         icon = <FontAwesomeIcon icon={faTableList} />
     }
+    if (icon === null) {
+        icon = <FontAwesomeIcon icon={faTableCells} />
+    }
     return (
-        <div className="sidebarLink">
-            {icon}
-            <a href={link.url}>{link.title}</a>
-        </div>
+        <a href={link.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="sidebarLink">
+                {icon}
+                {link.title}
+            </div>
+        </a>
     );
 }
 
