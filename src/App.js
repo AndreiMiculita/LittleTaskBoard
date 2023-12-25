@@ -3,6 +3,8 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './components/Column';
 import NewTaskForm from './components/NewTaskForm';
 import './styles/App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt, faTableList } from '@fortawesome/free-solid-svg-icons';
 
 /* Start with mock data; 3 columns, 4 tasks each */
 const exampleBoardResponse = {
@@ -153,8 +155,16 @@ function HeaderBar({ onClickSidebarButton }) {
 }
 
 function SidebarLink({ link }) {
+    let icon = null;
+    if (link.title === 'Calendar') {
+        icon = <FontAwesomeIcon icon={faCalendarAlt} />
+    }
+    if (link.title === 'Tasks') {
+        icon = <FontAwesomeIcon icon={faTableList} />
+    }
     return (
         <div className="sidebarLink">
+            {icon}
             <a href={link.url}>{link.title}</a>
         </div>
     );
