@@ -36,14 +36,17 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    from . import blog
-    app.register_blueprint(blog.bp)
-    app.add_url_rule('/', endpoint='index')
+    # from . import blog
+    # app.register_blueprint(blog.bp)
+    # app.add_url_rule('/', endpoint='index')
 
     from . import sidebar
     app.register_blueprint(sidebar.bp)
 
     from . import boards
     app.register_blueprint(boards.bp)
+
+    from . import tasks
+    app.register_blueprint(tasks.bp)
 
     return app
