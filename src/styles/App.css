@@ -181,7 +181,7 @@ body {
 }
 
 .taskDetails>* {
-  flex: 1;
+  width: 100%;
 }
 
 .board {
@@ -269,6 +269,15 @@ body {
   border-radius: 10px;
   cursor: pointer;
   padding: 0.5rem;
+  color: #999;
+}
+
+.taskAttributes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
   color: #999;
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Planning from './Planning';
 import { Draggable } from 'react-beautiful-dnd';
 import TaskLinkButton from './TaskLinkButton';
+import TaskAttributes from './TaskAttributes';
 
 function Task({ task }) {
     const maxPriority = 4;
@@ -22,10 +23,7 @@ function Task({ task }) {
                             </div>
                             <TaskLinkButton taskId={task.id} />
                         </div>
-                        <div className="taskPriority">
-                            <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
-                            <div className="taskPriorityNumber">{task.priority}</div>
-                        </div>
+                        <TaskAttributes focus={task.focus} priority={task.priority} priorityColor={priorityColor} />
                         <Planning plannedAt={task.plannedAt} duration={task.duration} />
                     </div>
                 </div>
