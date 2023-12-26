@@ -40,6 +40,11 @@ def get_sidebar():
                         'id': 5,
                         'title': 'Tasks',
                         'url': '/tasks'
+                    },
+                    {
+                        'id': 6,
+                        'title': 'Insights',
+                        'url': '/insights'
                     }
                 ]
             },
