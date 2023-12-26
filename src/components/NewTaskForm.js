@@ -1,29 +1,39 @@
 import React, { useState } from 'react';
 
 const FIELDS = [
-    {
-        type: 'number',
-        min: 1,
-        max: 4,
-        placeholder: 'Priority (1-4)',
-        state: 'priority',
-    },
-    {
-        type: 'datetime-local',
-        placeholder: 'Planned at',
-        state: 'plannedAt',
-    },
-    {
-        type: 'number',
-        min: 1,
-        placeholder: 'Duration (mins)',
-        state: 'duration',
-    },
+    [
+        {
+            type: 'number',
+            min: 1,
+            max: 4,
+            placeholder: 'Priority (1-4)',
+            state: 'priority',
+        },
+        {
+            type: 'checkbox',
+            placeholder: 'Requires Focus',
+            state: 'focus',
+        },
+    ],
+    [
+        {
+            type: 'datetime-local',
+            placeholder: 'Planned at',
+            state: 'plannedAt',
+        },
+        {
+            type: 'number',
+            min: 1,
+            placeholder: 'Duration (mins)',
+            state: 'duration',
+        },
+    ],
 ];
 
 function NewTaskForm({ onCreate }) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
+    const [focus, setFocus] = useState(false);
     const [plannedAt, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
     const [isFocused, setIsFocused] = useState(false);
@@ -39,6 +49,7 @@ function NewTaskForm({ onCreate }) {
 
     const stateSetters = {
         priority: setPriority,
+        focus: setFocus,
         plannedAt: setPlannedAt,
         duration: setDuration,
     };
@@ -46,8 +57,10 @@ function NewTaskForm({ onCreate }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         onCreate({ title, priority, plannedAt, duration });
+        // Reset the form
         setTitle('');
         setPriority('');
+        setFocus(false);
         setPlannedAt('');
         setDuration('');
     };
@@ -66,18 +79,27 @@ function NewTaskForm({ onCreate }) {
                     required
                 />
                 <div className="taskDetails">
-                    {FIELDS.map(({ type, min, max, placeholder, state }) => (
-                        <input
-                            key={state}
-                            type={type}
-                            min={min}
-                            max={max}
-                            value={{ priority, plannedAt, duration }[state]}
-                            onChange={(e) => stateSetters[state](e.target.value)}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            placeholder={placeholder}
-                        />
+                    {FIELDS.map((row, index) => (
+                        <div className="taskDetailsRow" key={index}>
+                            {row.map((field, index) => (
+                                <React.Fragment key={index}>
+                                    <div className="taskDetailsField">
+                                        {field.type === 'checkbox' && <label htmlFor={field.state}>{field.placeholder}</label>}
+                                        <input
+                                            id={field.state}
+                                            type={field.type}
+                                            min={field.min}
+                                            max={field.max}
+                                            placeholder={field.placeholder}
+                                            value={stateSetters[field.state]}
+                                            onChange={(e) => stateSetters[field.state](e.target.value)}
+                                            onFocus={handleFocus}
+                                            onBlur={handleBlur}
+                                        />
+                                    </div>
+                                </React.Fragment>
+                            ))}
+                        </div>
                     ))}
                 </div>
                 <button type="submit">Add Task</button>
