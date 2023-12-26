@@ -9,7 +9,7 @@ from .db import get_db
 bp = Blueprint('boards', __name__)
 
 
-@bp.route('/boards', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def index():
     db = get_db()
     posts = db.execute(
@@ -19,7 +19,7 @@ def index():
     ).fetchall()
     
     # For now we just return a json object
-    exampleBoardResponse = {
+    example_board_response = {
         'columns': [
             {
                 'id': 1,
@@ -110,7 +110,7 @@ def index():
         ]
     };
 
-    return jsonify(exampleBoardResponse)
+    return jsonify(example_board_response)
 
 
 def get_post(id, check_author=True):

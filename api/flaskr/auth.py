@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from .db import get_db
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__)
 
 
 @bp.route('/register', methods=('GET', 'POST'))
@@ -40,11 +40,12 @@ def register():
     return render_template('auth/register.html')
 
 
-@bp.route('/login', methods=('GET', 'POST'))
+@bp.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
         db = get_db()
         error = None
         user = db.execute(
@@ -59,11 +60,11 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('index'))
-
-        flash(error)
-
-    return render_template('auth/login.html')
+            return 'Logged in successfully.', 200
+        
+        print(error)
+        
+        return error, 400
 
 
 @bp.before_app_request

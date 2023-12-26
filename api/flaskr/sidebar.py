@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 
 bp = Blueprint('sidebar', __name__)
 
-@bp.route('/sidebar', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def get_sidebar():
     sidebar_data = {
         'linksByCategory': [

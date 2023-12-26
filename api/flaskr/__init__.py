@@ -34,19 +34,19 @@ def create_app(test_config=None):
     db.init_app(app)
 
     from . import auth
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(auth.bp, url_prefix='/api/auth')
 
     # from . import blog
     # app.register_blueprint(blog.bp)
     # app.add_url_rule('/', endpoint='index')
 
     from . import sidebar
-    app.register_blueprint(sidebar.bp)
+    app.register_blueprint(sidebar.bp, url_prefix='/api/sidebar')
 
     from . import boards
-    app.register_blueprint(boards.bp)
+    app.register_blueprint(boards.bp, url_prefix='/api/boards')
 
     from . import tasks
-    app.register_blueprint(tasks.bp)
+    app.register_blueprint(tasks.bp, url_prefix='/api/tasks')
 
     return app
