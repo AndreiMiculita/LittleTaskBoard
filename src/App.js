@@ -1,8 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './LoginPage'; 
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import LoginPage from './LoginPage';
 import BoardPage from './BoardPage';
 import PrivateRoute from './PrivateRoute';
+import AuthService from './Services/AuthService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+function LogoutHandler() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.location.pathname === '/logout') {
+      const authService = new AuthService();
+      authService.logout();
+      toast("You have been logged out.");
+      navigate('/login')
+    }
+  }, [navigate]);
+
+  return null;
+}
 
 function App() {
   return (
@@ -15,6 +33,7 @@ function App() {
           </PrivateRoute>
         } />
       </Routes>
+      <LogoutHandler />
     </Router>
   );
 }

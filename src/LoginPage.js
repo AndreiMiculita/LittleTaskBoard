@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AuthService from './Services/AuthService'
 import { Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
 
 class LoginPage extends Component {
 
@@ -36,36 +37,39 @@ class LoginPage extends Component {
         }
 
         return (
-            <div className="login">
-                <h1>Log in</h1>
-                <form onSubmit={this.handleFormSubmit}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={this.state.username}
-                        onChange={this.handleChange}
-                        required
-                    />
-                    <br />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        required
-                    />
-                    <br />
-                    <input type="submit" value="Submit" />
-                </form>
-                <p>
-                    <a href="/forgotpassword">Forgot password?</a>
-                </p>
-                <p>
-                    Don't have an account? <a href="/register">Register</a>
-                </p>
-            </div>
+            <>
+                <ToastContainer />
+                <div className="login">
+                    <h1>Log in</h1>
+                    <form onSubmit={this.handleFormSubmit}>
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={this.state.username}
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <br />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                            required
+                        />
+                        <br />
+                        <input type="submit" value="Submit" />
+                    </form>
+                    <p>
+                        <a href="/forgotpassword">Forgot password?</a>
+                    </p>
+                    <p>
+                        Don't have an account? <a href="/register">Register</a>
+                    </p>
+                </div>
+            </>
         )
     }
 }
