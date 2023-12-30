@@ -351,3 +351,13 @@ body {
   justify-content: space-between;
   padding: 0.5rem;
 }
+
+:root {
+  --toastify-font-family: Arial, Helvetica, sans-serif;
+}
+
+.Toastify__toast {
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+}

@@ -4,9 +4,11 @@ import HeaderBar from './components/HeaderBar';
 import Sidebar from './components/Sidebar';
 import NewTaskForm from './components/NewTaskForm';
 import Column from './components/Column';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/App.css';
 import boardsData from './example_responses/board.json';
 import sidebarData from './example_responses/sidebar.json';
+import { toast, ToastContainer } from 'react-toastify';
 
 function BoardPage() {
     const [board, setBoard] = useState(boardsData);
@@ -66,6 +68,15 @@ function BoardPage() {
                     <HeaderBar onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)} />
                 </header>
                 <div className="content">
+                    <ToastContainer 
+                        position="bottom-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        draggable
+                    />
                     <Sidebar sidebar={sidebar} isSidebarOpen={isSidebarOpen} />
 
                     <div className="main">
