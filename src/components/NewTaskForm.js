@@ -36,15 +36,15 @@ function NewTaskForm({ onCreate }) {
     const [focus, setFocus] = useState(false);
     const [plannedAt, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFormFocused, setIsFormFocused] = useState(false);
 
 
     const handleFocus = () => {
-        (!isFocused) && setIsFocused(true);
+        (!isFormFocused) && setIsFormFocused(true);
     };
 
     const handleBlur = () => {
-        (isFocused) && setIsFocused(false);
+        (isFormFocused) && setIsFormFocused(false);
     };
 
     const stateSetters = {
@@ -56,7 +56,7 @@ function NewTaskForm({ onCreate }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onCreate({ title, priority, plannedAt, duration });
+        onCreate({ title, priority, focus, plannedAt, duration });
         // Reset the form
         setTitle('');
         setPriority('');
@@ -67,7 +67,7 @@ function NewTaskForm({ onCreate }) {
 
     return (
         <div>
-            {isFocused && <div className="overlay"></div>}
+            {isFormFocused && <div className="overlay"></div>}
             <form className="newTaskForm" onSubmit={handleSubmit}>
                 <input
                     type="text"

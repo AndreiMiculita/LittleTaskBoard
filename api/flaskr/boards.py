@@ -9,8 +9,10 @@ from .db import get_db
 bp = Blueprint('boards', __name__)
 
 
-@bp.route('/', methods=['GET'])
-def index():
+@bp.route('/<int:id>', methods=['GET'])
+@login_required
+def get_board(id):
+    # TODO use id to get board from db
     db = get_db()
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'

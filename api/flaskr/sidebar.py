@@ -1,8 +1,11 @@
 from flask import Blueprint, jsonify
 
+from .auth import login_required
+
 bp = Blueprint('sidebar', __name__)
 
 @bp.route('/', methods=['GET'])
+@login_required
 def get_sidebar():
     sidebar_data = {
         'linksByCategory': [
