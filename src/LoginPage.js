@@ -12,7 +12,6 @@ class LoginPage extends Component {
             password: '',
             redirectToReferrer: false
         }
-        console.log(this.Auth.isLoggedIn())
     }
 
     handleChange = e => {

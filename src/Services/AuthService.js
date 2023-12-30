@@ -13,7 +13,6 @@ export default class AuthService {
     }
 
     async login(username, password) {
-        console.log('login' + username + password)
         // Get a token from api server using the fetch api
         const res = await this.fetch(`${this.domain}/auth/login`, {
             method: 'POST',
