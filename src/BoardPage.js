@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/App.css';
 import boardsData from './example_responses/board.json';
 import sidebarData from './example_responses/sidebar.json';
+import AuthService from './Services/AuthService';
 import { toast, ToastContainer } from 'react-toastify';
 
 function BoardPage() {
@@ -15,16 +16,34 @@ function BoardPage() {
     const [sidebar, setSidebar] = useState(sidebarData);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
+    const auth = new AuthService();
+
     useEffect(() => {
-        fetch('/api/sidebar').then(res => res.json()).then(data => {
-            setSidebar(data);
-        });
+        auth.fetch('http://localhost:5000/api/sidebar/',
+            {
+                method: 'GET'
+            })
+            .then(data => {
+                setSidebar(data);
+            })
+            .catch(err => {
+                console.error(err);
+                toast.error('Failed to load sidebar data');
+            });
     }, []);
 
     useEffect(() => {
-        fetch('/api/boards').then(res => res.json()).then(data => {
-            setBoard(data);
-        });
+        auth.fetch('http://localhost:5000/api/boards/1',
+            {
+                method: 'GET'
+            })
+            .then(data => {
+                setBoard(data);
+            })
+            .catch(err => {
+                console.error(err);
+                toast.error('Failed to load board data');
+            });
     }, []);
 
     function onDragEnd(result) {
@@ -49,16 +68,13 @@ function BoardPage() {
     }
 
     function onCreateTask(task) {
-        fetch('/api/tasks/create', {
+        const res = auth.fetch('http://localhost:5000/api/tasks/create', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        }).then(res => res.json()).then(data => {
-            setBoard(data);
+            data: JSON.stringify(task)
+        });
+        if (res.status === 200) {
+            toast.success('Task created');
         }
-        );
     }
 
     return (

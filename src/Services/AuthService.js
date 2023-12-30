@@ -34,7 +34,7 @@ export default class AuthService {
     isTokenExpired(token) {
         try {
             const decoded = jwtDecode(token)
-            if (decoded.exp < Date.now() / 1000) {
+            if (decoded.exp < Date.now() / 3600) {
                 // Checking if token is expired. N
                 return true
             } else return false
