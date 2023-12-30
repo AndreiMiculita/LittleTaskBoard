@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import HeaderBar from './components/HeaderBar';
 import Sidebar from './components/Sidebar';
+import UserPanel from './components/UserPanel';
 import NewTaskForm from './components/NewTaskForm';
 import Column from './components/Column';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/App.css';
 import boardsData from './example_responses/board.json';
 import sidebarData from './example_responses/sidebar.json';
+import userPanelData from './example_responses/userPanel.json';
 import AuthService from './Services/AuthService';
 import { toast, ToastContainer } from 'react-toastify';
 
 function BoardPage() {
     const [board, setBoard] = useState(boardsData);
     const [sidebar, setSidebar] = useState(sidebarData);
+    const [userPanel, setUserPanel] = useState(userPanelData);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
     const [reload, setReload] = useState(false);
 
     const auth = new AuthService();
@@ -46,6 +50,20 @@ function BoardPage() {
                 toast.error('Failed to load board data');
             });
     }, [reload]);
+
+    useEffect(() => {
+        auth.fetch('http://localhost:5000/api/user/',
+            {
+                method: 'GET'
+            })
+            .then(data => {
+                setUserPanel(data);
+            })
+            .catch(err => {
+                console.error(err);
+                toast.error('Failed to load user data');
+            });
+    }, []);
 
     function onDragEnd(result) {
         // dropped outside the list
@@ -87,10 +105,13 @@ function BoardPage() {
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="App">
                 <header className="App-header">
-                    <HeaderBar onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)} />
+                    <HeaderBar
+                        onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
+                        onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
+                    />
                 </header>
                 <div className="content">
-                    <ToastContainer 
+                    <ToastContainer
                         position="bottom-right"
                         autoClose={5000}
                         hideProgressBar={false}
@@ -107,6 +128,8 @@ function BoardPage() {
                             {board.columns.map(column => <Column key={column.id} column={column} />)}
                         </div>
                     </div>
+
+                    <UserPanel userPanel={userPanel} isUserPanelOpen={isUserPanelOpen} />
                 </div>
             </div>
         </DragDropContext>

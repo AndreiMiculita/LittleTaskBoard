@@ -119,40 +119,41 @@ body {
   justify-content: center;
 }
 
-.sidebar {
+.sidebar, .userPanel {
   background-color: #fff;
   flex: 0 0 200px;
   box-shadow: 0 0px 15px rgba(9, 30, 66, 0.04);
   z-index: 1;
   height: 100%;
-  border-radius: 0 0 10px;
   overflow: hidden;
   transition: flex 0.1s ease-in-out;
   white-space: nowrap;
 }
 
-.sidebar.hide {
+.sidebar {
+  border-radius: 0 0 10px;
+}
+
+.userPanel {
+  border-radius: 0 0 0px 10px;
+}
+
+.sidebar.hide, .userPanel.hide {
   flex: 0 0 0;
 }
 
-.sidebarLinks {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.sidebarLink {
+.sidebarLink, .userPanelRow {
   padding: 1rem;
   display: flex;
   justify-content: left;
   gap: 1rem;
 }
 
-.sidebarLink:hover {
+.sidebarLink:hover, .userPanelRow:hover {
   background-color: #c2d4df;
 }
 
-.sidebarLink a {
+.sidebarLink a, .userPanelRow a {
   color: #000;
   text-decoration: none;
 }

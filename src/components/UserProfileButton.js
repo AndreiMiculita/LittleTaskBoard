@@ -2,12 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function UserProfileButton() {
+function UserProfileButton({ onClickUserProfileButton }) {
     return (
-        <a className="userProfileButton" href='/user' style={{ textDecoration: 'none', color: 'inherit' }}>
+        <button className='userProfileButton' onClick={onClickUserProfileButton}>
             <FontAwesomeIcon icon={faUser} />
             Profile
-        </a>
+        </button>
     );
 }
 

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import UserProfileButton from './UserProfileButton';
 
-function HeaderBar({ onClickSidebarButton }) {
+function HeaderBar({ onClickSidebarButton, onClickUserProfileButton }) {
 
     return (
         <div className="headerBar">
@@ -12,7 +12,7 @@ function HeaderBar({ onClickSidebarButton }) {
                 Menu
             </button>
             <h1>Little Task Board</h1>
-            <UserProfileButton />
+            <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
         </div>
     );
 }
