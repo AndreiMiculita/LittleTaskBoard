@@ -79,7 +79,7 @@ function BoardPage() {
             })
             .catch(err => {
                 console.error(err);
-                toast.error('Failed to create task');
+                toast.error('Failed to create task. Are you connected to the internet?');
             });
     }
 
