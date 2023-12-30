@@ -91,7 +91,7 @@ function NewTaskForm({ onCreate }) {
                                             min={field.min}
                                             max={field.max}
                                             placeholder={field.placeholder}
-                                            value={stateSetters[field.state]}
+                                            value={field.state}
                                             onChange={(e) => stateSetters[field.state](e.target.value)}
                                             onFocus={handleFocus}
                                             onBlur={handleBlur}
