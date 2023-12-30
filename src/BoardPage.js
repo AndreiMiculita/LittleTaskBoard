@@ -15,6 +15,7 @@ function BoardPage() {
     const [board, setBoard] = useState(boardsData);
     const [sidebar, setSidebar] = useState(sidebarData);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [reload, setReload] = useState(false);
 
     const auth = new AuthService();
 
@@ -44,7 +45,7 @@ function BoardPage() {
                 console.error(err);
                 toast.error('Failed to load board data');
             });
-    }, []);
+    }, [reload]);
 
     function onDragEnd(result) {
         // dropped outside the list
@@ -68,13 +69,18 @@ function BoardPage() {
     }
 
     function onCreateTask(task) {
-        const res = auth.fetch('http://localhost:5000/api/tasks/create', {
+        auth.fetch('http://localhost:5000/api/tasks/create', {
             method: 'POST',
             data: JSON.stringify(task)
-        });
-        if (res.status === 200) {
-            toast.success('Task created');
-        }
+        })
+            .then(data => {
+                setReload(!reload);
+                toast.success('Task created');
+            })
+            .catch(err => {
+                console.error(err);
+                toast.error('Failed to create task');
+            });
     }
 
     return (
