@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import HeaderBar from '../components/HeaderBar';
-import Sidebar from '../components/Sidebar';
-import UserPanel from '../components/UserPanel';
 import NewTaskForm from '../components/NewTaskForm';
 import Column from '../components/Column';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 import boardsData from '../example_responses/board.json';
-import AuthService from '../Services/AuthService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import withPageLayout from '../hoc/withPageLayout';
 
-function BoardPage() {
+function BoardPage({ auth }) {
     const [board, setBoard] = useState(boardsData);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
     const [reload, setReload] = useState(false);
-
-    const auth = new AuthService();
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/boards/1',
@@ -70,38 +63,15 @@ function BoardPage() {
     }
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <div className="App">
-                <header className="App-header">
-                    <HeaderBar
-                        onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
-                        onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
-                    />
-                </header>
-                <div className="content">
-                    <ToastContainer
-                        position="bottom-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        draggable
-                    />
-                    <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
-
-                    <div className="main">
-                        <NewTaskForm onCreate={onCreateTask} />
-                        <div className="board">
-                            {board.columns.map(column => <Column key={column.id} column={column} />)}
-                        </div>
-                    </div>
-
-                    <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
+        <div className="main">
+            <NewTaskForm onCreate={onCreateTask} />
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="board">
+                    {board.columns.map(column => <Column key={column.id} column={column} />)}
                 </div>
-            </div>
-        </DragDropContext>
+            </DragDropContext>
+        </div>
     );
 }
 
-export default BoardPage;
+export default withPageLayout(BoardPage);
