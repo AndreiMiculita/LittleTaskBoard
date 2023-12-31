@@ -1,4 +1,4 @@
-from flask import Blueprint, request, flash, g
+from flask import Blueprint, request, flash, g, jsonify
 
 from .auth import login_required
 from .db import get_db
@@ -24,7 +24,8 @@ def get_tasks():
             'SELECT * FROM task WHERE author_id = ? ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
             (g.user['id'], per_page, (page - 1) * per_page)
         ).fetchall()
-    return tasks, 200
+    tasks = [dict(task) for task in tasks] 
+    return jsonify(tasks), 200
 
 @bp.route('/<int:id>', methods=['GET'])
 @login_required

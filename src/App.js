@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import BoardPage from './BoardPage';
+import BoardPage from './pages/BoardPage';
+import TasksPage from './pages/TasksPage';
 import PrivateRoute from './PrivateRoute';
 import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';
@@ -30,6 +31,11 @@ function App() {
         <Route path="/" element={
           <PrivateRoute>
             <BoardPage />
+          </PrivateRoute>
+        } />
+        <Route path="/tasks" element={
+          <PrivateRoute>
+            <TasksPage />
           </PrivateRoute>
         } />
       </Routes>

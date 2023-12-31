@@ -360,6 +360,24 @@ body {
   padding: 0.5rem;
 }
 
+.tasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.taskRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0px 10px rgba(9, 30, 66, 0.04);
+  padding: 1rem;
+}
+
 :root {
   --toastify-font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
