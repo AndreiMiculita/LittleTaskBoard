@@ -39,9 +39,19 @@ function App() {
             <TasksPage />
           </PrivateRoute>
         } />
-        <Route path="tasks/:id" element={
+        <Route path="/tasks/:id" element={
           <PrivateRoute>
             <TaskDetailPage />
+          </PrivateRoute>
+        } />
+        <Route path="/calendar" element={
+          <PrivateRoute>
+            <div>Calendar</div> TODO: Add calendar
+          </PrivateRoute>
+        } />
+        <Route path="/insights" element={
+          <PrivateRoute>
+            <div>Insights</div> TODO: Add insights
           </PrivateRoute>
         } />
       </Routes>
