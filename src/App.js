@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import LoginPage from './LoginPage';
 import BoardPage from './pages/BoardPage';
 import TasksPage from './pages/TasksPage';
+import TaskDetailPage from './pages/TaskDetailPage';
 import PrivateRoute from './PrivateRoute';
 import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';
@@ -36,6 +37,11 @@ function App() {
         <Route path="/tasks" element={
           <PrivateRoute>
             <TasksPage />
+          </PrivateRoute>
+        } />
+        <Route path="tasks/:id" element={
+          <PrivateRoute>
+            <TaskDetailPage />
           </PrivateRoute>
         } />
       </Routes>

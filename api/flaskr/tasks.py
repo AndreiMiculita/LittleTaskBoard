@@ -35,7 +35,8 @@ def get_task(id):
         'SELECT * FROM task WHERE id = ?',
         (id,)
     ).fetchone()
-    return task, 200
+    task = dict(task)
+    return jsonify(task), 200
 
 
 # Example data: {"title":"Test","priority":"1","plannedAt":"2023-12-12T10:10","duration":"10"}

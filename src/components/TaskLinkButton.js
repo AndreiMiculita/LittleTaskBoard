@@ -1,12 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const TaskLinkButton = ({ taskId }) => {
+    const navigate = useNavigate();
     const handleClick = () => {
-        // Handle click event here
         console.log(`Clicked on task ${taskId}`);
-        // Navigate to the task page
+        navigate(`/tasks/${taskId}`);
     };
 
     return (
