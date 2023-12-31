@@ -7,22 +7,21 @@ function Column({ column }) {
     tasks.sort((a, b) => a.priority - b.priority);
 
     return (
-        <div className="column">
-            <h2>{column.title}</h2>
-            <Droppable droppableId={column.id.toString()}>
-                {(provided) => (
-                    <div
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                    >
-                        <div className="tasks">
-                            {tasks.map(task => <Task key={task.id} task={task} />)}
-                        </div>
-                        {provided.placeholder}
+        <Droppable droppableId={column.id.toString()}>
+            {(provided, snapshot) => (
+                <div
+                    className={`column ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                >
+                    <h2>{column.title}</h2>
+                    <div className={`tasks ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}>
+                        {tasks.map(task => <Task key={task.id} task={task} />)}
                     </div>
-                )}
-            </Droppable>
-        </div>
+                    {provided.placeholder}
+                </div>
+            )}
+        </Droppable>
     );
 }
 

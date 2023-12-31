@@ -258,6 +258,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  transition: background-color 0.2s ease;
+}
+
+.draggingOver {
+  background-color: #f4f5f7;
 }
 
 .column>div {
@@ -267,7 +272,7 @@ body {
 .tasks {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: start;
   margin-bottom: 0.5rem;
 }
 
@@ -288,7 +293,7 @@ body {
 }
 
 .task:hover {
-  background-color: #f4f5f7;
+  box-shadow: 0 0px 10px rgba(9, 30, 66, 0.3);
 }
 
 .task:hover .planning {
@@ -297,6 +302,11 @@ body {
 
 .task:hover .taskLinkButton {
   background-color: #eaeaea;
+}
+
+.dragging {
+  transition: box-shadow 0.2s ease;
+  box-shadow: 0 0px 10px rgba(9, 30, 66, 0.5);
 }
 
 .taskHeader {
