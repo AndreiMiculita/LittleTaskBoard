@@ -13,7 +13,7 @@ function BoardPage({ auth }) {
     const [reload, setReload] = useState(false);
 
     useEffect(() => {
-        auth.fetch('http://localhost:5000/api/boards/1',
+        auth.fetch('http://localhost:5000/api/boards/',
             {
                 method: 'GET'
             })
