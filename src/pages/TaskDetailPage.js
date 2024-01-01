@@ -20,7 +20,7 @@ function TaskDetailPage({ auth }) {
                 console.error(err);
                 toast.error('Failed to load task data');
             });
-    }, []);
+    }, [auth, id]);
 
     return (
         <div className="main">

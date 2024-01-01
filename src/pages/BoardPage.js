@@ -24,7 +24,7 @@ function BoardPage({ auth }) {
                 console.error(err);
                 toast.error('Failed to load board data');
             });
-    }, [reload]);
+    }, [auth, reload]);
 
     function onDragEnd(result) {
         // dropped outside the list
