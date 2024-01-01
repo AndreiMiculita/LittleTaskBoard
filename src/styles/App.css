@@ -381,6 +381,23 @@ body {
   gap: 0.5rem;
 }
 
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.filters select {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+}
+
 .tasksList {
   display: flex;
   flex-direction: column;

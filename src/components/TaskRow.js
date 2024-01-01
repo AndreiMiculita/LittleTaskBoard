@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
 
 const STATUS_MAP = {
-    0: 'To Do',
-    1: 'In Progress',
-    2: 'Done'
+    1: 'To Do',
+    2: 'In Progress',
+    3: 'Done'
 };
 
 const TaskRow = ({ task }) => {
