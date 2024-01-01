@@ -30,7 +30,7 @@ const FIELDS = [
     ],
 ];
 
-function NewTaskForm({ onCreate }) {
+function NewTaskForm({ onCreateTask }) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
     const [focus, setFocus] = useState(false);
@@ -56,7 +56,7 @@ function NewTaskForm({ onCreate }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onCreate({ title, priority, focus, plannedAt, duration });
+        onCreateTask({ title, priority, focus, plannedAt, duration });
         // Reset the form
         setTitle('');
         setPriority('');
@@ -90,11 +90,11 @@ function NewTaskForm({ onCreate }) {
                                             type={field.type}
                                             min={field.min}
                                             max={field.max}
-                                            placeholder={field.placeholder}
-                                            value={field.state}
+                                            value={field.state.value}
                                             onChange={(e) => stateSetters[field.state](e.target.value)}
                                             onFocus={handleFocus}
                                             onBlur={handleBlur}
+                                            placeholder={field.placeholder}
                                         />
                                     </div>
                                 </React.Fragment>

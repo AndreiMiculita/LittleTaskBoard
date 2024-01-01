@@ -82,7 +82,7 @@ function BoardPage({ auth }) {
 
     return (
         <div className="main">
-            <NewTaskForm onCreate={onCreateTask} />
+            <NewTaskForm onCreateTask={onCreateTask} />
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="board">
                     {board.columns.map(column => <Column key={column.id} column={column} />)}
