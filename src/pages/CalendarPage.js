@@ -9,7 +9,8 @@ function CalendarPage({ auth }) {
         viewType: "Week",
         durationBarVisible: false,
         timeRangeSelectedHandling: "Enabled",
-        onEventMoved: onEventMoved
+        onEventMoved: onEventMoved,
+        onEventResized: onEventMoved,
     });
     const calendarRef = useRef(null); // We use this to update events with calendarRef.current.control.update
     // This prevents an infinite loop if we were to use setConfig directly in useEffect
@@ -86,7 +87,7 @@ function CalendarPage({ auth }) {
             method: 'PATCH',
             data: JSON.stringify({
                 planned_at: args.newStart,
-                duration: args.newEnd.getTime() - args.newStart.getTime()
+                duration: args.newEnd.getTime() - args.newStart.getTime() / 60000
             })
         })
             .then(data => {
