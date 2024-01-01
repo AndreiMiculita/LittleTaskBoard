@@ -31,17 +31,43 @@ def get_tasks():
             task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
     return jsonify(tasks), 200
 
-@bp.route('/<int:id>', methods=['GET'])
+@bp.route('/<int:id>', methods=['GET', 'PATCH'])
 @login_required
 def get_task(id):
-    db = get_db()
-    task = db.execute(
-        'SELECT * FROM task WHERE id = ?',
-        (id,)
-    ).fetchone()
-    task = dict(task)
-    task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
-    return jsonify(task), 200
+    if request.method == 'PATCH':
+        # Check if task exists
+        db = get_db()
+        task = db.execute(
+            'SELECT * FROM task WHERE id = ?',
+            (id,)
+        ).fetchone()
+        if task is None:
+            return 'Task not found.', 404
+        data = request.get_json()
+        attributes = ['title', 'priority', 'plannedAt', 'duration', 'status']
+        updates = {attr: data.get(attr) for attr in attributes if data.get(attr) is not None}
+        
+        if 'title' in updates and not updates['title']:
+            return 'Title is required.', 400
+            
+        db = get_db()
+        for attr, value in updates.items():
+            db.execute(f"UPDATE task SET {attr} = ? WHERE id = ?", (value, id))
+        db.commit()
+        
+        return 'Task updated successfully.', 200
+        
+    elif request.method == 'GET':
+        db = get_db()
+        task = db.execute(
+            'SELECT * FROM task WHERE id = ?',
+            (id,)
+        ).fetchone()
+        task = dict(task)
+        task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
+        return jsonify(task), 200
+    
+    return 'Something went wrong.', 500
 
 
 # Example data: {"title":"Test","priority":"1","plannedAt":"2023-12-12T10:10","duration":"10"}
@@ -53,55 +79,22 @@ def create():
     priority = data['priority']
     planned_at = data['plannedAt']
     duration = data['duration']
-    error = None
     
-    planned_at_datetime = datetime.strptime('2024-10-10 10:01:00', '%Y-%m-%d %H:%M:%S')
+    planned_at_datetime = datetime.strptime(planned_at, '%Y-%m-%dT%H:%M')
     planned_at_unix = int(time.mktime(planned_at_datetime.timetuple()))
 
     if not title:
         return 'Title is required.', 400
     
-    if error is not None:
-        flash(error)
-    else:
-        db = get_db()
-        db.execute(
-            'INSERT INTO task (title, author_id, priority, planned_at, duration, status)'
-            ' VALUES (?, ?, ?, ?, ?, ?)',
-            (title, g.user['id'], priority, planned_at_unix, duration, 0)
-        )
-        db.commit()
-        return 'Task created successfully.', 200
-    
-    return 'Something went wrong.', 500
+    db = get_db()
+    db.execute(
+        'INSERT INTO task (title, author_id, priority, planned_at, duration, status)'
+        ' VALUES (?, ?, ?, ?, ?, ?)',
+        (title, g.user['id'], priority, planned_at_unix, duration, 0)
+    )
+    db.commit()
+    return 'Task created successfully.', 200
 
-@bp.route('/<int:id>/update', methods=['POST'])
-@login_required
-def update(id):
-    data = request.get_json()
-    title = data['title']
-    priority = data['priority']
-    planned_at = data['plannedAt']
-    duration = data['duration']
-    status = data['status']
-    error = None
-
-    if not title:
-        return 'Title is required.', 400
-    
-    if error is not None:
-        flash(error)
-    else:
-        db = get_db()
-        db.execute(
-            'UPDATE task SET title = ?, priority = ?, planned_at = ?, duration = ?, status = ?'
-            ' WHERE id = ?',
-            (title, priority, planned_at, duration, status, id)
-        )
-        db.commit()
-        return 'Task updated successfully.', 200
-    
-    return 'Something went wrong.', 500
 
 
 @bp.route('/<int:id>/delete', methods=['POST'])

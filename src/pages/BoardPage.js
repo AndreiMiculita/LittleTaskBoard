@@ -44,6 +44,24 @@ function BoardPage({ auth }) {
         const destinationTasks = board.columns.find(column => column.id === destinationColumnId).tasks;
         destinationTasks.splice(destinationIndex, 0, task);
 
+
+        if (sourceColumnId !== destinationColumnId) {
+            auth.fetch(`http://localhost:5000/api/tasks/${task.id}`,
+                {
+                    method: 'PATCH',
+                    data: JSON.stringify({
+                        status: destinationColumnId
+                    })
+                })
+                .then(data => {
+                    toast.success('Task updated');
+                })
+                .catch(err => {
+                    console.error(err);
+                    toast.error('Failed to update task. Are you connected to the internet?');
+                });
+        }
+
         setBoard(board);
     }
 

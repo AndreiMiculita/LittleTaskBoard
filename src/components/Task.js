@@ -12,11 +12,11 @@ function getPriorityColor(priority) {
     return `hsl(${hue}, 100%, 50%)`;
 }
 
-function Task({ task }) {
+function Task({ task, index }) {
     const priorityColor = getPriorityColor(task.priority);
 
     return (
-        <Draggable draggableId={task.id.toString()} index={task.priority - 1}>
+        <Draggable draggableId={task.id.toString()} index={index}>
             {(provided, snapshot) => {
                 console.log(snapshot.isDragging);
                 return (

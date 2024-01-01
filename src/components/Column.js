@@ -16,7 +16,7 @@ function Column({ column }) {
                 >
                     <h2>{column.title}</h2>
                     <div className={`tasks ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}>
-                        {tasks.map(task => <Task key={task.id} task={task} />)}
+                        {tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
                     </div>
                     {provided.placeholder}
                 </div>
