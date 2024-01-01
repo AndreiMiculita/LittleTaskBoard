@@ -58,7 +58,10 @@ function CalendarPage({ auth }) {
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/tasks/',
             {
-                method: 'GET'
+                method: 'GET',
+                data: JSON.stringify({
+                    planned: true
+                })
             })
             .then(data => {
                 const events = data.map(task => {

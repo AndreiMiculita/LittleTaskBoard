@@ -14,16 +14,17 @@ def get_tasks():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     status = request.args.get('status', type=int)
+    planned = request.args.get('planned', type=str) == 'true'
     db = get_db()
     if status is not None:
         tasks = db.execute(
-            'SELECT * FROM task WHERE author_id = ? AND status = ? ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
-            (g.user['id'], status, per_page, (page - 1) * per_page)
+            'SELECT * FROM task WHERE author_id = ? AND status = ? AND (? OR planned_at IS NOT NULL) ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
+            (g.user['id'], status, planned, per_page, (page - 1) * per_page)
         ).fetchall()
     else:
         tasks = db.execute(
-            'SELECT * FROM task WHERE author_id = ? ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
-            (g.user['id'], per_page, (page - 1) * per_page)
+            'SELECT * FROM task WHERE author_id = ? AND (? OR planned_at IS NOT NULL) ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
+            (g.user['id'], planned, per_page, (page - 1) * per_page)
         ).fetchall()
     tasks = [dict(task) for task in tasks]
     for task in tasks:

@@ -23,7 +23,7 @@ CREATE TABLE task (
   title TEXT NOT NULL,
   priority INTEGER CHECK(typeof(priority) = 'integer' OR priority IS NULL),
   planned_at INTEGER CHECK(typeof(planned_at) = 'integer' OR planned_at IS NULL),
-  duration INTEGER CHECK(typeof(duration) = 'integer' OR duration IS NULL),
+  duration INTEGER CHECK((typeof(duration) = 'integer' AND duration > 0) OR duration IS NULL),
   status INTEGER NOT NULL CHECK(typeof(status) = 'integer'),
   FOREIGN KEY (author_id) REFERENCES user (id)
 ) STRICT;
