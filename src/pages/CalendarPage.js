@@ -12,48 +12,7 @@ function CalendarPage({ auth }) {
         onEventMoved: onEventMoved,
         onEventResized: onEventMoved,
     });
-    const calendarRef = useRef(null); // We use this to update events with calendarRef.current.control.update
-    // This prevents an infinite loop if we were to use setConfig directly in useEffect
-
-    // useEffect(() => {
-    //     const events = [
-    //         {
-    //           id: 1,
-    //           text: "Event 1",
-    //           start: "2023-10-02T10:30:00",
-    //           end: "2023-10-02T13:00:00",
-    //           participants: 2,
-    //         },
-    //         {
-    //           id: 2,
-    //           text: "Event 2",
-    //           start: "2023-10-03T09:30:00",
-    //           end: "2023-10-03T11:30:00",
-    //           backColor: "#6aa84f",
-    //           participants: 1,
-    //         },
-    //         {
-    //           id: 3,
-    //           text: "Event 3",
-    //           start: "2023-10-03T12:00:00",
-    //           end: "2023-10-03T15:00:00",
-    //           backColor: "#f1c232",
-    //           participants: 3,
-    //         },
-    //         {
-    //           id: 4,
-    //           text: "Event 4",
-    //           start: "2023-10-01T11:30:00",
-    //           end: "2023-10-01T14:30:00",
-    //           backColor: "#cc4125",
-    //           participants: 4,
-    //         },
-    //       ];
-
-    //       const startDate = "2023-10-02";
-
-    //       calendarRef.current.control.update({startDate, events});
-    // }, []);
+    const calendarRef = useRef(null);
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/tasks/',
