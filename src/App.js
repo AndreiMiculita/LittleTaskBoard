@@ -9,6 +9,7 @@ import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CalendarPage from './pages/CalendarPage';
+import InsightsPage from './pages/InsightsPage';
 
 function LogoutHandler() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function App() {
         } />
         <Route path="/insights" element={
           <PrivateRoute>
-            <div>Insights</div> TODO: Add insights
+            <InsightsPage />
           </PrivateRoute>
         } />
       </Routes>
