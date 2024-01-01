@@ -31,7 +31,7 @@ body {
 
 .login form {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 .login input {
@@ -119,7 +119,8 @@ body {
   justify-content: center;
 }
 
-.sidebar, .userPanel {
+.sidebar,
+.userPanel {
   background-color: #fff;
   flex: 0 0 200px;
   box-shadow: 0 0px 15px rgba(9, 30, 66, 0.04);
@@ -138,22 +139,26 @@ body {
   border-radius: 0 0 0px 10px;
 }
 
-.sidebar.hide, .userPanel.hide {
+.sidebar.hide,
+.userPanel.hide {
   flex: 0 0 0;
 }
 
-.sidebarLink, .userPanelRow {
+.sidebarLink,
+.userPanelRow {
   padding: 1rem;
   display: flex;
   justify-content: left;
   gap: 1rem;
 }
 
-.sidebarLink:hover, .userPanelRow:hover {
+.sidebarLink:hover,
+.userPanelRow:hover {
   background-color: #c2d4df;
 }
 
-.sidebarLink a, .userPanelRow a {
+.sidebarLink a,
+.userPanelRow a {
   color: #000;
   text-decoration: none;
 }
@@ -179,8 +184,13 @@ body {
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .overlay {
