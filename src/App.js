@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CalendarPage from './pages/CalendarPage';
 
 function LogoutHandler() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function App() {
         } />
         <Route path="/calendar" element={
           <PrivateRoute>
-            <div>Calendar</div> TODO: Add calendar
+            <CalendarPage />
           </PrivateRoute>
         } />
         <Route path="/insights" element={
