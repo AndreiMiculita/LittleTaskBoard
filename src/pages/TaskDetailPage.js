@@ -29,7 +29,7 @@ function TaskDetailPage({ auth }) {
                 <div className="taskDetail__description">{task.description}</div>
                 <div className="taskDetail__status">{task.status}</div>
                 <div className="taskDetail__priority">{task.priority}</div>
-                <Planning plannedAt={task.planned_at} duration={task.duration} />
+                <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
             </div>
         </div>
     );

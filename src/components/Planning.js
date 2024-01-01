@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Planning({ plannedAt, duration }) {
+function Planning({ plannedAt, duration, showFull = false }) {
     function builtInFormatTime(date) {
         const options = { hour: 'numeric', minute: 'numeric' };
         return date.toLocaleTimeString([], options);
@@ -16,15 +16,20 @@ function Planning({ plannedAt, duration }) {
     }
 
     const plannedAtDate = new Date(plannedAt);
-    // We format the date in a user friendly way; if it is today, we show the time, otherwise we show the date
-    // The date is formatted in a user friendly way, based on the user's locale; e.g. January 1, 2021 or 1 January 2021
-    const today = new Date();
     let plannedAtString = '';
-    if (plannedAtDate.toDateString() === today.toDateString()) {
-        plannedAtString = builtInFormatTime(plannedAtDate);
+
+    if (showFull) {
+        plannedAtString = plannedAtDate.toLocaleString();
     }
     else {
-        plannedAtString = builtInFormatDate(plannedAtDate);
+        // We format the date in a user friendly way; if it is today, we show the time, otherwise we show the date
+        const today = new Date();
+        if (plannedAtDate.toDateString() === today.toDateString()) {
+            plannedAtString = builtInFormatTime(plannedAtDate);
+        }
+        else {
+            plannedAtString = builtInFormatDate(plannedAtDate);
+        }
     }
 
     // Duration should be shown in minutes, or hours and minutes if it is more than 60 minutes
