@@ -21,9 +21,9 @@ CREATE TABLE task (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   title TEXT NOT NULL,
-  priority INTEGER NOT NULL,
-  planned_at TIMESTAMP NOT NULL,
-  duration INTEGER NOT NULL,
+  priority INTEGER,
+  planned_at INTEGER CHECK(typeof(planned_at) = 'integer'),
+  duration INTEGER,
   status INTEGER NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
-);
+) STRICT;

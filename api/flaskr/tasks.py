@@ -1,8 +1,9 @@
+import time
 from flask import Blueprint, request, flash, g, jsonify
 
 from .auth import login_required
 from .db import get_db
-# from .models import Task
+from datetime import datetime
 
 bp = Blueprint('tasks', __name__)
 
@@ -24,7 +25,10 @@ def get_tasks():
             'SELECT * FROM task WHERE author_id = ? ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
             (g.user['id'], per_page, (page - 1) * per_page)
         ).fetchall()
-    tasks = [dict(task) for task in tasks] 
+    tasks = [dict(task) for task in tasks]
+    for task in tasks:
+        if task['planned_at'] is not None:
+            task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
     return jsonify(tasks), 200
 
 @bp.route('/<int:id>', methods=['GET'])
@@ -36,6 +40,7 @@ def get_task(id):
         (id,)
     ).fetchone()
     task = dict(task)
+    task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
     return jsonify(task), 200
 
 
@@ -49,6 +54,9 @@ def create():
     planned_at = data['plannedAt']
     duration = data['duration']
     error = None
+    
+    planned_at_datetime = datetime.strptime('2024-10-10 10:01:00', '%Y-%m-%d %H:%M:%S')
+    planned_at_unix = int(time.mktime(planned_at_datetime.timetuple()))
 
     if not title:
         return 'Title is required.', 400
@@ -60,7 +68,7 @@ def create():
         db.execute(
             'INSERT INTO task (title, author_id, priority, planned_at, duration, status)'
             ' VALUES (?, ?, ?, ?, ?, ?)',
-            (title, g.user['id'], priority, planned_at, duration, 0)
+            (title, g.user['id'], priority, planned_at_unix, duration, 0)
         )
         db.commit()
         return 'Task created successfully.', 200

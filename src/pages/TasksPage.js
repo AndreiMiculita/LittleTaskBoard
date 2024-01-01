@@ -46,7 +46,7 @@ function TasksPage({ auth }) {
             </div>
             <div className="tasksList">
                 {currentTasks.map(task => (
-                    <Task key={task.id} task={task} />
+                    <TaskRow key={task.id} task={task} />
                 ))}
             </div>
         </div>

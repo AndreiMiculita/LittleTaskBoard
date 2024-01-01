@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import withPageLayout from '../hoc/withPageLayout';
+import Planning from '../components/Planning';
 import { toast } from 'react-toastify';
 
 function TaskDetailPage({ auth }) {
@@ -28,8 +29,7 @@ function TaskDetailPage({ auth }) {
                 <div className="taskDetail__description">{task.description}</div>
                 <div className="taskDetail__status">{task.status}</div>
                 <div className="taskDetail__priority">{task.priority}</div>
-                <div className="taskDetail__createdAt">{task.createdAt}</div>
-                <div className="taskDetail__updatedAt">{task.updatedAt}</div>
+                <Planning plannedAt={task.planned_at} duration={task.duration} />
             </div>
         </div>
     );
