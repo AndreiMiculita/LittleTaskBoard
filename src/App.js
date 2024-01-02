@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CalendarPage from './pages/CalendarPage';
 import InsightsPage from './pages/InsightsPage';
 import PageLayout from './layouts/PageLayout';
+import RegisterPage from './pages/RegisterPage';
 
 function LogoutHandler({ setAuth }) {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ function App() {
       <PageLayout auth={auth}>
         <Routes>
           <Route path="/login" element={<LoginPage setAuth={setAuth}/>} />
+          <Route path="/register" element={<RegisterPage setAuth={setAuth}/>} />
           <Route path="/" element={
             <PrivateRoute>
               <BoardPage auth={auth} />

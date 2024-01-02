@@ -3,9 +3,10 @@ import AuthService from '../Services/AuthService';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-function LoginPage({ setAuth }) {
+function RegisterPage({ setAuth }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
     const auth = new AuthService();
@@ -20,13 +21,20 @@ function LoginPage({ setAuth }) {
             setUsername(e.target.value);
         } else if (e.target.name === 'password') {
             setPassword(e.target.value);
+        } else if (e.target.name === 'confirmPassword') {
+            setConfirmPassword(e.target.value);
         }
     };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        auth.login(username, password)
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        auth.register(username, password)
             .then(() => {
                 setRedirectToReferrer(true);
             })
@@ -42,8 +50,8 @@ function LoginPage({ setAuth }) {
     return (
         <>
             <ToastContainer />
-            <div className="login">
-                <h1>Log in</h1>
+            <div className="register">
+                <h1>Register</h1>
                 <form onSubmit={handleFormSubmit}>
                     <input
                         type="text"
@@ -63,17 +71,23 @@ function LoginPage({ setAuth }) {
                         required
                     />
                     <br />
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={handleChange}
+                        required
+                    />
+                    <br />
                     <input type="submit" value="Submit" />
                 </form>
                 <p>
-                    <a href="/forgotpassword">Forgot password?</a>
-                </p>
-                <p>
-                    Don't have an account? <a href="/register">Register</a>
+                    Already have an account? <a href="/login">Log in</a>
                 </p>
             </div>
         </>
     );
 };
 
-export default LoginPage;
+export default RegisterPage;
