@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 import boardsData from '../example_responses/board.json';
 import { toast } from 'react-toastify';
-import withPageLayout from '../hoc/withPageLayout';
 
 function BoardPage({ auth }) {
     const [board, setBoard] = useState(boardsData);
@@ -92,4 +91,4 @@ function BoardPage({ auth }) {
     );
 }
 
-export default withPageLayout(BoardPage);
+export default BoardPage;

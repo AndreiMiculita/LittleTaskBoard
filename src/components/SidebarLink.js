@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faTableList, faChartSimple, faTableCells } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function SidebarLink({ link }) {
     let icon = null;
@@ -16,13 +17,14 @@ function SidebarLink({ link }) {
     if (icon === null) {
         icon = <FontAwesomeIcon icon={faTableCells} />
     }
+
     return (
-        <a href={link.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={link.url} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="sidebarLink">
                 {icon}
                 {link.title}
             </div>
-        </a>
+        </Link>
     );
 }
 

@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import HeaderBar from '../components/HeaderBar';
 import Sidebar from '../components/Sidebar';
 import UserPanel from '../components/UserPanel';
-import AuthService from '../Services/AuthService';
 import { ToastContainer } from 'react-toastify';
 
-function withPageLayout(WrappedComponent) {
-    return function PageLayout(props) {
-        const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-        const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
+function PageLayout({ children, auth }) {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
 
-        const auth = new AuthService();
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { auth });
+        }
+        return child;
+      });
 
-        return (
-            <div className="App">
+    if (auth) {
+        console.log(auth);
+        console.log(auth.isLoggedIn());
+    }
+
+    return (
+        <div className="App">
+        {auth && auth.isLoggedIn() ? (
+            <>
                 <header className="App-header">
                     <HeaderBar
                         onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -32,13 +42,18 @@ function withPageLayout(WrappedComponent) {
                     />
                     <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
 
-                    <WrappedComponent {...props} auth={auth} />
+                    {childrenWithProps}
 
                     <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
                 </div>
-            </div>
-        );
-    };
+            </>
+        ) : (
+            <>
+                {childrenWithProps}
+            </>
+        )}
+        </div>
+    );
 }
 
-export default withPageLayout;
+export default PageLayout;

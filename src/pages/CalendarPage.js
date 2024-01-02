@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import withPageLayout from '../hoc/withPageLayout';
 import { DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 
 
@@ -69,4 +68,4 @@ function CalendarPage({ auth }) {
     );
 }
 
-export default withPageLayout(CalendarPage);
+export default CalendarPage;

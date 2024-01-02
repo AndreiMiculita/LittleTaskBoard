@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import withPageLayout from '../hoc/withPageLayout';
 import Planning from '../components/Planning';
 import { toast } from 'react-toastify';
 
@@ -35,4 +34,4 @@ function TaskDetailPage({ auth }) {
     );
 };
 
-export default withPageLayout(TaskDetailPage);
+export default TaskDetailPage;

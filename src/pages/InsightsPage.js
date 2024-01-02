@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import withPageLayout from '../hoc/withPageLayout';
 import { toast } from 'react-toastify';
 
 
@@ -83,4 +82,4 @@ function InsightsPage({ auth }) {
     );
 }
 
-export default withPageLayout(InsightsPage);
+export default InsightsPage;

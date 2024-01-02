@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import withPageLayout from '../hoc/withPageLayout';
 import TaskRow from '../components/TaskRow';
 import Select from '../components/Select';
 import { toast } from 'react-toastify';
@@ -126,4 +125,4 @@ function TasksPage({ auth }) {
     );
 };
 
-export default withPageLayout(TasksPage);
+export default TasksPage;

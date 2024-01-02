@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut, faCog } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function UserPanelRow({ userPanelRow }) {
     let icon = null;
@@ -11,12 +12,12 @@ function UserPanelRow({ userPanelRow }) {
         icon = <FontAwesomeIcon icon={faSignOut} />
     }
     return (
-        <a href={userPanelRow.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={userPanelRow.url} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="userPanelRow">
                 {icon}
                 {userPanelRow.title}
             </div>
-        </a>
+        </Link>
     );
 }
 
