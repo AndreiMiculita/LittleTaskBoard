@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DayPilotCalendar } from "@daypilot/daypilot-lite-react";
+import '../styles/calendar_custom_styling.css';
 
 
 function CalendarPage({ auth }) {
@@ -23,9 +24,10 @@ function CalendarPage({ auth }) {
             })
             .then(data => {
                 const events = data.map(task => {
+                    const text = task.title + " (" + new Date(task.planned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " to " + new Date(new Date(task.planned_at).getTime() + task.duration * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ")";
                     return {
                         id: task.id,
-                        text: task.title,
+                        text: text,
                         start: new Date(task.planned_at).toISOString(),
                         end: new Date(new Date(task.planned_at).getTime() + task.duration * 60000).toISOString(),
                         backColor: task.focus ? "#cc4125" : "#6aa84f",
