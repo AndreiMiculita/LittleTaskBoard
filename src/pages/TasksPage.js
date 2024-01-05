@@ -103,7 +103,7 @@ function TasksPage({ auth }) {
     const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
 
     return (
-        <div className="main">
+        <>
             <div className="filters">
                 {filters.map(filter => (
                     <Select
@@ -121,7 +121,7 @@ function TasksPage({ auth }) {
                     <TaskRow key={task.id} task={task} />
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

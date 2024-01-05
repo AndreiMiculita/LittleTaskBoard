@@ -57,27 +57,25 @@ function InsightsPage({ auth }) {
     }, [auth]);
 
     return (
-        <div className="main">
-            <div className="insights">
-                <div className="insights__title">Insights</div>
-                <div className="insights__description">This is where we will display some insights.</div>
-                <div className="insights__status" style={{ width: '50%', height: '100px', display: 'inline-block' }}>
-                    Status
-                    <div>
-                        {Array.isArray(statusData) ?
-                            statusData.map((item, index) => (
-                                <div key={index}>
-                                    {item.status} {item.count}
-                                </div>
-                            ))
-                            :
-                            console.log("statusData is not an array")
-                        }
-                    </div>
+        <div className="insights">
+            <div className="insights__title">Insights</div>
+            <div className="insights__description">This is where we will display some insights.</div>
+            <div className="insights__status" style={{ width: '50%', height: '100px', display: 'inline-block' }}>
+                Status
+                <div>
+                    {Array.isArray(statusData) ?
+                        statusData.map((item, index) => (
+                            <div key={index}>
+                                {item.status} {item.count}
+                            </div>
+                        ))
+                        :
+                        console.log("statusData is not an array")
+                    }
                 </div>
-                <div className="insights__focus" style={{ width: '50%', height: '100px', display: 'inline-block' }}> Focus </div>
-                <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}> Focus over time </div>
             </div>
+            <div className="insights__focus" style={{ width: '50%', height: '100px', display: 'inline-block' }}> Focus </div>
+            <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}> Focus over time </div>
         </div>
     );
 }

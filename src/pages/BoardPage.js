@@ -80,14 +80,14 @@ function BoardPage({ auth }) {
     }
 
     return (
-        <div className="main">
+        <>
             <NewTaskForm onCreateTask={onCreateTask} />
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="board">
                     {board.columns.map(column => <Column key={column.id} column={column} />)}
                 </div>
             </DragDropContext>
-        </div>
+        </>
     );
 }
 

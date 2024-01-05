@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 body {
-  /* if the viewport is too big, we make the body fill the screen */
-  height: 100vh;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   color: #555;
   background-color: #fafaf7;

@@ -10,10 +10,10 @@ function PageLayout({ children, auth }) {
 
     const childrenWithProps = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, { auth });
+            return React.cloneElement(child, { auth });
         }
         return child;
-      });
+    });
 
     if (auth) {
         console.log(auth);
@@ -22,36 +22,38 @@ function PageLayout({ children, auth }) {
 
     return (
         <div className="App">
-        {auth && auth.isLoggedIn() ? (
-            <>
-                <header className="App-header">
-                    <HeaderBar
-                        onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
-                        onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
-                    />
-                </header>
-                <div className="content">
-                    <ToastContainer
-                        position="bottom-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        draggable
-                    />
-                    <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
+            {auth && auth.isLoggedIn() ? (
+                <>
+                    <header className="App-header">
+                        <HeaderBar
+                            onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
+                            onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
+                        />
+                    </header>
+                    <div className="content">
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            draggable
+                        />
+                        <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
 
+                        <div className="main">
+                            {childrenWithProps}
+                        </div>
+
+                        <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
+                    </div>
+                </>
+            ) : (
+                <>
                     {childrenWithProps}
-
-                    <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
-                </div>
-            </>
-        ) : (
-            <>
-                {childrenWithProps}
-            </>
-        )}
+                </>
+            )}
         </div>
     );
 }

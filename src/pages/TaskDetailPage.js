@@ -22,14 +22,12 @@ function TaskDetailPage({ auth }) {
     }, [auth, id]);
 
     return (
-        <div className="main">
-            <div className="taskDetail">
-                <div className="taskDetail__title">{task.title}</div>
-                <div className="taskDetail__description">{task.description}</div>
-                <div className="taskDetail__status">{task.status}</div>
-                <div className="taskDetail__priority">{task.priority}</div>
-                <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
-            </div>
+        <div className="taskDetail">
+            <div className="taskDetail__title">{task.title}</div>
+            <div className="taskDetail__description">{task.description}</div>
+            <div className="taskDetail__status">{task.status}</div>
+            <div className="taskDetail__priority">{task.priority}</div>
+            <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
         </div>
     );
 };

@@ -60,10 +60,8 @@ function CalendarPage({ auth }) {
     }
 
     return (
-        <div className="main">
-            <div>
-                <DayPilotCalendar {...config} ref={calendarRef} />
-            </div>
+        <div>
+            <DayPilotCalendar {...config} ref={calendarRef} />
         </div>
     );
 }
