@@ -209,6 +209,7 @@ body {
   border-radius: 3px;
   font-size: 15px;
   border: 1px solid #ddd;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
 .newTaskForm button {
