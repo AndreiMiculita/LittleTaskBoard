@@ -22,12 +22,20 @@ CREATE TABLE task (
   author_id INTEGER NOT NULL,
   title TEXT NOT NULL,
   priority INTEGER CHECK(typeof(priority) = 'integer' OR priority IS NULL),
-  focus INTEGER CHECK(typeof(focus) = 'integer' OR focus IS NULL),
+  task_type INTEGER CHECK(typeof(task_type) = 'integer') NOT NULL DEFAULT 0,
   planned_at INTEGER CHECK(typeof(planned_at) = 'integer' OR planned_at IS NULL),
   duration INTEGER CHECK((typeof(duration) = 'integer' AND duration > 0) OR duration IS NULL),
   status INTEGER NOT NULL CHECK(typeof(status) = 'integer'),
   FOREIGN KEY (author_id) REFERENCES user (id)
+  FOREIGN KEY (task_type) REFERENCES task_type (id)
 ) STRICT;
+
+CREATE TABLE task_type (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
+
+INSERT INTO task_type (name) VALUES ('Regular'), ('Focus'), ('Meeting');
 
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
 VALUES (1, 'Feed the cat, dog, and fish', 1, 1609493600, 30, 1);

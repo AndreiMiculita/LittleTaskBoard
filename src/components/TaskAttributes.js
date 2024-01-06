@@ -1,14 +1,15 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrain } from '@fortawesome/free-solid-svg-icons';
+import { faBrain, faUsers } from '@fortawesome/free-solid-svg-icons';
 
-const TaskAttributes = ({ focus, priority, priorityColor }) => (
+const TaskAttributes = ({ type, priority, priorityColor }) => (
     <div className="taskAttributes">
         <div className="taskPriority">
             <div className="taskPriorityColor" style={{ backgroundColor: priorityColor }}></div>
             <div className="taskPriorityNumber">{priority}</div>
         </div>
-        {focus && <FontAwesomeIcon icon={faBrain} />}
+        {type === 1 && <FontAwesomeIcon icon={faBrain} className="taskType" />}
+        {type === 2 && <FontAwesomeIcon icon={faUsers} className="taskType" />}
     </div>
 );
 

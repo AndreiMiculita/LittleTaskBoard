@@ -72,7 +72,7 @@ function TasksPage({ auth }) {
                 { value: 'priority', label: 'Priority' },
                 { value: 'duration', label: 'Duration' },
                 { value: 'planned_at', label: 'Planned At' },
-                { value: 'focus', label: 'Focus' },
+                { value: 'type', label: 'type' },
                 { value: 'status', label: 'Status' },
             ],
         },

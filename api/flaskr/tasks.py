@@ -7,30 +7,87 @@ from datetime import datetime
 
 bp = Blueprint('tasks', __name__)
 
+class ValidationError(Exception):
+    def __init__(self, message, status_code):
+        super().__init__(message)
+        self.status_code = status_code
 
-@bp.route('/', methods=['GET'])
+def validate_and_convert(data, key, min_val=None, max_val=None):
+    value = data.get(key)
+    if value is not None:
+        if value == '':
+            value = None
+        else:
+            try:
+                value = int(value)
+                if min_val is not None and value < min_val:
+                    raise ValidationError(f'{key.capitalize()} must be greater than or equal to {min_val}.', 400)
+                if max_val is not None and value > max_val:
+                    raise ValidationError(f'{key.capitalize()} must be less than or equal to {max_val}.', 400)
+            except ValueError:
+                raise ValidationError(f'{key.capitalize()} must be a valid integer.', 400)
+    return value
+
+def parse_date_to_timestamp(date_str):
+    if date_str is not None and date_str != '':
+        try:
+            date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M')
+            return int(time.mktime(date.timetuple()))
+        except ValueError:
+            raise ValidationError('Invalid date format. Use YYYY-MM-DDTHH:MM.', 400)
+    return None
+
+@bp.route('/', methods=['GET', 'POST'])
 @login_required
 def get_tasks():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
-    status = request.args.get('status', type=int)
-    planned = request.args.get('planned', type=str) == 'true'
-    db = get_db()
-    if status is not None:
-        tasks = db.execute(
-            'SELECT * FROM task WHERE author_id = ? AND status = ? AND (? OR planned_at IS NOT NULL) ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
-            (g.user['id'], status, planned, per_page, (page - 1) * per_page)
-        ).fetchall()
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            if not data.get('title'):
+                raise ValidationError('Title is required.', 400)
+            priority = validate_and_convert(data, 'priority', 1, 4)
+            task_type = validate_and_convert(data, 'type', 0, 2)
+            duration = validate_and_convert(data, 'duration', 0)
+            planned_at = parse_date_to_timestamp(data.get('plannedAt'))
+        except ValidationError as e:
+            return str(e), e.status_code
+        db = get_db()
+        db.execute(
+            'INSERT INTO task (title, priority, type, planned_at, duration, author_id, status)'
+            ' VALUES (?, ?, ?, ?, ?, ?, ?)',
+            (data.get('title'), priority, task_type, planned_at, duration, g.user['id'], 0)
+        )
+        db.commit()
+        return 'Task created successfully.', 201
+    elif request.method == 'GET':
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        status = request.args.get('status', type=int)
+        planned = request.args.get('planned', type=str)
+        
+        db = get_db()
+        query = 'SELECT * FROM task WHERE author_id = ?'
+        params = [g.user['id']]
+        
+        if planned is not None:
+            planned = planned.lower() == 'true'
+            query += ' AND (planned_at IS NOT NULL)' if planned else ' AND (planned_at IS NULL)'
+        if status is not None:
+            query += ' AND status = ?'
+            params.append(status)
+        
+        query += ' ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?'
+        params.extend([per_page, (page - 1) * per_page])
+        
+        tasks = db.execute(query, params).fetchall()
+        
+        tasks = [dict(task) for task in tasks]
+        for task in tasks:
+            if task['planned_at'] is not None:
+                task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
+        return jsonify(tasks), 200
     else:
-        tasks = db.execute(
-            'SELECT * FROM task WHERE author_id = ? AND (? OR planned_at IS NOT NULL) ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?',
-            (g.user['id'], planned, per_page, (page - 1) * per_page)
-        ).fetchall()
-    tasks = [dict(task) for task in tasks]
-    for task in tasks:
-        if task['planned_at'] is not None:
-            task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
-    return jsonify(tasks), 200
+        return 'Method not allowed.', 405
 
 @bp.route('/<int:id>', methods=['GET', 'PATCH'])
 @login_required
@@ -65,37 +122,10 @@ def get_task(id):
             (id,)
         ).fetchone()
         task = dict(task)
-        task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
+        if task['planned_at'] is not None:
+            task['planned_at'] = datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
         return jsonify(task), 200
-    
     return 'Something went wrong.', 500
-
-
-# Example data: {"title":"Test","priority":"1","plannedAt":"2023-12-12T10:10","duration":"10"}
-@bp.route('/create', methods=['POST'])
-@login_required
-def create():
-    data = request.get_json()
-    title = data['title']
-    priority = data['priority']
-    planned_at = data['plannedAt']
-    duration = data['duration']
-    
-    planned_at_datetime = datetime.strptime(planned_at, '%Y-%m-%dT%H:%M')
-    planned_at_unix = int(time.mktime(planned_at_datetime.timetuple()))
-
-    if not title:
-        return 'Title is required.', 400
-    
-    db = get_db()
-    db.execute(
-        'INSERT INTO task (title, author_id, priority, planned_at, duration, status)'
-        ' VALUES (?, ?, ?, ?, ?, ?)',
-        (title, g.user['id'], priority, planned_at_unix, duration, 0)
-    )
-    db.commit()
-    return 'Task created successfully.', 200
-
 
 
 @bp.route('/<int:id>/delete', methods=['POST'])

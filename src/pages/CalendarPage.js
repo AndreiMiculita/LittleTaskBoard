@@ -18,9 +18,9 @@ function CalendarPage({ auth }) {
         auth.fetch('http://localhost:5000/api/tasks/',
             {
                 method: 'GET',
-                data: JSON.stringify({
-                    planned: true
-                })
+                params: {
+                    planned: true,
+                }
             })
             .then(data => {
                 const events = data.map(task => {
@@ -30,7 +30,7 @@ function CalendarPage({ auth }) {
                         text: text,
                         start: new Date(task.planned_at).toISOString(),
                         end: new Date(new Date(task.planned_at).getTime() + task.duration * 60000).toISOString(),
-                        backColor: task.focus ? "#cc4125" : "#6aa84f",
+                        backColor: task.type === 1 ? "#cc4125" : "#6aa84f",
                         participants: 4,
                     }
                 });

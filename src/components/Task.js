@@ -32,7 +32,7 @@ function Task({ task, index }) {
                                 </div>
                                 <TaskLinkButton taskId={task.id} />
                             </div>
-                            <TaskAttributes focus={task.focus} priority={task.priority} priorityColor={priorityColor} />
+                            <TaskAttributes type={task.type} priority={task.priority} priorityColor={priorityColor} />
                             <Planning plannedAt={task.plannedAt} duration={task.duration} />
                         </div>
                     </div>

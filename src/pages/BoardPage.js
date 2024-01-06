@@ -65,7 +65,7 @@ function BoardPage({ auth }) {
     }
 
     function onCreateTask(task) {
-        auth.fetch('http://localhost:5000/api/tasks/create', {
+        auth.fetch('http://localhost:5000/api/tasks/', {
             method: 'POST',
             data: JSON.stringify(task)
         })
@@ -75,7 +75,7 @@ function BoardPage({ auth }) {
             })
             .catch(err => {
                 console.error(err);
-                toast.error('Failed to create task. Are you connected to the internet?');
+                toast.error(err.response.data);
             });
     }
 

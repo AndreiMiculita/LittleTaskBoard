@@ -18,7 +18,7 @@ const TaskRow = ({ task }) => {
             <div className='taskRowPriority'>{task.priority ? task.priority : "No Priority"}</div>
             <div className='taskRowPlannedAt'>{task.planned_at ? <Planning plannedAt={task.planned_at} duration={task.duration} /> : "Not Planned"}</div>
             <div className='taskRowDuration'>{task.duration ? task.duration : "No Duration"}</div>
-            <div className='taskRowFocus'>{task.focus ? <FontAwesomeIcon icon={faBrain} /> : null}</div>
+            <div className='taskRowType'>{task.type === 1 ? <FontAwesomeIcon icon={faBrain} /> : null}</div>
             <div className='taskRowStatus'>{STATUS_MAP[task.status]}</div>
         </Link>
     );

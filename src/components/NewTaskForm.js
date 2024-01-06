@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const taskTypes = ['regular', 'focus', 'meeting'];
+
 const FIELDS = [
     [
         {
@@ -10,9 +12,10 @@ const FIELDS = [
             state: 'priority',
         },
         {
-            type: 'checkbox',
-            placeholder: 'Requires Focus',
-            state: 'focus',
+            type: 'radio',
+            options: taskTypes,
+            placeholder: 'Task Type',
+            state: 'type',
         },
     ],
     [
@@ -33,7 +36,7 @@ const FIELDS = [
 function NewTaskForm({ onCreateTask }) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
-    const [focus, setFocus] = useState(false);
+    const [type, setType] = useState('regular');
     const [plannedAt, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
     const [isFormFocused, setIsFormFocused] = useState(false);
@@ -49,18 +52,24 @@ function NewTaskForm({ onCreateTask }) {
 
     const stateSetters = {
         priority: setPriority,
-        focus: setFocus,
+        type: setType,
         plannedAt: setPlannedAt,
         duration: setDuration,
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onCreateTask({ title, priority, focus, plannedAt, duration });
+        onCreateTask({
+            title,
+            priority: priority,
+            type: taskTypes.indexOf(type),
+            plannedAt,
+            duration
+        });
         // Reset the form
         setTitle('');
         setPriority('');
-        setFocus(false);
+        setType('regular');
         setPlannedAt('');
         setDuration('');
     };
@@ -85,17 +94,35 @@ function NewTaskForm({ onCreateTask }) {
                                 <React.Fragment key={index}>
                                     <div className="taskDetailsField">
                                         {field.type === 'checkbox' && <label htmlFor={field.state}>{field.placeholder}</label>}
-                                        <input
-                                            id={field.state}
-                                            type={field.type}
-                                            min={field.min}
-                                            max={field.max}
-                                            value={field.state.value}
-                                            onChange={(e) => stateSetters[field.state](e.target.value)}
-                                            onFocus={handleFocus}
-                                            onBlur={handleBlur}
-                                            placeholder={field.placeholder}
-                                        />
+                                        {field.type === 'radio' ? (
+                                            field.options.map(option => (
+                                                <label key={option}>
+                                                    <input
+                                                        id={`${field.state}-${option}`}
+                                                        type="radio"
+                                                        name={field.state}
+                                                        value={option}
+                                                        checked={type === option}
+                                                        onChange={(e) => stateSetters[field.state](e.target.value)}
+                                                        onFocus={handleFocus}
+                                                        onBlur={handleBlur}
+                                                    />
+                                                    {option}
+                                                </label>
+                                            ))
+                                        ) : (
+                                            <input
+                                                id={field.state}
+                                                type={field.type}
+                                                min={field.min}
+                                                max={field.max}
+                                                value={field.state.value}
+                                                onChange={(e) => stateSetters[field.state](e.target.value)}
+                                                onFocus={handleFocus}
+                                                onBlur={handleBlur}
+                                                placeholder={field.placeholder}
+                                            />
+                                        )}
                                     </div>
                                 </React.Fragment>
                             ))}
