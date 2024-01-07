@@ -59,8 +59,8 @@ function CalendarPage({ auth }) {
         auth.fetch(`http://localhost:5000/api/tasks/${args.e.id()}`, {
             method: 'PATCH',
             data: JSON.stringify({
-                planned_at: args.newStart,
-                duration: args.newEnd.getTime() - args.newStart.getTime() / 60000
+                planned_at: args.newStart.toString('yyyy-MM-ddTHH:MM'),
+                end: args.newEnd.toString('yyyy-MM-ddTHH:MM'),
             })
         })
             .then(data => {

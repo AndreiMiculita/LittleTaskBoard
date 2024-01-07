@@ -47,8 +47,20 @@ def get_tasks():
                 raise ValidationError('Title is required.', 400)
             priority = validate_and_convert(data, 'priority', 1, 4)
             task_type = validate_and_convert(data, 'type', 0, 2)
-            duration = validate_and_convert(data, 'duration', 0)
             planned_at = parse_date_to_timestamp(data.get('plannedAt'))
+            duration = validate_and_convert(data, 'duration', 0)
+            end = parse_date_to_timestamp(data.get('end'))
+            
+            if duration is not None and end is not None:
+                raise ValidationError('Specify either duration or end, not both.', 400)
+            
+            if end is not None:
+                if planned_at is None:
+                    raise ValidationError('plannedAt is required when specifying end.', 400)
+                elif planned_at > end:
+                    raise ValidationError('End must be greater than plannedAt.', 400)
+                duration = end - planned_at
+                
         except ValidationError as e:
             return str(e), e.status_code
         db = get_db()
@@ -107,15 +119,37 @@ def get_task(id):
         if task is None:
             return 'Task not found.', 404
         data = request.get_json()
-        attributes = ['title', 'priority', 'plannedAt', 'duration', 'status']
-        updates = {attr: data.get(attr) for attr in attributes if data.get(attr) is not None}
+        title = data.get('title') or None
+        priority = validate_and_convert(data, 'priority', 1, 4)
+        task_type = validate_and_convert(data, 'type', 0, 2)
+        planned_at = parse_date_to_timestamp(data.get('planned_at'))
+        duration = validate_and_convert(data, 'duration', 0)
+        end = parse_date_to_timestamp(data.get('end'))
         
-        if 'title' in updates and not updates['title']:
-            return 'Title is required.', 400
-            
+        updates = {
+            'title': title,
+            'priority': priority,
+            'type': task_type,
+            'planned_at': planned_at,
+            'duration': duration,
+            'end': end
+        }
+        
+        if duration is not None and end is not None:
+            return 'Specify either duration or end, not both.', 400
+        
+        if end is not None:
+            if planned_at is None:
+                return 'plannedAt is required when specifying end.', 400
+            elif planned_at > end:
+                return 'End must be greater than plannedAt.', 400
+            updates['duration'] = (end - planned_at) // 60 # Convert UNIX timestamps to minutes
+            updates.pop('end')  # Remove 'end' key from updates, as it is not a column in the database
+        
         db = get_db()
         for attr, value in updates.items():
-            db.execute(f"UPDATE task SET {attr} = ? WHERE id = ?", (value, id))
+            if value is not None: # TODO: allow setting values to None
+                db.execute(f"UPDATE task SET {attr} = ? WHERE id = ?", (value, id))
         db.commit()
         
         return 'Task updated successfully.', 200
