@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { DayPilotCalendar } from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import '../styles/calendar_custom_styling.css';
 
 
@@ -41,7 +41,10 @@ function CalendarPage({ auth }) {
                         participants: 4,
                     }
                 });
-                const startDate = events.reduce((min, event) => event.start < min ? event.start : min, events[0].start);
+
+                const today = new Date();
+                const startDate = DayPilot.Date.today();
+                console.log(startDate);
                 setConfig({ ...config, startDate, events });
                 console.log(startDate);
                 console.log(events);

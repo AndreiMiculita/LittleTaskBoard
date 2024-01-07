@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS task;
+DROP TABLE IF EXISTS task_type;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,11 +39,11 @@ CREATE TABLE task_type (
 INSERT INTO task_type (name) VALUES ('Regular'), ('Focus'), ('Meeting');
 
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
-VALUES (1, 'Feed the cat, dog, and fish', 1, 1609493600, 30, 1);
+VALUES (1, 'Feed the cat, dog, and fish', 1, strftime('%s', 'now', 'start of day', '+14 hours'), 30, 1);
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
-VALUES (1, 'Clean the house; vacuum, dust, mop', 2, 1609497200, 120, 1);
+VALUES (1, 'Clean the house; vacuum, dust, mop', 2, strftime('%s', 'now', 'start of day', '+1 day', '+14 hours'), 120, 1);
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
-VALUES (1, 'Water the plants and flowers', 3, 1609494400, 30, 1);
+VALUES (1, 'Water the plants and flowers', 3, strftime('%s', 'now', 'start of day', '+2 days', '+14 hours'), 30, 1);
 INSERT INTO task (author_id, title, priority, status)
 VALUES (1, 'Buy tea, coffee, and milk', 4, 1);
 INSERT INTO task (author_id, title, priority, status)
