@@ -413,15 +413,18 @@ body {
 }
 
 .taskRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   border-radius: 10px;
   background-color: var(--background-color-highlight);
   box-shadow: 0 0px 10px var(--box-shadow-color);
-  padding: 1rem;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  height: 70px;
+}
+
+.taskRow td {
+  padding: 0 30px;
+  width: 100%;
 }
 
 .taskDetail {

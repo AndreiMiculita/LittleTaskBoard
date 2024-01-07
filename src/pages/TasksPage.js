@@ -115,11 +115,13 @@ function TasksPage({ auth }) {
                     />
                 ))}
             </div>
-            <div className="tasksList">
-                {currentTasks.map(task => (
-                    <TaskRow key={task.id} task={task} />
-                ))}
-            </div>
+            <table className="tasksList">
+                <tbody>
+                    {currentTasks.map(task => (
+                        <TaskRow key={task.id} task={task} />
+                    ))}
+                </tbody>
+            </table>
         </>
     );
 };

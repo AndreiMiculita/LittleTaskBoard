@@ -1,6 +1,6 @@
 import React from 'react';
 import Planning from './Planning';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,18 +11,22 @@ const STATUS_MAP = {
 };
 
 const TaskRow = ({ task }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/tasks/${task.id}`);
+    };
 
     return (
-        <Link to={`/tasks/${task.id}`} className="taskRow">
-            <div className='taskRowTitle'>{task.title}</div>
-            <div className='taskRowPriority'>{task.priority ? task.priority : "No Priority"}</div>
-            <div className='taskRowPlannedAt'>{task.planned_at ? <Planning plannedAt={task.planned_at} duration={task.duration} /> : "Not Planned"}</div>
-            <div className='taskRowDuration'>{task.duration ? task.duration : "No Duration"}</div>
-            <div className='taskRowType'>{task.type === 1 ? <FontAwesomeIcon icon={faBrain} /> : null}</div>
-            <div className='taskRowStatus'>{STATUS_MAP[task.status]}</div>
-        </Link>
+        <tr onClick={handleClick} className="taskRow">
+            <td className='taskRowTitle'>{task.title}</td>
+            <td>{task.priority ? task.priority : "No Priority"}</td>
+            <td>{task.planned_at ? <Planning plannedAt={task.planned_at} duration={task.duration} /> : "Not Planned"}</td>
+            <td>{task.duration ? task.duration : "No Duration"}</td>
+            <td>{task.type === 1 ? <FontAwesomeIcon icon={faBrain} /> : null}</td>
+            <td>{STATUS_MAP[task.status]}</td>
+        </tr>
     );
 };
 
 export default TaskRow;
-
