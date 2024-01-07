@@ -15,11 +15,6 @@ function PageLayout({ children, auth }) {
         return child;
     });
 
-    if (auth) {
-        console.log(auth);
-        console.log(auth.isLoggedIn());
-    }
-
     return (
         <div className="App">
             {auth && auth.isLoggedIn() ? (

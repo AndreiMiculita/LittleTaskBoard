@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const TaskLinkButton = ({ taskId }) => {
     const navigate = useNavigate();
     const handleClick = () => {
-        console.log(`Clicked on task ${taskId}`);
         navigate(`/tasks/${taskId}`);
     };
 

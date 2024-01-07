@@ -18,7 +18,6 @@ function Task({ task, index }) {
     return (
         <Draggable draggableId={task.id.toString()} index={index}>
             {(provided, snapshot) => {
-                console.log(snapshot.isDragging);
                 return (
                     <div
                         ref={provided.innerRef}
