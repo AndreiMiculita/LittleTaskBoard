@@ -72,6 +72,7 @@ def get_tasks():
         db.commit()
         return 'Task created successfully.', 201
     elif request.method == 'GET':
+        q = request.args.get('q', type=str)
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)
         status = request.args.get('status', type=int)
@@ -82,6 +83,10 @@ def get_tasks():
         db = get_db()
         query = 'SELECT * FROM task WHERE author_id = ?'
         params = [g.user['id']]
+        
+        if q is not None:
+            query += ' AND title LIKE ?'
+            params.append('%' + q + '%')
         
         if planned is not None:
             planned = planned.lower() == 'true'

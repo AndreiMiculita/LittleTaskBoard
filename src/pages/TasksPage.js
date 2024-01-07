@@ -8,7 +8,8 @@ function TasksPage({ auth }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [tasksPerPage, setTasksPerPage] = useState(10);
 
-
+    const [searchText, setSearchText] = useState('');
+    const [searchSubmitted, setSearchSubmitted] = useState(false);
     const [statusFilter, setStatusFilter] = useState('');
     const [priorityFilter, setPriorityFilter] = useState('');
     const [sortCriteria, setSortCriteria] = useState('priority');
@@ -78,6 +79,7 @@ function TasksPage({ auth }) {
     useEffect(() => {
         // This will omit the keys with empty string values
         const params = {
+            ...(searchText !== '' && { q: searchText }),
             ...(statusFilter !== '' && { status: statusFilter }),
             ...(priorityFilter !== '' && { priority: priorityFilter }),
             ...(sortCriteria !== '' && { sort_by: sortCriteria }),
@@ -95,7 +97,13 @@ function TasksPage({ auth }) {
                 console.error(err);
                 toast.error('Failed to load tasks data');
             });
-    }, [auth, currentPage, tasksPerPage, statusFilter, priorityFilter, sortCriteria, sortDirection]);
+    }, [auth, currentPage, tasksPerPage, searchSubmitted, statusFilter, priorityFilter, sortCriteria, sortDirection]);
+
+    const handleKeyDown = e => {
+        if (e.key === 'Enter') {
+            setSearchSubmitted(!searchSubmitted);
+        }
+    }
 
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
@@ -114,6 +122,14 @@ function TasksPage({ auth }) {
                         options={filter.options}
                     />
                 ))}
+                <input
+                    type="text"
+                    value={searchText}
+                    onChange={e => setSearchText(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Search by text"
+                    className="search"
+                />
             </div>
             <table className="tasksList">
                 <tbody>

@@ -394,10 +394,17 @@ body {
   align-items: center;
   padding: 2rem;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 .filters select {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+}
+
+.filters .search {
   padding: 10px;
   border-radius: 10px;
   font-size: 15px;
