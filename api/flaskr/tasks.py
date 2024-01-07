@@ -64,6 +64,8 @@ def get_tasks():
         per_page = request.args.get('per_page', 10, type=int)
         status = request.args.get('status', type=int)
         planned = request.args.get('planned', type=str)
+        sort_by = request.args.get('sort_by', 'priority', type=str)
+        sort_direction = request.args.get('sort_direction', 'desc', type=str)
         
         db = get_db()
         query = 'SELECT * FROM task WHERE author_id = ?'
@@ -76,7 +78,10 @@ def get_tasks():
             query += ' AND status = ?'
             params.append(status)
         
-        query += ' ORDER BY priority ASC, status ASC LIMIT ? OFFSET ?'
+        if sort_by in ['status', 'priority', 'type', 'planned_at', 'duration']:
+            query += f' ORDER BY {sort_by} {sort_direction.upper()}'
+        
+        query += ' LIMIT ? OFFSET ?'
         params.extend([per_page, (page - 1) * per_page])
         
         tasks = db.execute(query, params).fetchall()

@@ -10,9 +10,9 @@ function TasksPage({ auth }) {
 
 
     const [statusFilter, setStatusFilter] = useState('');
-    const [durationFilter, setDurationFilter] = useState('');
     const [priorityFilter, setPriorityFilter] = useState('');
-    const [sortCriteria, setSortCriteria] = useState('');
+    const [sortCriteria, setSortCriteria] = useState('priority');
+    const [sortDirection, setSortDirection] = useState('desc');
 
     const filters = [
         {
@@ -39,18 +39,6 @@ function TasksPage({ auth }) {
             ],
         },
         {
-            id: 'durationFilter',
-            label: 'Duration',
-            value: durationFilter,
-            onChange: e => setDurationFilter(e.target.value),
-            options: [
-                { value: '', label: 'All' },
-                { value: 'short', label: 'Short' },
-                { value: 'medium', label: 'Medium' },
-                { value: 'long', label: 'Long' },
-            ],
-        },
-        {
             id: 'priorityFilter',
             label: 'Priority',
             value: priorityFilter,
@@ -64,31 +52,42 @@ function TasksPage({ auth }) {
         },
         {
             id: 'sortCriteria',
-            label: 'Sort Criteria',
+            label: 'Sort by',
             value: sortCriteria,
             onChange: e => setSortCriteria(e.target.value),
             options: [
-                { value: '', label: 'None' },
                 { value: 'priority', label: 'Priority' },
                 { value: 'duration', label: 'Duration' },
                 { value: 'planned_at', label: 'Planned At' },
-                { value: 'type', label: 'type' },
+                { value: 'type', label: 'Type' },
                 { value: 'status', label: 'Status' },
+            ],
+        },
+        {
+            id: 'sortDirection',
+            label: 'Direction',
+            value: sortDirection,
+            onChange: e => setSortDirection(e.target.value),
+            options: [
+                { value: 'asc', label: 'Ascending' },
+                { value: 'desc', label: 'Descending' },
             ],
         },
     ];
 
     useEffect(() => {
-        auth.fetch('http://localhost:5000/api/tasks/',
-            {
-                method: 'GET',
-                params: {
-                    status: statusFilter,
-                    duration: durationFilter,
-                    priority: priorityFilter,
-                    sort: sortCriteria
-                }
-            })
+        // This will omit the keys with empty string values
+        const params = {
+            ...(statusFilter !== '' && { status: statusFilter }),
+            ...(priorityFilter !== '' && { priority: priorityFilter }),
+            ...(sortCriteria !== '' && { sort_by: sortCriteria }),
+            ...(sortDirection !== '' && { sort_direction: sortDirection }),
+        };
+
+        auth.fetch('http://localhost:5000/api/tasks/', {
+            method: 'GET',
+            params
+        })
             .then(data => {
                 setTasks(data);
             })
@@ -96,7 +95,7 @@ function TasksPage({ auth }) {
                 console.error(err);
                 toast.error('Failed to load tasks data');
             });
-    }, [auth, currentPage, tasksPerPage, statusFilter, durationFilter, priorityFilter, sortCriteria]);
+    }, [auth, currentPage, tasksPerPage, statusFilter, priorityFilter, sortCriteria, sortDirection]);
 
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
