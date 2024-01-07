@@ -44,10 +44,7 @@ function CalendarPage({ auth }) {
 
                 const today = new Date();
                 const startDate = DayPilot.Date.today();
-                console.log(startDate);
                 setConfig({ ...config, startDate, events });
-                console.log(startDate);
-                console.log(events);
             })
             .catch(err => {
                 console.error(err);
