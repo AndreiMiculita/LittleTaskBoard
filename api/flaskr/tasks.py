@@ -65,7 +65,7 @@ def get_tasks():
             return str(e), e.status_code
         db = get_db()
         db.execute(
-            'INSERT INTO task (title, priority, type, planned_at, duration, author_id, status)'
+            'INSERT INTO task (title, priority, task_type, planned_at, duration, author_id, status)'
             ' VALUES (?, ?, ?, ?, ?, ?, ?)',
             (data.get('title'), priority, task_type, planned_at, duration, g.user['id'], 0)
         )
@@ -134,7 +134,7 @@ def get_task(id):
         updates = {
             'title': title,
             'priority': priority,
-            'type': task_type,
+            'task_type': task_type,
             'planned_at': planned_at,
             'duration': duration,
             'end': end
