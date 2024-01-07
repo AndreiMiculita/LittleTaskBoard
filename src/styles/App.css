@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 :root {
-  --background-color: #fafaf7;
-  --text-color: #555;
-  --background-color-highlight: #fff;
+  --background-color: rgb(250, 250, 247);
+  --text-color: rgb(85, 85, 85);
+  --background-color-highlight: rgb(255, 255, 255);
   --box-shadow-color: rgba(9, 30, 66, 0.04);
 }
 
@@ -115,7 +115,7 @@ body {
 
 .userProfileButton:hover,
 .sidebarButton:hover {
-  background-color: #c2d4df;
+  background-color: rgb(194, 212, 223);
 }
 
 .content {
@@ -159,12 +159,12 @@ body {
 
 .sidebarLink:hover,
 .userPanelRow:hover {
-  background-color: #c2d4df;
+  background-color: rgb(194, 212, 223);
 }
 
 .sidebarLink a,
 .userPanelRow a {
-  color: #000;
+  color: rgb(0, 0, 0);
   text-decoration: none;
 }
 
@@ -215,7 +215,7 @@ body {
   padding: 10px;
   border-radius: 3px;
   font-size: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(221, 221, 221);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
@@ -225,7 +225,7 @@ body {
 }
 
 .newTaskForm button:hover {
-  background-color: #eaeaea;
+  background-color: rgb(234, 234, 234);
 }
 
 .taskDetails {
@@ -278,7 +278,7 @@ body {
 }
 
 .draggingOver {
-  background-color: #f4f5f7;
+  background-color: rgb(244, 245, 247);
 }
 
 .column>div {
@@ -313,11 +313,11 @@ body {
 }
 
 .task:hover .planning {
-  background-color: #eaeaea;
+  background-color: rgb(234, 234, 234);
 }
 
 .task:hover .taskLinkButton {
-  background-color: #eaeaea;
+  background-color: rgb(234, 234, 234);
 }
 
 .dragging {
@@ -347,7 +347,7 @@ body {
   border-radius: 10px;
   cursor: pointer;
   padding: 0.5rem;
-  color: #999;
+  color: rgb(153, 153, 153);
 }
 
 .taskAttributes {
@@ -356,7 +356,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
-  color: #999;
+  color: rgb(153, 153, 153);
 }
 
 .taskPriority {
@@ -374,11 +374,11 @@ body {
 }
 
 .fa-brain:hover {
-  color: #ff9081;
+  color: rgb(255, 144, 129);
 }
 
 .planning {
-  background-color: #f4f5f7;
+  background-color: rgb(244, 245, 247);
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -401,14 +401,14 @@ body {
   padding: 10px;
   border-radius: 10px;
   font-size: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(221, 221, 221);
 }
 
 .filters .search {
   padding: 10px;
   border-radius: 10px;
   font-size: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(221, 221, 221);
 }
 
 .tasksList {
