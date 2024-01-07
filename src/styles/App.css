@@ -4,7 +4,22 @@
   --background-color: rgb(250, 250, 247);
   --text-color: rgb(85, 85, 85);
   --background-color-highlight: rgb(255, 255, 255);
+  --sidebar-hover: rgb(194, 212, 223);
   --box-shadow-color: rgba(9, 30, 66, 0.04);
+  --highlight-color: rgb(244, 245, 247);
+  --highlight-color-hover: rgb(234, 234, 234);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: rgb(28, 30, 33);
+    --text-color: rgb(255, 255, 255);
+    --background-color-highlight: rgb(44, 47, 51);
+    --sidebar-hover: rgb(61, 66, 71);
+    --box-shadow-color: rgba(255, 255, 255, 0.04);
+    --highlight-color: rgb(71, 75, 80);
+    --highlight-color-hover: rgb(61, 66, 71);
+  }
 }
 
 body {
@@ -45,6 +60,10 @@ body {
   font-size: 15px;
   border: 1px solid #ddd;
   margin: 1rem 0;
+}
+
+button {
+  color: var(--text-color);
 }
 
 .App {
@@ -115,7 +134,7 @@ body {
 
 .userProfileButton:hover,
 .sidebarButton:hover {
-  background-color: rgb(194, 212, 223);
+  background-color: var(--sidebar-hover);
 }
 
 .content {
@@ -159,13 +178,7 @@ body {
 
 .sidebarLink:hover,
 .userPanelRow:hover {
-  background-color: rgb(194, 212, 223);
-}
-
-.sidebarLink a,
-.userPanelRow a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
+  background-color: var(--sidebar-hover);
 }
 
 .main {
@@ -225,7 +238,7 @@ body {
 }
 
 .newTaskForm button:hover {
-  background-color: rgb(234, 234, 234);
+  background-color: var(--highlight-color-hover)
 }
 
 .taskDetails {
@@ -278,7 +291,7 @@ body {
 }
 
 .draggingOver {
-  background-color: rgb(244, 245, 247);
+  background-color: var(--highlight-color);
 }
 
 .column>div {
@@ -313,11 +326,11 @@ body {
 }
 
 .task:hover .planning {
-  background-color: rgb(234, 234, 234);
+  background-color: var(--highlight-color-hover);
 }
 
 .task:hover .taskLinkButton {
-  background-color: rgb(234, 234, 234);
+  background-color: var(--highlight-color-hover);
 }
 
 .dragging {
@@ -378,7 +391,7 @@ body {
 }
 
 .planning {
-  background-color: rgb(244, 245, 247);
+  background-color: var(--highlight-color);
   border-radius: 10px;
   display: flex;
   flex-direction: row;
