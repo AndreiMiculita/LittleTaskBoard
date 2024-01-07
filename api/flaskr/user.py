@@ -7,6 +7,9 @@ bp = Blueprint('user', __name__)
 @bp.route('/', methods=['GET'])
 @login_required
 def get_user_panel():
+    """
+    Get the user panel data.
+    """
     user_panel_data = {
         'links': [
             {

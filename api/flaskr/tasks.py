@@ -4,15 +4,29 @@ from flask import Blueprint, request, flash, g, jsonify
 from .auth import login_required
 from .db import get_db
 from datetime import datetime
+from typing import Union
 
 bp = Blueprint('tasks', __name__)
 
 class ValidationError(Exception):
+    """Exception raised for errors in the request data."""
     def __init__(self, message, status_code):
         super().__init__(message)
         self.status_code = status_code
 
-def validate_and_convert(data, key, min_val=None, max_val=None):
+def validate_and_convert(data: dict, key: str, min_val: Union[int, None] = None, max_val: Union[int, None] = None):
+    """
+    Validate and convert a value from the request data. If the value is not present, return None.
+    Note: if the value is present but empty, it will be converted to None. This is something to keep in mind.
+
+    Args:
+        data: request data
+        key: key to validate
+        min_val: minimum value
+        max_val: maximum value
+    Returns:
+        value: validated and converted value
+    """
     value = data.get(key)
     if value is not None:
         if value == '':
@@ -29,6 +43,7 @@ def validate_and_convert(data, key, min_val=None, max_val=None):
     return value
 
 def parse_date_to_timestamp(date_str):
+    """Parse a date string to a UNIX timestamp. We want to use timestamps because they are timezone-agnostic."""
     if date_str is not None and date_str != '':
         try:
             date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M')
@@ -40,6 +55,24 @@ def parse_date_to_timestamp(date_str):
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
 def get_tasks():
+    """
+    Get all tasks (filtered by query parameters) or create a new task.
+    
+    Query parameters:
+        q: search query
+        page: page number
+        per_page: number of tasks per page
+        status: task status
+        planned: whether task is planned
+        sort_by: sort tasks by this column
+        sort_direction: sort direction (asc or desc)
+    
+    Returns:
+        200: list of tasks
+        201: task created successfully
+        400: invalid request
+        405: method not allowed
+    """
     if request.method == 'POST':
         try:
             data = request.get_json()
@@ -114,6 +147,14 @@ def get_tasks():
 @bp.route('/<int:id>', methods=['GET', 'PATCH'])
 @login_required
 def get_task(id):
+    """ Get a task by ID or update a task.
+    
+    Returns:
+        200: task
+        400: invalid request
+        404: task not found
+        405: method not allowed
+    """
     if request.method == 'PATCH':
         # Check if task exists
         db = get_db()
@@ -175,6 +216,7 @@ def get_task(id):
 @bp.route('/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
+    """Delete a task."""
     db = get_db()
     db.execute('DELETE FROM task WHERE id = ?', (id,))
     db.commit()

@@ -13,6 +13,13 @@ bp = Blueprint('boards', __name__)
 @bp.route('/', methods=['GET'])
 @login_required
 def get_board():
+    """
+    Get a task board. Should maybe be refactored to have separate API calls for each column.
+    
+    Returns:
+        200: board
+    """
+    
     statuses = {
         1: 'To do',
         2: 'In progress',

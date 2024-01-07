@@ -14,6 +14,17 @@ s = Serializer('secret')
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Register a new user.
+    
+    Request body:
+        username: username
+        password: password
+        
+    Returns:
+        201: token
+        400: error message
+    """
     if request.method == 'POST':
         data = request.get_json()
         username = data['username']
@@ -47,6 +58,16 @@ def register():
 
 @bp.route('/login', methods=['POST'])
 def login():
+    """
+    Log in a user.
+    
+    Request body:
+        username: username
+        password: password
+    Returns:
+        200: token
+        401: incorrect username or password
+    """
     if request.method == 'POST':
         data = request.get_json()
         username = data['username']
@@ -66,6 +87,7 @@ def login():
 
 @bp.before_app_request
 def load_logged_in_user():
+    """If a valid token is provided, load the user object into g.user, so that it can be used in other views."""
     token = request.headers.get('Authorization')
     if token is None:
         g.user = None
@@ -82,11 +104,23 @@ def load_logged_in_user():
 
 @bp.route('/logout')
 def logout():
+    """
+    Clear the session. Note that this does not invalidate the token, so the frontend must also clear the token.
+    
+    Returns:
+        302: redirect to index
+    """
     session.clear()
     return redirect(url_for('index'))
 
 
 def login_required(view):
+    """
+    Decorator that requires a valid token to access a view.
+    
+    Returns:
+        401: unauthorized
+    """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         token = request.headers.get('Authorization')
