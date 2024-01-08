@@ -15,6 +15,18 @@ function getPriorityColor(priority) {
 function Task({ task, index }) {
     const priorityColor = getPriorityColor(task.priority);
 
+    // Before the api call, task is an empty object, so we show a placeholder
+    if (Object.keys(task).length === 0) {
+        return (
+            <div className="task taskPlaceholder">
+                <div className="taskHeader">
+                    <div className="taskTitle">
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <Draggable draggableId={task.id.toString()} index={index}>
             {(provided, snapshot) => {

@@ -2,33 +2,21 @@
     "linksByCategory": [
         {
             "id": 1,
-            "title": "Placeholder",
+            "title": "\u00A0",
             "links": [
                 {
-                    "id": 1,
-                    "title": "Placeholder",
-                    "url": "/board/1"
                 },
                 {
-                    "id": 2,
-                    "title": "Placeholder",
-                    "url": "/board/2"
                 },
                 {
-                    "id": 3,
-                    "title": "Placeholder",
-                    "url": "/board/3"
                 }
             ]
         },
         {
             "id": 2,
-            "title": "Placeholder",
+            "title": "\u00A0",
             "links": [
                 {
-                    "id": 4,
-                    "title": "Calendar",
-                    "url": "/calendar"
                 }
             ]
         }

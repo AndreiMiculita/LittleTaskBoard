@@ -4,6 +4,14 @@ import { faCalendarAlt, faTableList, faChartSimple, faTableCells } from '@fortaw
 import { Link } from 'react-router-dom';
 
 function SidebarLink({ link }) {
+    if (Object.keys(link).length === 0) {
+        return (
+            <div className="sidebarLink sidebarLinkPlaceholder">
+                &nbsp;
+            </div>
+        );
+    }
+
     let icon = null;
     if (link.title === 'Calendar') {
         icon = <FontAwesomeIcon icon={faCalendarAlt} />

@@ -8,6 +8,7 @@
   --box-shadow-color: rgba(9, 30, 66, 0.04);
   --highlight-color: rgb(244, 245, 247);
   --highlight-color-hover: rgb(234, 234, 234);
+  --placeholder-gradient: linear-gradient(to right, #fff 8%, #fafafa 18%, #fff 33%)
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,6 +20,16 @@
     --box-shadow-color: rgba(255, 255, 255, 0.04);
     --highlight-color: rgb(71, 75, 80);
     --highlight-color-hover: rgb(61, 66, 71);
+    --placeholder-gradient: linear-gradient(to right, #444 8%, #333 18%, #444 33%)
+  }
+}
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
   }
 }
 
@@ -176,6 +187,12 @@ button {
   gap: 1rem;
 }
 
+.sidebarLinkPlaceholder {
+  background: var(--placeholder-gradient);
+  background-size: 800px 104px;
+  animation: placeholderShimmer 4s linear infinite;  
+}
+
 .sidebarLink:hover,
 .userPanelRow:hover {
   background-color: var(--sidebar-hover);
@@ -331,6 +348,20 @@ button {
 
 .task:hover .taskLinkButton {
   background-color: var(--highlight-color-hover);
+}
+
+.taskPlaceholder {
+  height: 118px;
+}
+
+.taskPlaceholder .taskHeader {
+  /* animate a loop */
+  background: var(--placeholder-gradient);
+  background-size: 800px 104px;
+  animation: placeholderShimmer 4s linear infinite;  
+  height: 32px;
+  border-radius: 10px;
+  padding-left: 0.75rem;
 }
 
 .dragging {
