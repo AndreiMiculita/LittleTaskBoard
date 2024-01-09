@@ -1,6 +1,6 @@
 import pytest
 from flask import g, session
-from flaskr.db import get_db
+from ..flaskr.db import get_db
 
 
 def test_register(client, app):
@@ -15,18 +15,19 @@ def test_register(client, app):
             "SELECT * FROM user WHERE username = 'a'",
         ).fetchone() is not None
 
-
-@pytest.mark.parametrize(('username', 'password', 'message'), (
-    ('', '', b'Username is required.'),
-    ('a', '', b'Password is required.'),
-    ('test', 'test', b'already registered'),
+@pytest.mark.parametrize(('username', 'password', 'expected_status', 'expected_data'), (
+    ('test', 'password', 400, b'User test is already registered.'),
+    ('', 'password', 400, b'Username is required.'),
+    ('test', '', 400, b'Password is required.')
 ))
-def test_register_validate_input(client, username, password, message):
+def test_register_validate_input(client, app, username, password, expected_status, expected_data):
     response = client.post(
-        '/auth/register',
-        data={'username': username, 'password': password}
+        '/api/auth/register',
+        json={'username': username, 'password': password}
     )
-    assert message in response.data
+    assert response.status_code == expected_status
+    assert response.data == expected_data
+
 
 
 def test_login(client, auth):
