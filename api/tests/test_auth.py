@@ -50,5 +50,6 @@ def test_logout(client, auth):
     auth.login()
 
     with client:
-        auth.logout()
+        response = auth.logout()
+        assert response.status_code == 302
         assert 'user_id' not in session

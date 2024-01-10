@@ -111,7 +111,7 @@ def logout():
         302: redirect to index
     """
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('auth.login'))
 
 
 def login_required(view):
