@@ -44,12 +44,12 @@ class AuthActions(object):
 
     def login(self, username='test', password='test'):
         return self._client.post(
-            '/auth/login',
-            data={'username': username, 'password': password}
+            '/api/auth/login',
+            json={'username': username, 'password': password}
         )
 
     def logout(self):
-        return self._client.get('/auth/logout')
+        return self._client.get('/api/auth/logout')
 
 
 @pytest.fixture

@@ -12,7 +12,7 @@ bp = Blueprint('auth', __name__)
 
 s = Serializer('secret')
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['POST'])
 def register():
     """
     Register a new user.
