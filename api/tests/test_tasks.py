@@ -65,6 +65,13 @@ def test_get_tasks(client, auth, app):
         'duration': 3600
     }, 'Task created successfully.', 201),
     ({
+        'title': 'Task 1',
+        'priority': 2,
+        'type': 1,
+        'plannedAt': '2022-01-01T10:00',
+        'end': '2022-01-01T11:00'
+    }, 'Task created successfully.', 201),
+    ({
         'title': '',
         'priority': 5,
         'type': 3,
@@ -78,7 +85,27 @@ def test_get_tasks(client, auth, app):
         'plannedAt': '2022-01-01T10:00',
         'duration': -1
     }, 'Duration must be greater than or equal to 0.', 400),
-    # Add more test cases here
+    ({
+        'title': 'Task 3',
+        'priority': 3,
+        'type': 2,
+        'plannedAt': '2022-01-01T10:00',
+        'duration': 3600,
+        'end': '2022-01-01T11:00'
+    }, 'Specify either duration or end, not both.', 400),
+    ({
+        'title': 'Task 4',
+        'priority': 4,
+        'type': 1,
+        'plannedAt': '2022-01-01T10:00',
+        'end': '2022-01-01T09:00'
+    }, 'End must be greater than plannedAt.', 400),
+    ({
+        'title': 'Task 4',
+        'priority': 4,
+        'type': 1,
+        'end': '2022-01-01T09:00'
+    }, 'plannedAt is required when specifying end.', 400),
 ])
 def test_post_task(client, auth, app, data, expected_result, expected_status):
     (token,) = auth.login().get_json().values()
