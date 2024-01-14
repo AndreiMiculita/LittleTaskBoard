@@ -1,5 +1,5 @@
 import pytest
-from ..flaskr.tasks import validate_and_convert, ValidationError
+from ..flaskr.tasks import validate_and_convert, parse_date_to_timestamp, ValidationError
 
 
 @pytest.mark.parametrize("data, expected_result", [
@@ -13,6 +13,25 @@ from ..flaskr.tasks import validate_and_convert, ValidationError
 def test_validate_and_convert(data, expected_result):
     try:
         result = validate_and_convert(data, 'key', min_val=5, max_val=15)
+        assert result == expected_result
+    except ValidationError as e:
+        assert str(e) == str(expected_result)
+
+
+@pytest.mark.parametrize("date_str, expected_result", [
+    ('2022-01-01T10:00', 1641027600),
+    ('2022-12-31T23:59', 1672527540),
+    ('2023-06-15T12:30', 1686825000),
+    ('', None),
+    (None, None),
+    ('2022-01-01', ValidationError('Invalid date format. Use YYYY-MM-DDTHH:MM.', 400)),
+    ('2022-01-01T10:00:00',
+     ValidationError('Invalid date format. Use YYYY-MM-DDTHH:MM.', 400)),
+    ('abc', ValidationError('Invalid date format. Use YYYY-MM-DDTHH:MM.', 400)),
+])
+def test_parse_date_to_timestamp(date_str, expected_result):
+    try:
+        result = parse_date_to_timestamp(date_str)
         assert result == expected_result
     except ValidationError as e:
         assert str(e) == str(expected_result)
