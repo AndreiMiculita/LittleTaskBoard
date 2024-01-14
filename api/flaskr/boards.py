@@ -15,23 +15,23 @@ bp = Blueprint('boards', __name__)
 def get_board():
     """
     Get a task board. Should maybe be refactored to have separate API calls for each column.
-    
+
     Returns:
         200: board
     """
-    
+
     statuses = {
         1: 'To do',
         2: 'In progress',
         3: 'Done'
     }
-    
+
     db = get_db()
     tasks = db.execute(
         'SELECT * FROM task WHERE author_id = ? ORDER BY priority ASC, status ASC',
         (g.user['id'],)
     ).fetchall()
-    
+
     # Group tasks by status
     grouped_tasks = {}
     for task in tasks:
@@ -39,11 +39,10 @@ def get_board():
             grouped_tasks[task['status']] = []
         grouped_tasks[task['status']].append(task)
 
-
     board_response = {
         'columns': []
     }
-    
+
     for status_id, status_title in statuses.items():
         column = {
             'id': status_id,
@@ -60,5 +59,5 @@ def get_board():
                     'duration': task['duration']
                 })
         board_response['columns'].append(column)
-        
+
     return jsonify(board_response), 200

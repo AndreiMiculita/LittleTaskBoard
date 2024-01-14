@@ -12,15 +12,16 @@ bp = Blueprint('auth', __name__)
 
 s = Serializer('secret')
 
+
 @bp.route('/register', methods=['POST'])
 def register():
     """
     Register a new user.
-    
+
     Request body:
         username: username
         password: password
-        
+
     Returns:
         201: token
         400: error message
@@ -47,12 +48,13 @@ def register():
                 (username, generate_password_hash(password))
             )
             db.commit()
-            
-            token = s.dumps({'id': db.execute('SELECT id FROM user WHERE username = ?', (username,)).fetchone()['id']})
+
+            token = s.dumps({'id': db.execute(
+                'SELECT id FROM user WHERE username = ?', (username,)).fetchone()['id']})
             return jsonify({'token': token}), 201
 
         return error, 400
-    
+
     return 'Method not allowed.', 405
 
 
@@ -60,7 +62,7 @@ def register():
 def login():
     """
     Log in a user.
-    
+
     Request body:
         username: username
         password: password
@@ -81,7 +83,7 @@ def login():
 
         token = s.dumps({'id': user['id']})
         return jsonify({'token': token})
-    
+
     return 'Method not allowed.', 405
 
 
@@ -106,7 +108,7 @@ def load_logged_in_user():
 def logout():
     """
     Clear the session. Note that this does not invalidate the token, so the frontend must also clear the token.
-    
+
     Returns:
         302: redirect to index
     """
@@ -117,7 +119,7 @@ def logout():
 def login_required(view):
     """
     Decorator that requires a valid token to access a view.
-    
+
     Returns:
         401: unauthorized
     """
