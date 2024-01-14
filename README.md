@@ -4,7 +4,30 @@
 
 ![Screenshot](./screenshot.png)
 
-**Description will be added soon**
+**TODO: More description will be added soon**
+
+Goal: Solve the surprisingly complex problem of managing work. This is intended to be a flexible tool that can scale from a simple personal todo list to a full ticket management system.
+
+## Features
+| Feature                             | Description                                                     | Status |
+| :---------------------------------- | :-------------------------------------------------------------- | :----- |
+| Track tasks                         | Create, edit, delete, and move tasks between columns            | ✅      |
+| Calendar                            | View tasks on a calendar                                        | ✅      |
+| Search, filter, sort                | Search and filter tasks by name, description, and tags          | ✅      |
+| Insights                            | View insights about productivity (time spent in focus/meetings) | ✅      |
+| Responsive                          | Works on mobile, tablet, and desktop                            | ✅      |
+| Dark Mode                           | Toggle between light and dark mode                              | ✅      |
+| Multiple boards                     | Create multiple boards                                          | ❌      |
+| Share boards                        | Share boards with others                                        | ❌      |
+| Notifications                       | Get notified when tasks are updated                             | ❌      |
+| Comments                            | Add comments to tasks                                           | ❌      |
+| Attachments                         | Attach files to tasks                                           | ❌      |
+| Email integration                   | Create tasks by sending an email                                | ❌      |
+| Slack integration                   | Create tasks by sending a Slack message                         | ❌      |
+| GitHub/GitLab/BitBucket integration | Create tasks by creating an issue                               | ❌      |
+| Recurring tasks                     | Create tasks that repeat on a schedule                          | ❌      |
+| Task dependencies                   | Define dependencies (even chains) between tasks                 | ❌      |
+| Calendar sync                       | Sync tasks with Google Calendar                                 | ❌      |
 
 
 # Getting Started with Create React App
