@@ -29,6 +29,19 @@ Goal: Solve the surprisingly complex problem of managing work. This is intended 
 | Task dependencies                   | Define dependencies (even chains) between tasks                 | ❌      |
 | Calendar sync                       | Sync tasks with Google Calendar                                 | ❌      |
 
+# Tech Stack
+As this started a personal project to learn new technologies, the tech stack is a bit of a hodgepodge.
+
+## Frontend
+- [React](https://reactjs.org/)
+- [React Router](https://reactrouter.com/)
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
+- [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd/)
+
+## Backend
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+- [SQLite](https://www.sqlite.org/index.html)
+- [pytest](https://docs.pytest.org/en/6.2.x/)
 
 # Getting Started with Create React App
 
