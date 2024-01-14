@@ -1,8 +1,6 @@
 from datetime import datetime
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
-)
-from werkzeug.exceptions import abort
+
+from flask import (Blueprint, g, jsonify)
 
 from .auth import login_required
 from .db import get_db
