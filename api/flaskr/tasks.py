@@ -1,5 +1,5 @@
 import time
-from flask import Blueprint, request, flash, g, jsonify
+from flask import Blueprint, request, g, jsonify
 
 from .auth import login_required
 from .db import get_db
