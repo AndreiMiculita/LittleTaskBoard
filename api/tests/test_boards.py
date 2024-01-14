@@ -1,6 +1,6 @@
 
 
-def test_get_board(client, auth, app):
+def test_get_board(client, auth):
     (token,) = auth.login().get_json().values()
     response = client.get(
         '/api/boards', headers={'Authorization': f'Bearer {token}'}, follow_redirects=True)

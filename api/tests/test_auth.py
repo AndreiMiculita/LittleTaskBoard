@@ -24,7 +24,7 @@ def test_register(client, app):
     ('', 'password', 400, b'Username is required.'),
     ('test', '', 400, b'Password is required.')
 ))
-def test_register_validate_input(client, app, username, password, expected_status, expected_data):
+def test_register_validate_input(client, username, password, expected_status, expected_data):
     response = client.post(
         '/api/auth/register',
         json={'username': username, 'password': password}
@@ -33,7 +33,7 @@ def test_register_validate_input(client, app, username, password, expected_statu
     assert response.data == expected_data
 
 
-def test_login(client, auth):
+def test_login(auth):
     response = auth.login()
     assert response.status_code == 200
     assert 'token' in response.json
