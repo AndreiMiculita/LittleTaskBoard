@@ -2,8 +2,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Planning from '../components/Planning';
 import { toast } from 'react-toastify';
+import TaskAttributes from '../components/TaskAttributes';
+
+const STATUS_MAP = {
+    1: 'To Do',
+    2: 'In Progress',
+    3: 'Done'
+};
 
 function TaskDetailPage({ auth }) {
+
     let { id } = useParams();
     const [task, setTask] = useState([]);
 
@@ -22,13 +30,13 @@ function TaskDetailPage({ auth }) {
     }, [auth, id]);
 
     return (
-        <div className="taskDetail">
-            <div className="taskDetail__title">{task.title}</div>
-            <div className="taskDetail__description">{task.description}</div>
-            <div className="taskDetail__status">{task.status}</div>
-            <div className="taskDetail__priority">{task.priority}</div>
+        <article className="taskDetail">
+            <h1 className="taskDetail__title">{task.title}</h1>
+            <p className="taskDetail__description">{task.description}</p>
+            <div className="taskDetail__status">Status: {STATUS_MAP[task.status]}</div>
+            <TaskAttributes type={task.type} priority={task.priority} />
             <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
-        </div>
+        </article>
     );
 };
 
