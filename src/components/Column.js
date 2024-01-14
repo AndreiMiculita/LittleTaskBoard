@@ -1,5 +1,5 @@
 import React from 'react';
-import Task from './Task';
+import TaskCard from './TaskCard';
 import { Droppable } from 'react-beautiful-dnd';
 
 function Column({ column }) {
@@ -16,7 +16,7 @@ function Column({ column }) {
                 >
                     <h2>{column.title}</h2>
                     <div className={`tasks ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}>
-                        {tasks.map((task, index) => <Task key={task.id || Math.random()} task={task} index={index} />)}
+                        {tasks.map((task, index) => <TaskCard key={task.id || Math.random()} task={task} index={index} />)}
                     </div>
                     {provided.placeholder}
                 </div>
