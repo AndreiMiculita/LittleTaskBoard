@@ -52,7 +52,7 @@ def get_focused_tasks():
         (g.user['id'],)
     ).fetchall()
     focus_tasks = db.execute(
-        'SELECT * FROM task WHERE author_id = ? AND focus = 1 ORDER BY priority ASC, status ASC',
+        'SELECT * FROM task WHERE author_id = ? AND task_type = 1 ORDER BY priority ASC, status ASC',
         (g.user['id'],)
     ).fetchall()
 
@@ -75,7 +75,7 @@ def get_focus_over_time():
         (g.user['id'],)
     ).fetchall()
     focus_tasks = db.execute(
-        'SELECT * FROM task WHERE author_id = ? AND focus = 1 ORDER BY priority ASC, status ASC',
+        'SELECT * FROM task WHERE author_id = ? AND task_type = 1 ORDER BY priority ASC, status ASC',
         (g.user['id'],)
     ).fetchall()
 
