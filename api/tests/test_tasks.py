@@ -28,7 +28,7 @@ def test_get_tasks(client, auth, app):
     response = client.get(
         '/api/tasks/', headers={'Authorization': f'Bearer {token}'})
     assert response.status_code == 200
-    assert len(response.get_json()) == 10  # Number of tasks in data.sql
+    assert len(response.get_json()) == 10  # Pagination is set to 10 by default
 
 
 @pytest.mark.parametrize("data, expected_result, expected_status", [
@@ -65,17 +65,31 @@ def test_post_task(client, auth, app, data, expected_result, expected_status):
     assert response.data.decode('utf-8') == expected_result
 
 
-def test_get_task(client, auth, app):
+@pytest.mark.parametrize("task_id, expected_status, expected_data", [
+    (1, 200, {
+        'author_id': 1,
+        'id': 1,
+        'title': 'Feed the cat, dog, and fish',
+        'priority': 1,
+        'duration': 30,
+        'task_type': 0,
+        'status': 1
+    }),
+    (13, 404, 'Task not found.'),  # Task with id 13 belongs to another user
+    (100, 404, 'Task not found.')  # Task with id 100 does not exist
+])
+def test_get_task(client, auth, app, task_id, expected_status, expected_data):
     (token,) = auth.login().get_json().values()
-    response = client.get('/api/tasks/1', headers={
+    response = client.get(f'/api/tasks/{task_id}', headers={
         'Authorization': f'Bearer {token}'}, follow_redirects=True)
-    assert response.status_code == 200
-    task = response.get_json()
-    assert task['author_id'] == 1
-    assert task['title'] == 'Feed the cat, dog, and fish'
-    assert task['priority'] == 1
-    assert task['duration'] == 30
-    assert task['status'] == 1
+    assert response.status_code == expected_status
+    if isinstance(expected_data, dict):
+        task_data = response.get_json()
+        for key in expected_data:
+            if key != 'planned_at':
+                assert task_data[key] == expected_data[key]
+    else:
+        assert response.data.decode('utf-8') == expected_data
 
 
 @pytest.mark.parametrize("search_query, sort_by, sort_direction, expected_length, expected_first_title", [
@@ -121,14 +135,20 @@ def test_update_task(client, auth, app):
     assert task['duration'] == 60
 
 
-def test_delete_task(client, auth, app):
-    # Delete task
-    response = client.delete('/api/tasks/1', headers={
-        'Authorization': f'Bearer {auth.login().get_json()["token"]}'})
-    assert response.status_code == 200
-    assert response.data.decode('utf-8') == 'Task deleted successfully.'
+@pytest.mark.parametrize("task_id, expected_status, expected_data", [
+    (1, 200, 'Task deleted successfully.'),
+    (13, 404, 'Task not found.'),  # Task with id 13 belongs to another user
+    (100, 404, 'Task not found.')  # Task with id 100 does not exist
+])
+def test_delete_task(client, auth, app, task_id, expected_status, expected_data):
+    (token,) = auth.login().get_json().values()
+    response = client.delete(
+        f'/api/tasks/{task_id}', headers={'Authorization': f'Bearer {token}'})
+    assert response.status_code == expected_status
+    assert response.data.decode('utf-8') == expected_data
 
-    response = client.get('/api/tasks/1', headers={
-        'Authorization': f'Bearer {auth.login().get_json()["token"]}'})
+    # Check that the task was deleted
+    response = client.get(
+        f'/api/tasks/{task_id}', headers={'Authorization': f'Bearer {token}'})
     assert response.status_code == 404
     assert response.data.decode('utf-8') == 'Task not found.'

@@ -235,7 +235,7 @@ def get_task(id):
         task = get_db().execute(
             'SELECT * FROM task WHERE id = ?', (id,)
         ).fetchone()
-        if task['author_id'] != g.user['id']:
+        if task is None or task['author_id'] != g.user['id']:
             return 'Task not found.', 404
         db = get_db()
         db.execute('DELETE FROM task WHERE id = ?', (id,))

@@ -62,3 +62,5 @@ INSERT INTO task (author_id, title, priority, status)
 VALUES (1, 'Call electrician', 3, 3);
 INSERT INTO task (author_id, title, priority, status)
 VALUES (1, '3D print a new phone case', 4, 3);
+INSERT INTO task (author_id, title, priority, status)
+VALUES (2, 'Buy a new phone', 1, 4);
