@@ -18,6 +18,7 @@ def test_register(client, app):
         assert user is not None
         assert user['username'] == 'a'
 
+
 @pytest.mark.parametrize(('username', 'password', 'expected_status', 'expected_data'), (
     ('test', 'password', 400, b'User test is already registered.'),
     ('', 'password', 400, b'Username is required.'),
@@ -36,6 +37,7 @@ def test_login(client, auth):
     response = auth.login()
     assert response.status_code == 200
     assert 'token' in response.json
+
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
     ('a', 'test', b'Incorrect username or password.'),
