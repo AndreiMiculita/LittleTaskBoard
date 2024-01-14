@@ -159,7 +159,7 @@ def get_tasks():
         return 'Method not allowed.', 405
 
 
-@bp.route('/<int:id>', methods=['GET', 'PATCH'])
+@bp.route('/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 @login_required
 def get_task(id):
     """ Get a task by ID or update a task.
@@ -177,7 +177,7 @@ def get_task(id):
             'SELECT * FROM task WHERE id = ?',
             (id,)
         ).fetchone()
-        if task is None:
+        if task is None or task['author_id'] != g.user['id']:
             return 'Task not found.', 404
         data = request.get_json()
         title = data.get('title') or None
@@ -224,19 +224,21 @@ def get_task(id):
             'SELECT * FROM task WHERE id = ?',
             (id,)
         ).fetchone()
+        if task is None or task['author_id'] != g.user['id']:
+            return 'Task not found.', 404
         task = dict(task)
         if task['planned_at'] is not None:
             task['planned_at'] = datetime.fromtimestamp(
                 task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
         return jsonify(task), 200
+    elif request.method == 'DELETE':
+        task = get_db().execute(
+            'SELECT * FROM task WHERE id = ?', (id,)
+        ).fetchone()
+        if task['author_id'] != g.user['id']:
+            return 'Task not found.', 404
+        db = get_db()
+        db.execute('DELETE FROM task WHERE id = ?', (id,))
+        db.commit()
+        return 'Task deleted successfully.', 200
     return 'Something went wrong.', 500
-
-
-@bp.route('/<int:id>/delete', methods=['POST'])
-@login_required
-def delete(id):
-    """Delete a task."""
-    db = get_db()
-    db.execute('DELETE FROM task WHERE id = ?', (id,))
-    db.commit()
-    return 'Task deleted successfully.', 200
