@@ -1,10 +1,5 @@
-from pkg_resources import to_filename
 import pytest
-from datetime import datetime
-from flask import jsonify
-from werkzeug.exceptions import NotFound
 from ..flaskr.tasks import validate_and_convert, ValidationError
-from ..flaskr.db import get_db
 
 
 @pytest.mark.parametrize("data, expected_result", [
@@ -21,6 +16,17 @@ def test_validate_and_convert(data, expected_result):
         assert result == expected_result
     except ValidationError as e:
         assert str(e) == str(expected_result)
+
+
+def test_login_required(client, auth, app):
+    response = client.get('/api/tasks', follow_redirects=True)
+    assert response.status_code == 401
+    assert response.data.decode('utf-8') == 'Unauthorized, no token'
+
+    (token,) = auth.login().get_json().values()
+    response = client.get(
+        '/api/tasks', headers={'Authorization': f'Bearer {token}'}, follow_redirects=True)
+    assert response.status_code == 200
 
 
 def test_get_tasks(client, auth, app):
