@@ -11,20 +11,20 @@ const STATUS_MAP = {
 };
 
 const Comment = ({ comment }) => (
-    <div className="comment">
+    <article className="comment">
         <h2>{comment.author}</h2>
         <p>{comment.text}</p>
-        <div className="replies">
+        <section className="replies">
             {comment.replies && comment.replies.map(reply => <Reply key={reply.id} reply={reply} />)}
-        </div>
-    </div>
+        </section>
+    </article>
 );
 
 const Reply = ({ reply }) => (
-    <div className="reply">
+    <article className="reply">
         <h3>{reply.author}</h3>
         <p>{reply.text}</p>
-    </div>
+    </article>
 );
 
 const CommentForm = ({ taskId, auth, onCommentAdded }) => {
@@ -98,9 +98,9 @@ function TaskDetailPage({ auth }) {
             <div className="taskDetail__status">Status: {STATUS_MAP[task.status]}</div>
             <TaskAttributes type={task.type} priority={task.priority} />
             <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
-            <div className="comments">
+            <section className="comments">
                 {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
-            </div>
+            </section>
             <CommentForm taskId={id} auth={auth} onCommentAdded={comment => setComments([...comments, comment])} />
         </article>
     );
