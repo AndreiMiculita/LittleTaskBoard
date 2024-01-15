@@ -61,11 +61,11 @@ def parse_date_to_timestamp(date_str):
     return None
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET'])
 @login_required
 def get_tasks():
     """
-    Get all tasks (filtered by query parameters) or create a new task.
+    Get all tasks (filtered by query parameters).
 
     Query parameters:
         q: search query
@@ -78,6 +78,58 @@ def get_tasks():
 
     Returns:
         200: list of tasks
+        400: invalid request
+        405: method not allowed
+    """
+    if request.method == 'GET':
+        q = request.args.get('q', type=str)
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        status = request.args.get('status', type=int)
+        planned = request.args.get('planned', type=str)
+        sort_by = request.args.get('sort_by', 'priority', type=str)
+        sort_direction = request.args.get('sort_direction', 'desc', type=str)
+
+        db = get_db()
+        query = 'SELECT * FROM task WHERE author_id = ?'
+        params = [g.user['id']]
+
+        if q is not None:
+            query += ' AND title LIKE ?'
+            params.append('%' + q + '%')
+
+        if planned is not None:
+            planned = planned.lower() == 'true'
+            query += ' AND (planned_at IS NOT NULL)' if planned else ' AND (planned_at IS NULL)'
+        if status is not None:
+            query += ' AND status = ?'
+            params.append(status)
+
+        if sort_by in ['status', 'priority', 'type', 'planned_at', 'duration']:
+            query += f' ORDER BY {sort_by} {sort_direction.upper()}'
+
+        query += ' LIMIT ? OFFSET ?'
+        params.extend([per_page, (page - 1) * per_page])
+
+        tasks = db.execute(query, params).fetchall()
+
+        tasks = [dict(task) for task in tasks]
+        for task in tasks:
+            if task['planned_at'] is not None:
+                task['planned_at'] = datetime.fromtimestamp(
+                    task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
+        return jsonify(tasks), 200
+    else:
+        return 'Method not allowed.', 405
+
+
+@bp.route('/', methods=['POST'])
+@login_required
+def add_task():
+    """
+    Create a new task.
+
+    Returns:
         201: task created successfully
         400: invalid request
         405: method not allowed
@@ -117,44 +169,6 @@ def get_tasks():
         )
         db.commit()
         return 'Task created successfully.', 201
-    elif request.method == 'GET':
-        q = request.args.get('q', type=str)
-        page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 10, type=int)
-        status = request.args.get('status', type=int)
-        planned = request.args.get('planned', type=str)
-        sort_by = request.args.get('sort_by', 'priority', type=str)
-        sort_direction = request.args.get('sort_direction', 'desc', type=str)
-
-        db = get_db()
-        query = 'SELECT * FROM task WHERE author_id = ?'
-        params = [g.user['id']]
-
-        if q is not None:
-            query += ' AND title LIKE ?'
-            params.append('%' + q + '%')
-
-        if planned is not None:
-            planned = planned.lower() == 'true'
-            query += ' AND (planned_at IS NOT NULL)' if planned else ' AND (planned_at IS NULL)'
-        if status is not None:
-            query += ' AND status = ?'
-            params.append(status)
-
-        if sort_by in ['status', 'priority', 'type', 'planned_at', 'duration']:
-            query += f' ORDER BY {sort_by} {sort_direction.upper()}'
-
-        query += ' LIMIT ? OFFSET ?'
-        params.extend([per_page, (page - 1) * per_page])
-
-        tasks = db.execute(query, params).fetchall()
-
-        tasks = [dict(task) for task in tasks]
-        for task in tasks:
-            if task['planned_at'] is not None:
-                task['planned_at'] = datetime.fromtimestamp(
-                    task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
-        return jsonify(tasks), 200
     else:
         return 'Method not allowed.', 405
 
