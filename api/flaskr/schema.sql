@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS task_type;
 DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS reply;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +48,15 @@ CREATE TABLE comment (
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
+CREATE TABLE reply (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  comment_id INTEGER NOT NULL,
+  author_id INTEGER NOT NULL,
+  text TEXT NOT NULL,
+  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (comment_id) REFERENCES comment (id),
+  FOREIGN KEY (author_id) REFERENCES user (id)
+);
 
 INSERT INTO task_type (name) VALUES ('Regular'), ('Focus'), ('Meeting');
 
