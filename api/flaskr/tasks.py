@@ -321,3 +321,50 @@ def get_comments(id):
     comments = [dict(comment) for comment in comments]
     return jsonify(comments), 200
 
+@bp.route('/comments/<int:comment_id>/replies', methods=['GET'])
+@login_required
+def get_replies(comment_id):
+    """ Get all replies for a comment by ID.
+
+    Returns:
+        200: list of replies
+        404: comment not found
+    """
+    comment = get_db().execute(
+        'SELECT * FROM comment WHERE id = ?', (comment_id,)
+    ).fetchone()
+    if comment is None:
+        return 'Comment not found.', 404
+    replies = get_db().execute(
+        'SELECT * FROM reply WHERE comment_id = ?', (comment_id,)
+    ).fetchall()
+    replies = [dict(reply) for reply in replies]
+    return jsonify(replies), 200
+
+
+@bp.route('/comments/<int:comment_id>/replies', methods=['POST'])
+@login_required
+def add_reply(comment_id):
+    """ Add a reply to a comment by ID.
+
+    Returns:
+        201: reply added successfully
+        400: invalid request
+        404: comment not found
+    """
+    comment = get_db().execute(
+        'SELECT * FROM comment WHERE id = ?', (comment_id,)
+    ).fetchone()
+    if comment is None:
+        return 'Comment not found.', 404
+    data = request.get_json()
+    if not data.get('text'):
+        return 'Text is required.', 400
+    db = get_db()
+    db.execute(
+        'INSERT INTO reply (text, comment_id, author_id)'
+        ' VALUES (?, ?, ?)',
+        (data.get('text'), comment_id, g.user['id'])
+    )
+    db.commit()
+    return 'Reply added successfully.', 201

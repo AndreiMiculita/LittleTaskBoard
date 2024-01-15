@@ -20,6 +20,12 @@ const Comment = ({ comment }) => (
     </div>
 );
 
+const Reply = ({ reply }) => (
+    <div className="reply">
+        <h3>{reply.author}</h3>
+        <p>{reply.text}</p>
+    </div>
+);
 
 const CommentForm = ({ taskId, auth, onCommentAdded }) => {
     const [text, setText] = useState('');
