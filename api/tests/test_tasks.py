@@ -37,7 +37,7 @@ def test_parse_date_to_timestamp(date_str, expected_result):
         assert str(e) == str(expected_result)
 
 
-def test_login_required(client, auth, app):
+def test_login_required_for_task(client, auth, app):
     response = client.get('/api/tasks', follow_redirects=True)
     assert response.status_code == 401
     assert response.data.decode('utf-8') == 'Unauthorized, no token'
@@ -107,7 +107,7 @@ def test_get_tasks(client, auth, app):
         'end': '2022-01-01T09:00'
     }, 'plannedAt is required when specifying end.', 400),
 ])
-def test_post_task(client, auth, app, data, expected_result, expected_status):
+def test_add_task(client, auth, app, data, expected_result, expected_status):
     (token,) = auth.login().get_json().values()
     response = client.post('/api/tasks',
                            headers={'Authorization': f'Bearer {token}'},
@@ -204,3 +204,43 @@ def test_delete_task(client, auth, app, task_id, expected_status, expected_data)
         f'/api/tasks/{task_id}', headers={'Authorization': f'Bearer {token}'})
     assert response.status_code == 404
     assert response.data.decode('utf-8') == 'Task not found.'
+
+
+def test_login_required_for_comments(client, auth, app):
+    response = client.get('/api/tasks/1/comments', follow_redirects=True)
+    assert response.status_code == 401
+    assert response.data.decode('utf-8') == 'Unauthorized, no token'
+
+    (token,) = auth.login().get_json().values()
+    response = client.get(
+        '/api/tasks/1/comments', headers={'Authorization': f'Bearer {token}'}, follow_redirects=True)
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("task_id, text, expected_status, expected_data", [
+    (1, 'This is a comment', 201, 'Comment added successfully.'),
+    (1, '', 400, 'Text is required.'),
+    # Task with id 13 belongs to another user
+    (13, 'This is a comment', 404, 'Task not found.'),
+    # Task with id 100 does not exist
+    (100, 'This is a comment', 404, 'Task not found.')
+])
+def test_add_comment(client, auth, app, task_id, text, expected_status, expected_data):
+    (token,) = auth.login().get_json().values()
+    response = client.post(f'/api/tasks/{task_id}/comments',
+                           headers={'Authorization': f'Bearer {token}'},
+                           json={'text': text}, follow_redirects=True)
+
+    assert response.status_code == expected_status
+    assert response.data.decode('utf-8') == expected_data
+
+    if expected_status == 201:
+        response = client.get(f'/api/tasks/{task_id}/comments',
+                              headers={'Authorization': f'Bearer {token}'})
+        assert response.status_code == 200
+
+        comments = response.get_json()
+        assert len(comments) == 1
+        assert comments[0]['text'] == text
+        assert comments[0]['task_id'] == task_id
+        assert comments[0]['author_id'] == 1

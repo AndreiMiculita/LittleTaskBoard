@@ -273,3 +273,51 @@ def delete_task(id):
     db.commit()
     return 'Task deleted successfully.', 200
 
+
+@bp.route('/<int:id>/comments', methods=['POST'])
+@login_required
+def add_comment(id):
+    """ Add a comment to a task by ID.
+
+    Returns:
+        201: comment added successfully
+        400: invalid request
+        404: task not found
+    """
+    task = get_db().execute(
+        'SELECT * FROM task WHERE id = ?', (id,)
+    ).fetchone()
+    if task is None or task['author_id'] != g.user['id']:
+        return 'Task not found.', 404
+    data = request.get_json()
+    if not data.get('text'):
+        return 'Text is required.', 400
+    db = get_db()
+    db.execute(
+        'INSERT INTO comment (text, task_id, author_id)'
+        ' VALUES (?, ?, ?)',
+        (data.get('text'), id, g.user['id'])
+    )
+    db.commit()
+    return 'Comment added successfully.', 201
+
+@bp.route('/<int:id>/comments', methods=['GET'])
+@login_required
+def get_comments(id):
+    """ Get all comments for a task by ID.
+
+    Returns:
+        200: list of comments
+        404: task not found
+    """
+    task = get_db().execute(
+        'SELECT * FROM task WHERE id = ?', (id,)
+    ).fetchone()
+    if task is None or task['author_id'] != g.user['id']:
+        return 'Task not found.', 404
+    comments = get_db().execute(
+        'SELECT * FROM comment WHERE task_id = ?', (id,)
+    ).fetchall()
+    comments = [dict(comment) for comment in comments]
+    return jsonify(comments), 200
+
