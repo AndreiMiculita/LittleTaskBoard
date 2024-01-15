@@ -173,86 +173,103 @@ def add_task():
         return 'Method not allowed.', 405
 
 
-@bp.route('/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+@bp.route('/<int:id>', methods=['GET'])
 @login_required
 def get_task(id):
-    """ Get a task by ID or update a task.
+    """ Get a task by ID.
 
     Returns:
         200: task
+        404: task not found
+    """
+    db = get_db()
+    task = db.execute(
+        'SELECT * FROM task WHERE id = ?',
+        (id,)
+    ).fetchone()
+    if task is None or task['author_id'] != g.user['id']:
+        return 'Task not found.', 404
+    task = dict(task)
+    if task['planned_at'] is not None:
+        task['planned_at'] = datetime.fromtimestamp(
+            task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
+    return jsonify(task), 200
+
+
+@bp.route('/<int:id>', methods=['PATCH'])
+@login_required
+def update_task(id):
+    """ Update a task by ID.
+
+    Returns:
+        200: task updated successfully
         400: invalid request
         404: task not found
-        405: method not allowed
     """
-    if request.method == 'PATCH':
-        # Check if task exists
-        db = get_db()
-        task = db.execute(
-            'SELECT * FROM task WHERE id = ?',
-            (id,)
-        ).fetchone()
-        if task is None or task['author_id'] != g.user['id']:
-            return 'Task not found.', 404
-        data = request.get_json()
-        title = data.get('title') or None
-        priority = validate_and_convert(data, 'priority', 1, 4)
-        task_type = validate_and_convert(data, 'type', 0, 2)
-        planned_at = parse_date_to_timestamp(data.get('planned_at'))
-        duration = validate_and_convert(data, 'duration', 0)
-        end = parse_date_to_timestamp(data.get('end'))
+    # Check if task exists
+    db = get_db()
+    task = db.execute(
+        'SELECT * FROM task WHERE id = ?',
+        (id,)
+    ).fetchone()
+    if task is None or task['author_id'] != g.user['id']:
+        return 'Task not found.', 404
+    data = request.get_json()
+    title = data.get('title') or None
+    priority = validate_and_convert(data, 'priority', 1, 4)
+    task_type = validate_and_convert(data, 'type', 0, 2)
+    planned_at = parse_date_to_timestamp(data.get('planned_at'))
+    duration = validate_and_convert(data, 'duration', 0)
+    end = parse_date_to_timestamp(data.get('end'))
 
-        updates = {
-            'title': title,
-            'priority': priority,
-            'task_type': task_type,
-            'planned_at': planned_at,
-            'duration': duration,
-            'end': end
-        }
+    updates = {
+        'title': title,
+        'priority': priority,
+        'task_type': task_type,
+        'planned_at': planned_at,
+        'duration': duration,
+        'end': end
+    }
 
-        if duration is not None and end is not None:
-            return 'Specify either duration or end, not both.', 400
+    if duration is not None and end is not None:
+        return 'Specify either duration or end, not both.', 400
 
-        if end is not None:
-            if planned_at is None:
-                return 'plannedAt is required when specifying end.', 400
-            elif planned_at > end:
-                return 'End must be greater than plannedAt.', 400
-            # Convert UNIX timestamps to minutes
-            updates['duration'] = (end - planned_at) // 60
-            # Remove 'end' key from updates, as it is not a column in the database
-            updates.pop('end')
+    if end is not None:
+        if planned_at is None:
+            return 'plannedAt is required when specifying end.', 400
+        elif planned_at > end:
+            return 'End must be greater than plannedAt.', 400
+        # Convert UNIX timestamps to minutes
+        updates['duration'] = (end - planned_at) // 60
+        # Remove 'end' key from updates, as it is not a column in the database
+        updates.pop('end')
 
-        db = get_db()
-        for attr, value in updates.items():
-            if value is not None:  # TODO: allow setting values to None
-                db.execute(
-                    f"UPDATE task SET {attr} = ? WHERE id = ?", (value, id))
-        db.commit()
+    db = get_db()
+    for attr, value in updates.items():
+        if value is not None:  # TODO: allow setting values to None
+            db.execute(
+                f"UPDATE task SET {attr} = ? WHERE id = ?", (value, id))
+    db.commit()
 
-        return 'Task updated successfully.', 200
+    return 'Task updated successfully.', 200
 
-    elif request.method == 'GET':
-        db = get_db()
-        task = db.execute(
-            'SELECT * FROM task WHERE id = ?',
-            (id,)
-        ).fetchone()
-        if task is None or task['author_id'] != g.user['id']:
-            return 'Task not found.', 404
-        task = dict(task)
-        if task['planned_at'] is not None:
-            task['planned_at'] = datetime.fromtimestamp(
-                task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S')
-        return jsonify(task), 200
-    elif request.method == 'DELETE':
-        task = get_db().execute(
-            'SELECT * FROM task WHERE id = ?', (id,)
-        ).fetchone()
-        if task is None or task['author_id'] != g.user['id']:
-            return 'Task not found.', 404
-        db = get_db()
-        db.execute('DELETE FROM task WHERE id = ?', (id,))
-        db.commit()
-        return 'Task deleted successfully.', 200
-    return 'Something went wrong.', 500
+
+@bp.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_task(id):
+    """ Delete a task by ID.
+
+    Returns:
+        200: task deleted successfully
+        404: task not found
+    """
+    task = get_db().execute(
+        'SELECT * FROM task WHERE id = ?', (id,)
+    ).fetchone()
+    if task is None or task['author_id'] != g.user['id']:
+        return 'Task not found.', 404
+    db = get_db()
+    db.execute('DELETE FROM task WHERE id = ?', (id,))
+    db.commit()
+    return 'Task deleted successfully.', 200
+
