@@ -29,7 +29,7 @@ function InsightsPage({ auth }) {
     }, [auth]);
 
     useEffect(() => {
-        auth.fetch('http://localhost:5000/api/insights/focus',
+        auth.fetch('http://localhost:5000/api/insights/types',
             {
                 method: 'GET'
             })
@@ -43,7 +43,7 @@ function InsightsPage({ auth }) {
     }, [auth]);
 
     useEffect(() => {
-        auth.fetch('http://localhost:5000/api/insights/focus_over_time',
+        auth.fetch('http://localhost:5000/api/insights/types_over_time',
             {
                 method: 'GET'
             })
