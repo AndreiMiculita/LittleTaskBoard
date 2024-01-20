@@ -299,7 +299,14 @@ def add_comment(id):
         (data.get('text'), id, g.user['id'])
     )
     db.commit()
-    return 'Comment added successfully.', 201
+
+    comment = get_db().execute(
+        'SELECT comment.*, user.username AS author FROM comment JOIN user ON comment.author_id = user.id WHERE task_id = ? AND comment.author_id = ? ORDER BY comment.id DESC LIMIT 1', (
+            id, g.user['id'])
+    ).fetchone()
+
+    return jsonify(dict(comment)), 201
+
 
 @bp.route('/<int:id>/comments', methods=['GET'])
 @login_required
@@ -316,30 +323,11 @@ def get_comments(id):
     if task is None or task['author_id'] != g.user['id']:
         return 'Task not found.', 404
     comments = get_db().execute(
-        'SELECT comment.*, user.username AS author FROM comment JOIN user ON comment.author_id = user.id WHERE task_id = ?', (id,)
+        'SELECT comment.*, user.username AS author FROM comment JOIN user ON comment.author_id = user.id WHERE task_id = ?', (
+            id,)
     ).fetchall()
     comments = [dict(comment) for comment in comments]
     return jsonify(comments), 200
-
-@bp.route('/comments/<int:comment_id>/replies', methods=['GET'])
-@login_required
-def get_replies(comment_id):
-    """ Get all replies for a comment by ID.
-
-    Returns:
-        200: list of replies
-        404: comment not found
-    """
-    comment = get_db().execute(
-        'SELECT * FROM comment WHERE id = ?', (comment_id,)
-    ).fetchone()
-    if comment is None:
-        return 'Comment not found.', 404
-    replies = get_db().execute(
-        'SELECT * FROM reply WHERE comment_id = ?', (comment_id,)
-    ).fetchall()
-    replies = [dict(reply) for reply in replies]
-    return jsonify(replies), 200
 
 
 @bp.route('/comments/<int:comment_id>/replies', methods=['POST'])
@@ -367,4 +355,31 @@ def add_reply(comment_id):
         (data.get('text'), comment_id, g.user['id'])
     )
     db.commit()
-    return 'Reply added successfully.', 201
+
+    reply = get_db().execute(
+        'SELECT reply.*, user.username AS author FROM reply JOIN user ON reply.author_id = user.id WHERE comment_id = ? AND reply.author_id = ? ORDER BY reply.id DESC LIMIT 1', (
+            comment_id, g.user['id'])
+    ).fetchone()
+
+    return jsonify(dict(reply)), 201
+
+
+@bp.route('/comments/<int:comment_id>/replies', methods=['GET'])
+@login_required
+def get_replies(comment_id):
+    """ Get all replies for a comment by ID.
+
+    Returns:
+        200: list of replies
+        404: comment not found
+    """
+    comment = get_db().execute(
+        'SELECT * FROM comment WHERE id = ?', (comment_id,)
+    ).fetchone()
+    if comment is None:
+        return 'Comment not found.', 404
+    replies = get_db().execute(
+        'SELECT * FROM reply WHERE comment_id = ?', (comment_id,)
+    ).fetchall()
+    replies = [dict(reply) for reply in replies]
+    return jsonify(replies), 200
