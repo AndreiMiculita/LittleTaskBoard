@@ -100,10 +100,9 @@ function TaskDetailPage({ auth }) {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        auth.fetch(`http://localhost:5000/api/tasks/${id}`,
-            {
-                method: 'GET'
-            })
+        auth.fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: 'GET'
+        })
             .then(data => {
                 setTask(data);
             })
@@ -116,7 +115,7 @@ function TaskDetailPage({ auth }) {
                 const commentsWithRepliesPromises = data.map(comment => {
                     return auth.fetch(`http://localhost:5000/api/tasks/comments/${comment.id}/replies`, { method: 'GET' })
                         .then(repliesData => {
-                            return { ...comment, replies: repliesData.replies };
+                            return { ...comment, replies: repliesData };
                         });
                 });
                 return Promise.all(commentsWithRepliesPromises);
