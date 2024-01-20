@@ -379,7 +379,8 @@ def get_replies(comment_id):
     if comment is None:
         return 'Comment not found.', 404
     replies = get_db().execute(
-        'SELECT * FROM reply WHERE comment_id = ?', (comment_id,)
+        'SELECT reply.*, user.username AS author FROM reply JOIN user ON reply.author_id = user.id WHERE comment_id = ?', (
+            comment_id,)
     ).fetchall()
     replies = [dict(reply) for reply in replies]
     return jsonify(replies), 200
