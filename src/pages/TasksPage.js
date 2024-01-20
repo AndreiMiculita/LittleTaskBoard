@@ -84,6 +84,8 @@ function TasksPage({ auth }) {
             ...(priorityFilter !== '' && { priority: priorityFilter }),
             ...(sortCriteria !== '' && { sort_by: sortCriteria }),
             ...(sortDirection !== '' && { sort_direction: sortDirection }),
+            ...(currentPage !== '' && { page: currentPage }),
+            ...(tasksPerPage !== '' && { per_page: tasksPerPage }),
         };
 
         auth.fetch('http://localhost:5000/api/tasks/', {
