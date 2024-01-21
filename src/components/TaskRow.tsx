@@ -1,5 +1,5 @@
 import React from 'react';
-import Planning from './Planning';
+import Planning from './Planning.tsx';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faUsers, faNoteSticky } from '@fortawesome/free-solid-svg-icons';

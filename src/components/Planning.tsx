@@ -1,14 +1,18 @@
 import React from 'react';
 
-function Planning({ planned_at, duration, showFull = false }) {
-    function builtInFormatTime(date) {
-        const options = { hour: 'numeric', minute: 'numeric' };
-        return date.toLocaleTimeString([], options);
+interface PlanningProps {
+    planned_at: string;
+    duration: number;
+    showFull?: boolean;
+}
+
+function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
+    function builtInFormatTime(date: Date) {
+        return date.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
     }
 
-    function builtInFormatDate(date) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString([], options);
+    function builtInFormatDate(date: Date) {
+        return date.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' });
     }
 
     if (!planned_at) {
@@ -33,16 +37,17 @@ function Planning({ planned_at, duration, showFull = false }) {
     }
 
     // Duration should be shown in minutes, or hours and minutes if it is more than 60 minutes
+    let duration_str: string;
     if (duration > 60) {
         const hours = Math.floor(duration / 60);
         const minutes = duration % 60;
         if (minutes === 0) {
-            duration = `${hours}h`;
+            duration_str = `${hours}h`;
         } else {
-            duration = `${hours}h ${minutes}m`;
+            duration_str = `${hours}h ${minutes}m`;
         }
     } else {
-        duration = `${duration}m`;
+        duration_str = `${duration}m`;
     }
 
     return (
@@ -51,7 +56,7 @@ function Planning({ planned_at, duration, showFull = false }) {
                 {planned_atString}
             </div>
             <div className="duration">
-                {duration}
+                {duration_str}
             </div>
         </div>
     );

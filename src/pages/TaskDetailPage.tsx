@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Planning from '../components/Planning';
+import Planning from '../components/Planning.tsx';
 import TaskAttributes from '../components/TaskAttributes';
 import { Task, CommentProps, ReplyProps } from '../types';
 

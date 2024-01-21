@@ -1,5 +1,5 @@
 import React from 'react';
-import Planning from './Planning';
+import Planning from './Planning.tsx';
 import { Draggable } from 'react-beautiful-dnd';
 import TaskLinkButton from './TaskLinkButton';
 import TaskAttributes from './TaskAttributes';
