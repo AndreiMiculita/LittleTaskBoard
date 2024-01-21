@@ -1,7 +1,7 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import UserProfileButton from './UserProfileButton';
+import UserProfileButton from './UserProfileButton.tsx';
 
 interface HeaderBarProps {
     onClickSidebarButton: () => void;
