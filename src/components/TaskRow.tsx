@@ -1,9 +1,9 @@
-import React from 'react';
-import Planning from './Planning.tsx';
-import { useNavigate } from 'react-router-dom';
+import { faBrain, faNoteSticky, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrain, faUsers, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Task } from '../types';
+import Planning from './Planning.tsx';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -17,7 +17,7 @@ const taskTypes = {
     '2': <FontAwesomeIcon icon={faUsers} />
 };
 
-const TaskRow = ({ task }: { task: Task }) => {
+function TaskRow({ task }: { task: Task }) {
     const navigate = useNavigate();
 
     const handleClick = () => {

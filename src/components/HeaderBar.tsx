@@ -1,6 +1,6 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import UserProfileButton from './UserProfileButton';
 
 interface HeaderBarProps {
@@ -8,7 +8,7 @@ interface HeaderBarProps {
     onClickUserProfileButton: () => void;
 }
 
-const HeaderBar = ({ onClickSidebarButton, onClickUserProfileButton }: HeaderBarProps) => {
+function HeaderBar({ onClickSidebarButton, onClickUserProfileButton }: HeaderBarProps) {
     return (
         <div className="headerBar">
             <button className='sidebarButton' onClick={onClickSidebarButton}>
@@ -19,6 +19,6 @@ const HeaderBar = ({ onClickSidebarButton, onClickUserProfileButton }: HeaderBar
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
         </div>
     );
-}
+};
 
 export default HeaderBar;

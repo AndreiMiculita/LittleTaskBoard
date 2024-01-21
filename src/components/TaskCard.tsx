@@ -1,9 +1,9 @@
 import React from 'react';
-import Planning from './Planning.tsx';
 import { Draggable } from 'react-beautiful-dnd';
-import TaskLinkButton from './TaskLinkButton';
-import TaskAttributes from './TaskAttributes';
 import { Task } from '../types';
+import Planning from './Planning.tsx';
+import TaskAttributes from './TaskAttributes';
+import TaskLinkButton from './TaskLinkButton';
 
 function TaskCard({ task, index }: { task: Task, index: number }) {
 
@@ -43,6 +43,6 @@ function TaskCard({ task, index }: { task: Task, index: number }) {
             }}
         </Draggable>
     );
-}
+};
 
 export default TaskCard;

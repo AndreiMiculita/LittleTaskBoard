@@ -13,21 +13,21 @@ interface SelectProps {
     options: Option[];
 }
 
-const Select = ({ id, label, value, onChange, options }: SelectProps) => {
+function Select({ id, label, value, onChange, options }: SelectProps) {
     return (
         <div>
             <label htmlFor={id}> {label}: </label>
             <select
-              id={id}
-              value={value}
-              onChange={onChange}
+                id={id}
+                value={value}
+                onChange={onChange}
             >
-              {options.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
             </select>
         </div>
     );
-}
+};
 
 export default Select;

@@ -1,7 +1,7 @@
 import React from 'react';
-import TaskCard from './TaskCard.tsx';
 import { Droppable } from 'react-beautiful-dnd';
 import { Task } from '../types';
+import TaskCard from './TaskCard.tsx';
 
 
 interface ColumnProps {
@@ -12,7 +12,7 @@ interface ColumnProps {
     };
 }
 
-const Column = ({ column }: ColumnProps) => {
+function Column({ column }: ColumnProps) {
     const tasks = column.tasks;
     tasks.sort((a, b) => a.priority - b.priority);
 

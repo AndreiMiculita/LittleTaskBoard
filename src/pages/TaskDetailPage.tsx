@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Planning from '../components/Planning.tsx';
 import TaskAttributes from '../components/TaskAttributes';
-import { Task, CommentProps, ReplyProps } from '../types';
+import { CommentProps, ReplyProps, Task } from '../types';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -11,7 +11,7 @@ const STATUS_MAP = {
     3: 'Done'
 };
 
-const Comment = ({ comment, auth }: { comment: CommentProps, auth: any }) => {
+function Comment({ comment, auth }: { comment: CommentProps, auth: any }) {
     const [replies, setReplies] = useState(comment.replies || []);
 
     const handleReplyAdded = (reply) => {
@@ -31,7 +31,7 @@ const Comment = ({ comment, auth }: { comment: CommentProps, auth: any }) => {
     );
 };
 
-const Reply = ({ reply }: { reply: ReplyProps }) => {
+function Reply({ reply }: { reply: ReplyProps }) {
     return (
         <article className="reply">
             <h3>{reply.author}</h3>
@@ -40,7 +40,7 @@ const Reply = ({ reply }: { reply: ReplyProps }) => {
     );
 };
 
-const CommentForm = ({ taskId, auth, onCommentAdded }: { taskId: string, auth: any, onCommentAdded: any }) => {
+function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: any, onCommentAdded: any }) {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -67,7 +67,7 @@ const CommentForm = ({ taskId, auth, onCommentAdded }: { taskId: string, auth: a
     );
 };
 
-const ReplyForm = ({ commentId, auth, onReplyAdded }: { commentId: number, auth: any, onReplyAdded: any }) => {
+function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth: any, onReplyAdded: any }) {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {

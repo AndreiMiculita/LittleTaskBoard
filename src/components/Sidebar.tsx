@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import SidebarLinkCategory from './SidebarLinkCategory';
-import sidebarData from '../example_responses/sidebar.json';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService';
+import sidebarData from '../example_responses/sidebar.json';
+import SidebarLinkCategory from './SidebarLinkCategory';
 
 interface Link {
     id: number;
@@ -48,6 +48,6 @@ function Sidebar({ auth, isSidebarOpen }: SidebarProps) {
             {sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
         </div>
     );
-}
+};
 
 export default Sidebar;
