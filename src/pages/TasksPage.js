@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TaskRow from '../components/TaskRow.tsx';
-import Select from '../components/Select';
+import Select from '../components/Select.tsx';
 import { toast } from 'react-toastify';
 
 function TasksPage({ auth }) {
