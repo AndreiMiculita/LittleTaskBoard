@@ -1,10 +1,15 @@
+// HeaderBar.tsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import UserProfileButton from './UserProfileButton';
 
-function HeaderBar({ onClickSidebarButton, onClickUserProfileButton }) {
+interface HeaderBarProps {
+    onClickSidebarButton: () => void;
+    onClickUserProfileButton: () => void;
+}
 
+const HeaderBar = ({ onClickSidebarButton, onClickUserProfileButton }: HeaderBarProps) => {
     return (
         <div className="headerBar">
             <button className='sidebarButton' onClick={onClickSidebarButton}>
