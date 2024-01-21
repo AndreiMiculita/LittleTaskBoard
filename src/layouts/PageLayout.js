@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HeaderBar from '../components/HeaderBar';
+import HeaderBar from '../components/HeaderBar.tsx';
 import Sidebar from '../components/Sidebar';
 import UserPanel from '../components/UserPanel';
 import { ToastContainer } from 'react-toastify';
