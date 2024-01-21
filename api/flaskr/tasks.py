@@ -141,7 +141,7 @@ def add_task():
                 raise ValidationError('Title is required.', 400)
             priority = validate_and_convert(data, 'priority', 1, 4)
             task_type = validate_and_convert(data, 'type', 0, 2)
-            planned_at = parse_date_to_timestamp(data.get('plannedAt'))
+            planned_at = parse_date_to_timestamp(data.get('planned_at'))
             duration = validate_and_convert(data, 'duration', 0)
             end = parse_date_to_timestamp(data.get('end'))
 
@@ -152,10 +152,10 @@ def add_task():
             if end is not None:
                 if planned_at is None:
                     raise ValidationError(
-                        'plannedAt is required when specifying end.', 400)
+                        'planned_at is required when specifying end.', 400)
                 elif planned_at > end:
                     raise ValidationError(
-                        'End must be greater than plannedAt.', 400)
+                        'End must be greater than planned_at.', 400)
                 duration = end - planned_at
 
         except ValidationError as e:
@@ -236,9 +236,9 @@ def update_task(id):
 
     if end is not None:
         if planned_at is None:
-            return 'plannedAt is required when specifying end.', 400
+            return 'planned_at is required when specifying end.', 400
         elif planned_at > end:
-            return 'End must be greater than plannedAt.', 400
+            return 'End must be greater than planned_at.', 400
         # Convert UNIX timestamps to minutes
         updates['duration'] = (end - planned_at) // 60
         # Remove 'end' key from updates, as it is not a column in the database

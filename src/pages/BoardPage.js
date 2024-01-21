@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import NewTaskForm from '../components/NewTaskForm';
-import Column from '../components/Column';
+import Column from '../components/Column.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 import boardsData from '../example_responses/board.json';

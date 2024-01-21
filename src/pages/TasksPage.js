@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import TaskRow from '../components/TaskRow';
+import TaskRow from '../components/TaskRow.tsx';
 import Select from '../components/Select';
 import { toast } from 'react-toastify';
 

@@ -53,7 +53,7 @@ def get_board():
                     'id': task['id'],
                     'title': task['title'],
                     'priority': task['priority'],
-                    'plannedAt': datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S') if task['planned_at'] else None,
+                    'planned_at': datetime.fromtimestamp(task['planned_at']).strftime('%Y-%m-%dT%H:%M:%S') if task['planned_at'] else None,
                     'duration': task['duration']
                 })
         board_response['columns'].append(column)

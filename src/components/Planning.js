@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Planning({ plannedAt, duration, showFull = false }) {
+function Planning({ planned_at, duration, showFull = false }) {
     function builtInFormatTime(date) {
         const options = { hour: 'numeric', minute: 'numeric' };
         return date.toLocaleTimeString([], options);
@@ -11,24 +11,24 @@ function Planning({ plannedAt, duration, showFull = false }) {
         return date.toLocaleDateString([], options);
     }
 
-    if (!plannedAt) {
+    if (!planned_at) {
         return null;
     }
 
-    const plannedAtDate = new Date(plannedAt);
-    let plannedAtString = '';
+    const planned_atDate = new Date(planned_at);
+    let planned_atString = '';
 
     if (showFull) {
-        plannedAtString = plannedAtDate.toLocaleString();
+        planned_atString = planned_atDate.toLocaleString();
     }
     else {
         // We format the date in a user friendly way; if it is today, we show the time, otherwise we show the date
         const today = new Date();
-        if (plannedAtDate.toDateString() === today.toDateString()) {
-            plannedAtString = builtInFormatTime(plannedAtDate);
+        if (planned_atDate.toDateString() === today.toDateString()) {
+            planned_atString = builtInFormatTime(planned_atDate);
         }
         else {
-            plannedAtString = builtInFormatDate(plannedAtDate);
+            planned_atString = builtInFormatDate(planned_atDate);
         }
     }
 
@@ -47,8 +47,8 @@ function Planning({ plannedAt, duration, showFull = false }) {
 
     return (
         <div className="planning">
-            <div className="plannedAt">
-                {plannedAtString}
+            <div className="planned_at">
+                {planned_atString}
             </div>
             <div className="duration">
                 {duration}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import LoginPage from './pages/LoginPage';
 import BoardPage from './pages/BoardPage';
 import TasksPage from './pages/TasksPage';
-import TaskDetailPage from './pages/TaskDetailPage';
+import TaskDetailPage from './pages/TaskDetailPage.tsx';
 import PrivateRoute from './PrivateRoute';
 import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';

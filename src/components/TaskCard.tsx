@@ -3,8 +3,9 @@ import Planning from './Planning';
 import { Draggable } from 'react-beautiful-dnd';
 import TaskLinkButton from './TaskLinkButton';
 import TaskAttributes from './TaskAttributes';
+import { Task } from '../types';
 
-function TaskCard({ task, index }) {
+function TaskCard({ task, index }: { task: Task, index: number }) {
 
     // Before the api call, task is an empty object, so we show a placeholder
     if (Object.keys(task).length === 0) {
@@ -34,8 +35,8 @@ function TaskCard({ task, index }) {
                                 </div>
                                 <TaskLinkButton taskId={task.id} />
                             </div>
-                            <TaskAttributes type={task.type} priority={task.priority} />
-                            <Planning plannedAt={task.plannedAt} duration={task.duration} />
+                            <TaskAttributes type={task.task_type} priority={task.priority} />
+                            <Planning planned_at={task.planned_at} duration={task.duration} />
                         </div>
                     </div>
                 );

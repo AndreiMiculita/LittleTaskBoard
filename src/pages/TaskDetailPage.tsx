@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Planning from '../components/Planning';
 import { toast } from 'react-toastify';
+import Planning from '../components/Planning';
 import TaskAttributes from '../components/TaskAttributes';
+import { Task, CommentProps, ReplyProps } from '../types';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -10,7 +11,7 @@ const STATUS_MAP = {
     3: 'Done'
 };
 
-const Comment = ({ comment, auth }) => {
+const Comment = ({ comment, auth }: { comment: CommentProps, auth: any }) => {
     const [replies, setReplies] = useState(comment.replies || []);
 
     const handleReplyAdded = (reply) => {
@@ -30,7 +31,7 @@ const Comment = ({ comment, auth }) => {
     );
 };
 
-const Reply = ({ reply }) => {
+const Reply = ({ reply }: { reply: ReplyProps }) => {
     return (
         <article className="reply">
             <h3>{reply.author}</h3>
@@ -39,7 +40,7 @@ const Reply = ({ reply }) => {
     );
 };
 
-const CommentForm = ({ taskId, auth, onCommentAdded }) => {
+const CommentForm = ({ taskId, auth, onCommentAdded }: { taskId: string, auth: any, onCommentAdded: any }) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -66,7 +67,7 @@ const CommentForm = ({ taskId, auth, onCommentAdded }) => {
     );
 };
 
-const ReplyForm = ({ commentId, auth, onReplyAdded }) => {
+const ReplyForm = ({ commentId, auth, onReplyAdded }: { commentId: number, auth: any, onReplyAdded: any }) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -95,9 +96,9 @@ const ReplyForm = ({ commentId, auth, onReplyAdded }) => {
 
 function TaskDetailPage({ auth }) {
 
-    let { id } = useParams();
-    const [task, setTask] = useState([]);
-    const [comments, setComments] = useState([]);
+    let { id } = useParams<{ id: string }>();
+    const [task, setTask] = useState<Task>({} as Task);
+    const [comments, setComments] = useState<CommentProps[]>([]);
 
     useEffect(() => {
         auth.fetch(`http://localhost:5000/api/tasks/${id}`, {
@@ -134,12 +135,12 @@ function TaskDetailPage({ auth }) {
             <h1 className="taskDetail__title">{task.title}</h1>
             <p className="taskDetail__description">{task.description}</p>
             <div className="taskDetail__status">Status: {STATUS_MAP[task.status]}</div>
-            <TaskAttributes type={task.type} priority={task.priority} />
-            <Planning plannedAt={task.planned_at} duration={task.duration} showFull={true} />
+            <TaskAttributes type={task.task_type} priority={task.priority} />
+            <Planning planned_at={task.planned_at} duration={task.duration} showFull={true} />
             <section className="comments">
                 {comments.map(comment => <Comment key={comment.id} comment={comment} auth={auth} />)}
             </section>
-            <CommentForm taskId={id} auth={auth} onCommentAdded={comment => setComments([...comments, comment])} />
+            { id && <CommentForm taskId={id} auth={auth} onCommentAdded={(comment: CommentProps) => setComments([...comments, comment])} /> }
         </article>
     );
 };

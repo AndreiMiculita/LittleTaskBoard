@@ -3,6 +3,7 @@ import Planning from './Planning';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faUsers, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { Task } from '../types';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -16,7 +17,7 @@ const taskTypes = {
     '2': <FontAwesomeIcon icon={faUsers} />
 };
 
-const TaskRow = ({ task }) => {
+const TaskRow = ({ task }: { task: Task }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -27,7 +28,7 @@ const TaskRow = ({ task }) => {
         <tr onClick={handleClick} className="taskRow">
             <td className='taskRowTitle'>{task.title}</td>
             <td>{task.priority ? task.priority : "No Priority"}</td>
-            <td>{task.planned_at ? <Planning plannedAt={task.planned_at} duration={task.duration} /> : "Not Planned"}</td>
+            <td>{task.planned_at ? <Planning planned_at={task.planned_at} duration={task.duration} /> : "Not Planned"}</td>
             <td>{task.duration ? task.duration : "No Duration"}</td>
             <td>{taskTypes[task.task_type]}</td>
             <td>{STATUS_MAP[task.status] ? STATUS_MAP[task.status] : "No Status"}</td>

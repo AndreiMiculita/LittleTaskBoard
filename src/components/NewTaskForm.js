@@ -22,7 +22,7 @@ const FIELDS = [
         {
             type: 'datetime-local',
             placeholder: 'Planned at',
-            state: 'plannedAt',
+            state: 'planned_at',
         },
         {
             type: 'number',
@@ -37,7 +37,7 @@ function NewTaskForm({ onCreateTask }) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
     const [type, setType] = useState('regular');
-    const [plannedAt, setPlannedAt] = useState('');
+    const [planned_at, setplanned_at] = useState('');
     const [duration, setDuration] = useState('');
     const [isFormFocused, setIsFormFocused] = useState(false);
 
@@ -53,7 +53,7 @@ function NewTaskForm({ onCreateTask }) {
     const stateSetters = {
         priority: setPriority,
         type: setType,
-        plannedAt: setPlannedAt,
+        planned_at: setplanned_at,
         duration: setDuration,
     };
 
@@ -63,14 +63,14 @@ function NewTaskForm({ onCreateTask }) {
             title,
             priority: priority,
             type: taskTypes.indexOf(type),
-            plannedAt,
+            planned_at,
             duration
         });
         // Reset the form
         setTitle('');
         setPriority('');
         setType('regular');
-        setPlannedAt('');
+        setplanned_at('');
         setDuration('');
     };
 
