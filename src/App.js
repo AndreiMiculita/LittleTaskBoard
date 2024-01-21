@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CalendarPage from './pages/CalendarPage';
 import InsightsPage from './pages/InsightsPage';
-import PageLayout from './layouts/PageLayout';
+import PageLayout from './layouts/PageLayout.tsx';
 import RegisterPage from './pages/RegisterPage';
 
 function LogoutHandler({ setAuth }) {

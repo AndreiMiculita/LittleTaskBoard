@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState, Children, isValidElement, cloneElement, Attributes } from 'react';
 import { ToastContainer } from 'react-toastify';
+import AuthService from '../Services/AuthService.js';
 import HeaderBar from '../components/HeaderBar.tsx';
 import Sidebar from '../components/Sidebar.tsx';
 import UserPanel from '../components/UserPanel.tsx';
 
-function PageLayout({ children, auth }) {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
+type PageLayoutProps = {
+    children: ReactNode;
+    auth: AuthService
+};
 
-    const childrenWithProps = React.Children.map(children, child => {
-        if (React.isValidElement(child)) {
-            return React.cloneElement(child, { auth });
+const mapChildrenWithProps = (children: ReactNode, auth: AuthService) => {
+    return Children.map(children, (child) => {
+        if (isValidElement(child)) {
+            return cloneElement(child, { auth: auth } as Attributes);
         }
         return child;
     });
+};
+
+function PageLayout({ children, auth }: PageLayoutProps) {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
+
+    const childrenWithProps = mapChildrenWithProps(children, auth);
 
     return (
         <div className="App">
