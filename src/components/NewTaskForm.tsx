@@ -1,5 +1,4 @@
-import React, { useState, ChangeEvent, FocusEvent, FormEvent } from 'react';
-import { Task } from '../types';
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
@@ -13,7 +12,7 @@ interface Field {
 }
 
 interface NewTaskFormProps {
-    onCreateTask: (task: Task) => void;
+    onCreateTask: (task: any) => void;
 }
 
 const taskTypes: TaskType[] = ['regular', 'focus', 'meeting'];
@@ -52,7 +51,7 @@ const FIELDS: Field[][] = [
 function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
-    const [type, setType] = useState < TaskType > ('regular');
+    const [type, setType] = useState<TaskType>('regular');
     const [planned_at, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
     const [isFormFocused, setIsFormFocused] = useState(false);
@@ -65,9 +64,9 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
         if (isFormFocused) setIsFormFocused(false);
     };
 
-    const stateSetters: { [key: string]: React.Dispatch<React.SetStateAction<string>> } = {
+    const stateSetters: { [key: string]: Dispatch<SetStateAction<string | TaskType>> } = {
         priority: setPriority,
-        type: setType,
+        type: setType as Dispatch<SetStateAction<string | TaskType>>,
         planned_at: setPlannedAt,
         duration: setDuration,
     };
@@ -76,10 +75,10 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
         event.preventDefault();
         onCreateTask({
             title,
-            priority,
-            type: taskTypes.indexOf(type),
+            priority: parseInt(priority),
+            task_type: taskTypes.indexOf(type),
             planned_at,
-            duration,
+            duration: parseInt(duration),
         });
         // Reset the form
         setTitle('');
@@ -99,8 +98,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    placeholder="New task title"
-                    required
                 />
                 <div className="taskDetails">
                     {FIELDS.map((row, index) => (
