@@ -1,8 +1,18 @@
 import React from 'react';
-import TaskCard from './TaskCard';
+import TaskCard from './TaskCard.tsx';
 import { Droppable } from 'react-beautiful-dnd';
+import { Task } from '../types';
 
-function Column({ column }) {
+
+interface ColumnProps {
+    column: {
+        id: number;
+        title: string;
+        tasks: Task[];
+    };
+}
+
+const Column = ({ column }: ColumnProps) => {
     const tasks = column.tasks;
     tasks.sort((a, b) => a.priority - b.priority);
 
@@ -23,6 +33,6 @@ function Column({ column }) {
             )}
         </Droppable>
     );
-}
+};
 
 export default Column;
