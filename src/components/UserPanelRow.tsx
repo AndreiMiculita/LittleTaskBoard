@@ -1,10 +1,11 @@
-import React from 'react';
+import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faCog } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { UserPanelRowProps } from './UserPanel.tsx';
 
-function UserPanelRow({ userPanelRow }) {
-    let icon = null;
+function UserPanelRow({ userPanelRow }: { userPanelRow: UserPanelRowProps }) {
+    let icon: JSX.Element | null = null;
     if (userPanelRow.title === 'Settings') {
         icon = <FontAwesomeIcon icon={faCog} />
     }
@@ -19,6 +20,6 @@ function UserPanelRow({ userPanelRow }) {
             </div>
         </Link>
     );
-}
+};
 
 export default UserPanelRow;

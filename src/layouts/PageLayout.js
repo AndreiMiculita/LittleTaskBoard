@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import HeaderBar from '../components/HeaderBar.tsx';
 import Sidebar from '../components/Sidebar.tsx';
-import UserPanel from '../components/UserPanel';
-import { ToastContainer } from 'react-toastify';
+import UserPanel from '../components/UserPanel.tsx';
 
 function PageLayout({ children, auth }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -51,6 +51,6 @@ function PageLayout({ children, auth }) {
             )}
         </div>
     );
-}
+};
 
 export default PageLayout;
