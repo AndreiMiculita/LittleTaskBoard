@@ -37,6 +37,7 @@ As this started a personal project to learn new technologies, the tech stack is 
 - [React Router](https://reactrouter.com/)
 - [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Backend
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
