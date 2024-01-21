@@ -1,9 +1,10 @@
-import React from 'react';
+import { faCalendarAlt, faChartSimple, faTableCells, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faTableList, faChartSimple, faTableCells } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { SidebarLinkProps } from '../components/Sidebar.tsx';
 
-function SidebarLink({ link }) {
+function SidebarLink({ link }: { link: SidebarLinkProps }) {
     if (Object.keys(link).length === 0) {
         return (
             <div className="sidebarLink sidebarLinkPlaceholder">
@@ -12,7 +13,7 @@ function SidebarLink({ link }) {
         );
     }
 
-    let icon = null;
+    let icon: JSX.Element | null = null;
     if (link.title === 'Calendar') {
         icon = <FontAwesomeIcon icon={faCalendarAlt} />
     }

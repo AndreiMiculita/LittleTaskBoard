@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService';
 import sidebarData from '../example_responses/sidebar.json';
-import SidebarLinkCategory from './SidebarLinkCategory';
+import SidebarLinkCategory from './SidebarLinkCategory.tsx';
 
-interface Link {
+export interface SidebarLinkProps {
     id: number;
     title: string;
     url: string;
 }
 
-interface LinkCategory {
+export interface SidebarLinkCategoryProps {
     id: number;
     title: string;
-    links: Link[];
+    links: SidebarLinkProps[];
 }
 
 interface SidebarData {
-    linksByCategory: LinkCategory[];
+    linksByCategory: SidebarLinkCategoryProps[];
 }
 
 interface SidebarProps {
