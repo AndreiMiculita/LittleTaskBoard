@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import BoardPage from './pages/BoardPage';
+import BoardPage from './pages/BoardPage.tsx';
 import TasksPage from './pages/TasksPage';
 import TaskDetailPage from './pages/TaskDetailPage.tsx';
 import PrivateRoute from './PrivateRoute';
