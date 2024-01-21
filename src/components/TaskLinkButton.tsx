@@ -3,7 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-const TaskLinkButton = ({ taskId }) => {
+interface TaskLinkButtonProps {
+  taskId: string;
+}
+
+function TaskLinkButton({ taskId }: TaskLinkButtonProps) {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate(`/tasks/${taskId}`);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Planning from '../components/Planning.tsx';
-import TaskAttributes from '../components/TaskAttributes';
+import TaskAttributes from '../components/TaskAttributes.tsx';
 import { CommentProps, ReplyProps, Task } from '../types';
 
 const STATUS_MAP = {
