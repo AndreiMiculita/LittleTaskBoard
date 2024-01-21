@@ -2,9 +2,32 @@ import React, { useState, useEffect } from 'react';
 import SidebarLinkCategory from './SidebarLinkCategory';
 import sidebarData from '../example_responses/sidebar.json';
 import { toast } from 'react-toastify';
+import AuthService from '../Services/AuthService';
 
-function Sidebar({ auth, isSidebarOpen }) {
-    const [sidebar, setSidebar] = useState(sidebarData);
+interface Link {
+    id: number;
+    title: string;
+    url: string;
+}
+
+interface LinkCategory {
+    id: number;
+    title: string;
+    links: Link[];
+}
+
+interface SidebarData {
+    linksByCategory: LinkCategory[];
+}
+
+interface SidebarProps {
+    auth: AuthService;
+    isSidebarOpen: boolean;
+}
+
+function Sidebar({ auth, isSidebarOpen }: SidebarProps) {
+    // We use empty objects for the links to control the placeholders better, this means we need to cast
+    const [sidebar, setSidebar] = useState<SidebarData>(sidebarData as SidebarData);
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/sidebar/',
