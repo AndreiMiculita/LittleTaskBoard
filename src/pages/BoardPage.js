@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import NewTaskForm from '../components/NewTaskForm';
+import NewTaskForm from '../components/NewTaskForm.tsx';
 import Column from '../components/Column.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';

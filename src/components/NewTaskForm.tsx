@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FocusEvent, FormEvent } from 'react';
+import { Task } from '../types';
 
-const taskTypes = ['regular', 'focus', 'meeting'];
+type TaskType = 'regular' | 'focus' | 'meeting';
 
-const FIELDS = [
+interface Field {
+    type: 'number' | 'radio' | 'datetime-local';
+    min?: number;
+    max?: number;
+    placeholder: string;
+    state: string;
+    options?: TaskType[];
+}
+
+interface NewTaskFormProps {
+    onCreateTask: (task: Task) => void;
+}
+
+const taskTypes: TaskType[] = ['regular', 'focus', 'meeting'];
+
+const FIELDS: Field[][] = [
     [
         {
             type: 'number',
@@ -33,44 +49,43 @@ const FIELDS = [
     ],
 ];
 
-function NewTaskForm({ onCreateTask }) {
+function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
-    const [type, setType] = useState('regular');
-    const [planned_at, setplanned_at] = useState('');
+    const [type, setType] = useState < TaskType > ('regular');
+    const [planned_at, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
     const [isFormFocused, setIsFormFocused] = useState(false);
 
-
     const handleFocus = () => {
-        (!isFormFocused) && setIsFormFocused(true);
+        if (!isFormFocused) setIsFormFocused(true);
     };
 
     const handleBlur = () => {
-        (isFormFocused) && setIsFormFocused(false);
+        if (isFormFocused) setIsFormFocused(false);
     };
 
-    const stateSetters = {
+    const stateSetters: { [key: string]: React.Dispatch<React.SetStateAction<string>> } = {
         priority: setPriority,
         type: setType,
-        planned_at: setplanned_at,
+        planned_at: setPlannedAt,
         duration: setDuration,
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         onCreateTask({
             title,
-            priority: priority,
+            priority,
             type: taskTypes.indexOf(type),
             planned_at,
-            duration
+            duration,
         });
         // Reset the form
         setTitle('');
         setPriority('');
         setType('regular');
-        setplanned_at('');
+        setPlannedAt('');
         setDuration('');
     };
 
@@ -81,7 +96,7 @@ function NewTaskForm({ onCreateTask }) {
                 <input
                     type="text"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     placeholder="New task title"
@@ -93,9 +108,8 @@ function NewTaskForm({ onCreateTask }) {
                             {row.map((field, index) => (
                                 <React.Fragment key={index}>
                                     <div className="taskDetailsField">
-                                        {field.type === 'checkbox' && <label htmlFor={field.state}>{field.placeholder}</label>}
                                         {field.type === 'radio' ? (
-                                            field.options.map(option => (
+                                            field.options?.map(option => (
                                                 <label key={option}>
                                                     <input
                                                         id={`${field.state}-${option}`}
@@ -103,7 +117,7 @@ function NewTaskForm({ onCreateTask }) {
                                                         name={field.state}
                                                         value={option}
                                                         checked={type === option}
-                                                        onChange={(e) => stateSetters[field.state](e.target.value)}
+                                                        onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
                                                         onFocus={handleFocus}
                                                         onBlur={handleBlur}
                                                     />
@@ -117,7 +131,7 @@ function NewTaskForm({ onCreateTask }) {
                                                 min={field.min}
                                                 max={field.max}
                                                 value={field.state.value}
-                                                onChange={(e) => stateSetters[field.state](e.target.value)}
+                                                onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
                                                 onFocus={handleFocus}
                                                 onBlur={handleBlur}
                                                 placeholder={field.placeholder}
@@ -133,6 +147,6 @@ function NewTaskForm({ onCreateTask }) {
             </form>
         </div>
     );
-}
+};
 
 export default NewTaskForm;
