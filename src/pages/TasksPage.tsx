@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService.js';
 import Select from '../components/Select.tsx';
 import TaskRow from '../components/TaskRow.tsx';
 import { Task } from '../types.ts';
 
+type Filter = {
+    id: string;
+    label: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    options: { value: string; label: string }[];
+};
 
 function TasksPage({ auth }: { auth: AuthService }) {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -18,24 +25,24 @@ function TasksPage({ auth }: { auth: AuthService }) {
     const [sortCriteria, setSortCriteria] = useState<string>('priority');
     const [sortDirection, setSortDirection] = useState<string>('desc');
 
-    const filters = [
+    const filters: Filter[] = [
         {
             id: 'tasksPerPage',
             label: 'Tasks per Page',
-            value: tasksPerPage,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+            value: tasksPerPage.toString(),
+            onChange: (e: ChangeEvent<HTMLSelectElement>) =>
                 setTasksPerPage(parseInt(e.target.value)),
             options: [
-                { value: 5, label: '5' },
-                { value: 10, label: '10' },
-                { value: 15, label: '15' },
+                { value: '5', label: '5' },
+                { value: '10', label: '10' },
+                { value: '15', label: '15' },
             ],
         },
         {
             id: 'statusFilter',
             label: 'Status',
             value: statusFilter,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+            onChange: (e: ChangeEvent<HTMLSelectElement>) =>
                 setStatusFilter(e.target.value),
             options: [
                 { value: '', label: 'All' },
@@ -48,7 +55,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
             id: 'priorityFilter',
             label: 'Priority',
             value: priorityFilter,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+            onChange: (e: ChangeEvent<HTMLSelectElement>) =>
                 setPriorityFilter(e.target.value),
             options: [
                 { value: '', label: 'All' },
@@ -61,7 +68,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
             id: 'sortCriteria',
             label: 'Sort by',
             value: sortCriteria,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+            onChange: (e: ChangeEvent<HTMLSelectElement>) =>
                 setSortCriteria(e.target.value),
             options: [
                 { value: 'priority', label: 'Priority' },
@@ -75,7 +82,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
             id: 'sortDirection',
             label: 'Direction',
             value: sortDirection,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+            onChange: (e: ChangeEvent<HTMLSelectElement>) =>
                 setSortDirection(e.target.value),
             options: [
                 { value: 'asc', label: 'Ascending' },
@@ -92,8 +99,6 @@ function TasksPage({ auth }: { auth: AuthService }) {
             ...(priorityFilter !== '' && { priority: priorityFilter }),
             ...(sortCriteria !== '' && { sort_by: sortCriteria }),
             ...(sortDirection !== '' && { sort_direction: sortDirection }),
-            ...(currentPage !== '' && { page: currentPage }),
-            ...(tasksPerPage !== '' && { per_page: tasksPerPage }),
         };
 
         auth.fetch('http://localhost:5000/api/tasks/', {
@@ -131,7 +136,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
     return (
         <>
             <div className="filters">
-                {filters.map((filter) => (
+                {filters.map((filter: Filter) => (
                     <Select
                         key={filter.id}
                         id={filter.id}
