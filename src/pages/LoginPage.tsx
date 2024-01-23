@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import AuthService from '../Services/AuthService';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import AuthService from '../Services/AuthService';
 
-function RegisterPage({ setAuth }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+function LoginPage({ setAuth }: { setAuth: (auth: AuthService) => void }) {
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [redirectToReferrer, setRedirectToReferrer] = useState<boolean>(false);
 
     const auth = new AuthService();
 
@@ -16,25 +15,18 @@ function RegisterPage({ setAuth }) {
         return <Navigate to="/" />;
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.name === 'username') {
             setUsername(e.target.value);
         } else if (e.target.name === 'password') {
             setPassword(e.target.value);
-        } else if (e.target.name === 'confirmPassword') {
-            setConfirmPassword(e.target.value);
         }
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            return;
-        }
-
-        auth.register(username, password)
+        auth.login(username, password)
             .then(() => {
                 setRedirectToReferrer(true);
             })
@@ -50,8 +42,8 @@ function RegisterPage({ setAuth }) {
     return (
         <>
             <ToastContainer />
-            <div className="register">
-                <h1>Register</h1>
+            <div className="login">
+                <h1>Log in</h1>
                 <form onSubmit={handleFormSubmit}>
                     <input
                         type="text"
@@ -71,23 +63,17 @@ function RegisterPage({ setAuth }) {
                         required
                     />
                     <br />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
                     <input type="submit" value="Submit" />
                 </form>
                 <p>
-                    Already have an account? <a href="/login">Log in</a>
+                    <a href="/forgotpassword">Forgot password?</a>
+                </p>
+                <p>
+                    Don't have an account? <a href="/register">Register</a>
                 </p>
             </div>
         </>
     );
 };
 
-export default RegisterPage;
+export default LoginPage;
