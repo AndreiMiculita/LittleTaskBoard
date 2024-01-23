@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage.tsx';
-import BoardPage from './pages/BoardPage.tsx';
-import TasksPage from './pages/TasksPage.tsx';
-import TaskDetailPage from './pages/TaskDetailPage.tsx';
-import PrivateRoute from './PrivateRoute';
-import AuthService from './Services/AuthService.tsx';
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PrivateRoute from './PrivateRoute.js';
+import AuthService from './Services/AuthService.tsx';
+import PageLayout from './layouts/PageLayout.tsx';
+import BoardPage from './pages/BoardPage.tsx';
 import CalendarPage from './pages/CalendarPage.tsx';
 import InsightsPage from './pages/InsightsPage.tsx';
-import PageLayout from './layouts/PageLayout.tsx';
+import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx';
+import TaskDetailPage from './pages/TaskDetailPage.tsx';
+import TasksPage from './pages/TasksPage.tsx';
 
-function LogoutHandler({ setAuth }) {
+function LogoutHandler({ setAuth }: { setAuth: (auth: AuthService) => void }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ function LogoutHandler({ setAuth }) {
 }
 
 function App() {
-    const [auth, setAuth] = useState(new AuthService());
+    const [auth, setAuth] = useState<AuthService>(new AuthService());
 
     return (
         <Router>
