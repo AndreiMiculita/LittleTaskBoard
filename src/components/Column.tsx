@@ -1,5 +1,5 @@
 import React from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { StrictModeDroppable } from './StrictModeDroppable.tsx';
 import { Task } from '../types';
 import TaskCard from './TaskCard.tsx';
 
@@ -14,7 +14,7 @@ function Column({ column }: { column: ColumnProps }) {
     tasks.sort((a, b) => a.priority - b.priority);
 
     return (
-        <Droppable droppableId={column.id.toString()}>
+        <StrictModeDroppable droppableId={column.id.toString()}>
             {(provided, snapshot) => (
                 <div
                     className={`column ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}
@@ -28,7 +28,7 @@ function Column({ column }: { column: ColumnProps }) {
                     {provided.placeholder}
                 </div>
             )}
-        </Droppable>
+        </StrictModeDroppable>
     );
 };
 
