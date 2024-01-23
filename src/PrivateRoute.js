@@ -4,7 +4,7 @@
 // If they are: they proceed to the page
 // If not: they are redirected to the login page.
 import React from 'react'
-import AuthService from './Services/AuthService'
+import AuthService from './Services/AuthService.tsx'
 import { Navigate } from 'react-router-dom'
 
 function PrivateRoute({ children }) {

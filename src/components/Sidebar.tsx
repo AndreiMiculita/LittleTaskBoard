@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import AuthService from '../Services/AuthService';
+import AuthService from '../Services/AuthService.tsx';
 import sidebarData from '../example_responses/sidebar.json';
 import SidebarLinkCategory from './SidebarLinkCategory.tsx';
 

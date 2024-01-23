@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import AuthService from '../Services/AuthService';
+import AuthService from '../Services/AuthService.tsx';
 import userPanelData from '../example_responses/userPanel.json';
 import UserPanelRow from './UserPanelRow.tsx';
 

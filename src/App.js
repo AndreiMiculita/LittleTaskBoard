@@ -5,7 +5,7 @@ import BoardPage from './pages/BoardPage.tsx';
 import TasksPage from './pages/TasksPage.tsx';
 import TaskDetailPage from './pages/TaskDetailPage.tsx';
 import PrivateRoute from './PrivateRoute';
-import AuthService from './Services/AuthService';
+import AuthService from './Services/AuthService.tsx';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CalendarPage from './pages/CalendarPage.tsx';
