@@ -11,6 +11,7 @@ function CalendarPage({ auth }: { auth: AuthService }) {
         timeRangeSelectedHandling: "Enabled",
         onEventMoved: onEventMoved,
         onEventResized: onEventMoved,
+        startDate: DayPilot.Date.today(),
     });
     const calendarRef = useRef(null);
 
@@ -42,14 +43,12 @@ function CalendarPage({ auth }: { auth: AuthService }) {
                     }
                 });
 
-                const today = new Date();
-                const startDate = DayPilot.Date.today();
-                setConfig({ ...config, startDate, events });
+                setConfig(prevConfig => ({ ...prevConfig, events }));
             })
             .catch(err => {
                 console.error(err);
             });
-    }, [auth]);
+    }, [auth, config]);
 
     function onEventMoved(args) {
         auth.fetch(`http://localhost:5000/api/tasks/${args.e.id()}`, {
