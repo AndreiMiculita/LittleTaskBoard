@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage.tsx';
 import BoardPage from './pages/BoardPage.tsx';
 import TasksPage from './pages/TasksPage';
 import TaskDetailPage from './pages/TaskDetailPage.tsx';
@@ -9,9 +9,9 @@ import AuthService from './Services/AuthService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CalendarPage from './pages/CalendarPage.tsx';
-import InsightsPage from './pages/InsightsPage';
+import InsightsPage from './pages/InsightsPage.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
-import RegisterPage from './pages/RegisterPage';
+import RegisterPage from './pages/RegisterPage.tsx';
 
 function LogoutHandler({ setAuth }) {
     const navigate = useNavigate();

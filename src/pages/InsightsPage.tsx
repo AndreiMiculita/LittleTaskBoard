@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+interface DataPoint {
+    status: string;
+    count: number;
+}
 
-function InsightsPage({ auth }) {
-    const [statusData, setStatusData] = useState([]);
-    const [focusData, setFocusData] = useState([]);
-    const [focusOverTimeData, setFocusOverTimeData] = useState([]);
+function InsightsPage({ auth }: { auth: any }) {
+    const [statusData, setStatusData] = useState<DataPoint[]>([]);
+    const [focusData, setFocusData] = useState<DataPoint[]>([]);
+    const [focusOverTimeData, setFocusOverTimeData] = useState<DataPoint[]>([]);
 
     // TODO: Implement this page.
     // We call the 
@@ -19,10 +23,10 @@ function InsightsPage({ auth }) {
             {
                 method: 'GET'
             })
-            .then(data => {
+            .then((data: any) => {
                 setStatusData(data.statuses);
             })
-            .catch(err => {
+            .catch((err: Error) => {
                 console.error(err);
                 toast.error('Failed to load status data');
             });
@@ -33,10 +37,10 @@ function InsightsPage({ auth }) {
             {
                 method: 'GET'
             })
-            .then(data => {
+            .then((data: any) => {
                 setFocusData(data);
             })
-            .catch(err => {
+            .catch((err: Error) => {
                 console.error(err);
                 toast.error('Failed to load focus data');
             });
@@ -47,10 +51,10 @@ function InsightsPage({ auth }) {
             {
                 method: 'GET'
             })
-            .then(data => {
+            .then((data: any) => {
                 setFocusOverTimeData(data);
             })
-            .catch(err => {
+            .catch((err: Error) => {
                 console.error(err);
                 toast.error('Failed to load focus over time data');
             });
@@ -70,7 +74,7 @@ function InsightsPage({ auth }) {
                             </div>
                         ))
                         :
-                        console.log("statusData is not an array")
+                        null
                     }
                 </div>
             </div>
@@ -78,6 +82,6 @@ function InsightsPage({ auth }) {
             <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}> Focus over time </div>
         </div>
     );
-}
+};
 
 export default InsightsPage;
