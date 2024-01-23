@@ -48,7 +48,7 @@ function CalendarPage({ auth }: { auth: AuthService }) {
             .catch(err => {
                 console.error(err);
             });
-    }, [auth, config]);
+    }, [auth]);
 
     function onEventMoved(args) {
         auth.fetch(`http://localhost:5000/api/tasks/${args.e.id()}`, {
