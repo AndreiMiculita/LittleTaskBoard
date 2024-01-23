@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.tsx';
 import BoardPage from './pages/BoardPage.tsx';
-import TasksPage from './pages/TasksPage';
+import TasksPage from './pages/TasksPage.tsx';
 import TaskDetailPage from './pages/TaskDetailPage.tsx';
 import PrivateRoute from './PrivateRoute';
 import AuthService from './Services/AuthService';
