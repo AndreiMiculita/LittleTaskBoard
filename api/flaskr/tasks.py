@@ -139,6 +139,7 @@ def add_task():
             data = request.get_json()
             if not data.get('title'):
                 raise ValidationError('Title is required.', 400)
+            description = data.get('description') or None
             priority = validate_and_convert(data, 'priority', 1, 4)
             task_type = validate_and_convert(data, 'type', 0, 2)
             planned_at = parse_date_to_timestamp(data.get('planned_at'))
@@ -162,9 +163,9 @@ def add_task():
             return str(e), e.status_code
         db = get_db()
         db.execute(
-            'INSERT INTO task (title, priority, task_type, planned_at, duration, author_id, status)'
-            ' VALUES (?, ?, ?, ?, ?, ?, ?)',
-            (data.get('title'), priority, task_type,
+            'INSERT INTO task (title, description, priority, task_type, planned_at, duration, author_id, status)'
+            ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            (data.get('title'), description, priority, task_type,
              planned_at, duration, g.user['id'], 0)
         )
         db.commit()
@@ -216,6 +217,7 @@ def update_task(id):
         return 'Task not found.', 404
     data = request.get_json()
     title = data.get('title') or None
+    description = data.get('description') or None
     priority = validate_and_convert(data, 'priority', 1, 4)
     task_type = validate_and_convert(data, 'type', 0, 2)
     planned_at = parse_date_to_timestamp(data.get('planned_at'))
@@ -224,6 +226,7 @@ def update_task(id):
 
     updates = {
         'title': title,
+        'description': description,
         'priority': priority,
         'task_type': task_type,
         'planned_at': planned_at,

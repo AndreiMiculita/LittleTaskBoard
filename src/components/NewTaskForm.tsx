@@ -50,6 +50,7 @@ const FIELDS: Field[][] = [
 
 function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
     const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [priority, setPriority] = useState('');
     const [type, setType] = useState<TaskType>('regular');
     const [planned_at, setPlannedAt] = useState('');
@@ -65,6 +66,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
     };
 
     const stateSetters: { [key: string]: Dispatch<SetStateAction<string | TaskType>> } = {
+        description: setDescription,
         priority: setPriority,
         type: setType as Dispatch<SetStateAction<string | TaskType>>,
         planned_at: setPlannedAt,
@@ -75,6 +77,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
         event.preventDefault();
         onCreateTask({
             title,
+            description,
             priority: parseInt(priority),
             task_type: taskTypes.indexOf(type),
             planned_at,
@@ -82,6 +85,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
         });
         // Reset the form
         setTitle('');
+        setDescription('');
         setPriority('');
         setType('regular');
         setPlannedAt('');
@@ -98,6 +102,15 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
+                    placeholder="Task Title"
+                />
+                <input
+                    type="text"
+                    value={description}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    placeholder="Description"
                 />
                 <div className="taskDetails">
                     {FIELDS.map((row, index) => (

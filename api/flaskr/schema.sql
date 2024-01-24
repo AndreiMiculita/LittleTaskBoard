@@ -24,6 +24,7 @@ CREATE TABLE task (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   title TEXT NOT NULL,
+  description TEXT,
   priority INTEGER CHECK(typeof(priority) = 'integer' OR priority IS NULL),
   task_type INTEGER CHECK(typeof(task_type) = 'integer') NOT NULL DEFAULT 0,
   planned_at INTEGER CHECK(typeof(planned_at) = 'integer' OR planned_at IS NULL),
@@ -60,8 +61,8 @@ CREATE TABLE reply (
 
 INSERT INTO task_type (name) VALUES ('Regular'), ('Focus'), ('Meeting');
 
-INSERT INTO task (author_id, title, priority, planned_at, duration, status)
-VALUES (1, 'Feed the cat, dog, and fish', 1, strftime('%s', 'now', 'start of day', '+14 hours'), 30, 1);
+INSERT INTO task (author_id, title, description, priority, planned_at, duration, status)
+VALUES (1, 'Feed the cat, dog, and fish', 'They are hungry', 1, strftime('%s', 'now', 'start of day', '+14 hours'), 30, 1);
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
 VALUES (1, 'Clean the house; vacuum, dust, mop', 2, strftime('%s', 'now', 'start of day', '+1 day', '+14 hours'), 120, 1);
 INSERT INTO task (author_id, title, priority, planned_at, duration, status)
