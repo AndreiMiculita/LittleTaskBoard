@@ -501,6 +501,15 @@ button {
   padding: 0;
 }
 
+.taskDetail__description {
+  font-size: 1rem;
+  text-align: left;
+  width: 60%;
+  margin: 0;
+  padding: 1rem;
+  border-bottom: 1px solid var(--text-color);
+}
+
 .comments {
   display: flex;
   flex-direction: column;
