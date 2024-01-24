@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import Planning from '../components/Planning.tsx';
 import TaskAttributes from '../components/TaskAttributes.tsx';
 import { CommentProps, ReplyProps, Task } from '../types';
+import AuthService from '../Services/AuthService.tsx';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -11,8 +12,23 @@ const STATUS_MAP = {
     3: 'Done'
 };
 
-function Comment({ comment, auth }: { comment: CommentProps, auth: any }) {
-    const [replies, setReplies] = useState(comment.replies || []);
+function Comment({ comment, auth }: { comment: CommentProps, auth: AuthService }) {
+    const [replies, setReplies] = useState<ReplyProps[]>([]);
+    const [repliesLoaded, setRepliesLoaded] = useState(false);
+
+    const loadReplies = (e) => {
+        if (!e.currentTarget.parentNode.open) {
+            auth.fetch(`http://localhost:5000/api/tasks/comments/${comment.id}/replies`, { method: 'GET' })
+                .then((repliesData: ReplyProps[]) => {
+                    setReplies(repliesData);
+                    setRepliesLoaded(true);
+                })
+                .catch(err => {
+                    console.error(err);
+                    toast.error('Failed to load replies');
+                });
+        }
+    };
 
     const handleReplyAdded = (reply) => {
         const updatedReply = { ...reply, key: 'RE' + reply.id };
@@ -21,12 +37,17 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: any }) {
 
     return (
         <article className="comment">
-            <h2>{comment.author}</h2>
-            <p>{comment.text}</p>
-            <section className="replies">
-                {replies.map(reply => <Reply key={'RE' + reply.id} reply={reply} />)}
-            </section>
-            <ReplyForm commentId={comment.id} auth={auth} onReplyAdded={handleReplyAdded} />
+            <h2 className="comment__author">{comment.author}</h2>
+            <p className="comment__text">{comment.text}</p>
+            <details className="comment__details" onToggle={e => setRepliesLoaded(e.currentTarget.open)}>
+                <summary onClick={loadReplies} className="comment__details-summary">
+                    {repliesLoaded ? 'Hide replies' : 'Show replies'}
+                </summary>
+                <section className="comment__replies">
+                    {repliesLoaded && replies.map(reply => <Reply key={'RE' + reply.id} reply={reply} />)}
+                    <ReplyForm commentId={comment.id} auth={auth} onReplyAdded={handleReplyAdded} />
+                </section>
+            </details>
         </article>
     );
 };
@@ -34,13 +55,13 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: any }) {
 function Reply({ reply }: { reply: ReplyProps }) {
     return (
         <article className="reply">
-            <h3>{reply.author}</h3>
-            <p>{reply.text}</p>
+            <h3 className="reply__author">{reply.author}</h3>
+            <p className="reply__text">{reply.text}</p>
         </article>
     );
 };
 
-function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: any, onCommentAdded: any }) {
+function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: AuthService, onCommentAdded: (comment: CommentProps) => void }) {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -67,7 +88,7 @@ function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: a
     );
 };
 
-function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth: any, onReplyAdded: any }) {
+function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth: AuthService, onReplyAdded: (reply: ReplyProps) => void }) {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -94,7 +115,7 @@ function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth:
     );
 };
 
-function TaskDetailPage({ auth }) {
+function TaskDetailPage({ auth }: { auth: AuthService }) {
 
     let { id } = useParams<{ id: string }>();
     const [task, setTask] = useState<Task>({} as Task);
@@ -104,25 +125,18 @@ function TaskDetailPage({ auth }) {
         auth.fetch(`http://localhost:5000/api/tasks/${id}`, {
             method: 'GET'
         })
-            .then(data => {
+            .then((data: Task) => {
                 setTask(data);
             })
             .catch(err => {
                 console.error(err);
                 toast.error('Failed to load task data');
             });
-        auth.fetch(`http://localhost:5000/api/tasks/${id}/comments`, { method: 'GET' })
-            .then(data => {
-                const commentsWithRepliesPromises = data.map(comment => {
-                    return auth.fetch(`http://localhost:5000/api/tasks/comments/${comment.id}/replies`, { method: 'GET' })
-                        .then(repliesData => {
-                            return { ...comment, replies: repliesData };
-                        });
-                });
-                return Promise.all(commentsWithRepliesPromises);
-            })
-            .then(commentsWithReplies => {
-                setComments(commentsWithReplies);
+        auth.fetch(`http://localhost:5000/api/tasks/${id}/comments`, {
+            method: 'GET'
+        })
+            .then((data: CommentProps[]) => {
+                setComments(data);
             })
             .catch(err => {
                 console.error(err);
@@ -140,7 +154,7 @@ function TaskDetailPage({ auth }) {
             <section className="comments">
                 {comments.map(comment => <Comment key={comment.id} comment={comment} auth={auth} />)}
             </section>
-            { id && <CommentForm taskId={id} auth={auth} onCommentAdded={(comment: CommentProps) => setComments([...comments, comment])} /> }
+            {id && <CommentForm taskId={id} auth={auth} onCommentAdded={(comment: CommentProps) => setComments([...comments, comment])} />}
         </article>
     );
 };
