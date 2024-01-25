@@ -1,5 +1,5 @@
 import pytest
-from ..flaskr.tasks import validate_and_convert, parse_date_to_timestamp, ValidationError
+from flaskr.tasks import validate_and_convert, parse_date_to_timestamp, ValidationError
 
 
 @pytest.mark.parametrize("data, expected_result", [
@@ -218,7 +218,13 @@ def test_login_required_for_comments(client, auth, app):
 
 
 @pytest.mark.parametrize("task_id, text, expected_status, expected_data", [
-    (1, 'This is a comment', 201, 'Comment added successfully.'),
+    (1, 'This is a comment', 201, {
+        "author": "test",
+        "author_id": 1,
+        "id": 1,
+        "task_id": 1,
+        "text": "This is a comment"
+    }),
     (1, '', 400, 'Text is required.'),
     # Task with id 13 belongs to another user
     (13, 'This is a comment', 404, 'Task not found.'),
@@ -232,7 +238,15 @@ def test_add_comment(client, auth, app, task_id, text, expected_status, expected
                            json={'text': text}, follow_redirects=True)
 
     assert response.status_code == expected_status
-    assert response.data.decode('utf-8') == expected_data
+    if isinstance(expected_data, dict):
+        # We can't check the 'created' field because it's a timestamp, so it depends on the time
+        # the comment was created. Instead, we'll check that it's a string.
+        comment_data = response.get_json()
+        assert isinstance(comment_data['created'], str)
+        for key in expected_data:
+            assert comment_data[key] == expected_data[key]
+    else:
+        assert response.data.decode('utf-8') == expected_data
 
     if expected_status == 201:
         response = client.get(f'/api/tasks/{task_id}/comments',

@@ -27,17 +27,17 @@ def get_task_status_stats():
         'SELECT * FROM task WHERE author_id = ? ORDER BY priority ASC, status ASC',
         (g.user['id'],)
     ).fetchall()
+    
+    status_counts = [
+        {
+            'id': status_id,
+            'title': status_title,
+            'count': len([task for task in tasks if task['status'] == status_id])
+        } for status_id, status_title in statuses.items()
+    ]
 
     # Return the number of tasks in each status
-    return jsonify({
-        'statuses': [
-            {
-                'id': status_id,
-                'title': status_title,
-                'count': len([task for task in tasks if task['status'] == status_id])
-            } for status_id, status_title in statuses.items()
-        ]
-    }), 200
+    return jsonify({'statuses': status_counts}), 200
 
 
 @bp.route('/types', methods=['GET'])
