@@ -1,6 +1,6 @@
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
-import React, { useEffect, useRef, useState } from 'react';
-import AuthService from '../Services/AuthService.tsx';
+import { useEffect, useRef, useState } from 'react';
+import AuthService from '../Services/AuthService';
 import '../styles/calendar_custom_styling.css';
 import { Task } from '../types';
 

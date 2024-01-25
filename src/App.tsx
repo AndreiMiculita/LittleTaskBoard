@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PrivateRoute from './PrivateRoute.tsx';
-import AuthService from './Services/AuthService.tsx';
-import PageLayout from './layouts/PageLayout.tsx';
-import BoardPage from './pages/BoardPage.tsx';
-import CalendarPage from './pages/CalendarPage.tsx';
-import InsightsPage from './pages/InsightsPage.tsx';
-import LoginPage from './pages/LoginPage.tsx';
-import RegisterPage from './pages/RegisterPage.tsx';
-import TaskDetailPage from './pages/TaskDetailPage.tsx';
-import TasksPage from './pages/TasksPage.tsx';
+import PrivateRoute from './PrivateRoute';
+import AuthService from './Services/AuthService';
+import PageLayout from './layouts/PageLayout';
+import BoardPage from './pages/BoardPage';
+import CalendarPage from './pages/CalendarPage';
+import InsightsPage from './pages/InsightsPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import TaskDetailPage from './pages/TaskDetailPage';
+import TasksPage from './pages/TasksPage';
 
 function LogoutHandler({ setAuth }: { setAuth: (auth: AuthService) => void }) {
     const navigate = useNavigate();

@@ -107,6 +107,7 @@ export default class AuthService {
             return response;
         } else {
             var error = new Error(response.statusText);
+            // @ts-ignore on Andrei's todo list
             error.response = response;
             throw error;
         }

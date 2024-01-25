@@ -1,9 +1,8 @@
-import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '../types';
-import Planning from './Planning.tsx';
-import TaskAttributes from './TaskAttributes.tsx';
-import TaskLinkButton from './TaskLinkButton.tsx';
+import Planning from './Planning';
+import TaskAttributes from './TaskAttributes';
+import TaskLinkButton from './TaskLinkButton';
 
 function TaskCard({ task, index }: { task: Task, index: number }) {
 

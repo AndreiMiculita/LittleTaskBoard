@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import AuthService from '../Services/AuthService.tsx';
+import AuthService from '../Services/AuthService';
 
 function RegisterPage({ setAuth }: { setAuth: (auth: AuthService) => void }) {
     const [username, setUsername] = useState<string>('');

@@ -1,9 +1,9 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService.js';
-import Select from '../components/Select.tsx';
-import TaskRow from '../components/TaskRow.tsx';
-import { Task } from '../types.ts';
+import Select from '../components/Select';
+import TaskRow from '../components/TaskRow';
+import { Task } from '../types';
 
 type Filter = {
     id: string;

@@ -5,7 +5,7 @@
 // If not: they are redirected to the login page.
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthService from './Services/AuthService.tsx';
+import AuthService from './Services/AuthService';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
     const authService = new AuthService();

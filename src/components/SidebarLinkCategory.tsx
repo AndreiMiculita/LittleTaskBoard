@@ -1,6 +1,5 @@
-import React from 'react';
-import { SidebarLinkCategoryProps } from '../components/Sidebar.tsx';
-import SidebarLink from '../components/SidebarLink.tsx';
+import { SidebarLinkCategoryProps } from '../components/Sidebar';
+import SidebarLink from '../components/SidebarLink';
 
 function SidebarLinkCategory({ linkCategory }: { linkCategory: SidebarLinkCategoryProps }) {
     return (

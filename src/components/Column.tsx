@@ -1,7 +1,6 @@
-import React from 'react';
-import { StrictModeDroppable } from './StrictModeDroppable.tsx';
 import { Task } from '../types';
-import TaskCard from './TaskCard.tsx';
+import { StrictModeDroppable } from './StrictModeDroppable';
+import TaskCard from './TaskCard';
 
 export interface ColumnProps {
     id: number;

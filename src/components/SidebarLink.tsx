@@ -1,8 +1,7 @@
 import { faCalendarAlt, faChartSimple, faTableCells, faTableList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { SidebarLinkProps } from '../components/Sidebar.tsx';
+import { SidebarLinkProps } from '../components/Sidebar';
 
 function SidebarLink({ link }: { link: SidebarLinkProps }) {
     if (Object.keys(link).length === 0) {

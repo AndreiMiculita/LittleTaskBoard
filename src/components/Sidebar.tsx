@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import AuthService from '../Services/AuthService.tsx';
+import AuthService from '../Services/AuthService';
 import sidebarData from '../example_responses/sidebar.json';
-import SidebarLinkCategory from './SidebarLinkCategory.tsx';
+import SidebarLinkCategory from './SidebarLinkCategory';
 
 export interface SidebarLinkProps {
     id: number;

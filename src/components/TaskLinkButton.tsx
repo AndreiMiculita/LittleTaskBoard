@@ -1,10 +1,9 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
 interface TaskLinkButtonProps {
-  taskId: string;
+    taskId: number;
 }
 
 function TaskLinkButton({ taskId }: TaskLinkButtonProps) {

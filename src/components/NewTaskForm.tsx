@@ -140,6 +140,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                                 type={field.type}
                                                 min={field.min}
                                                 max={field.max}
+                                                // @ts-ignore Lord forgive me (on Andrei's todo list)
                                                 value={field.state.value}
                                                 onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
                                                 onFocus={handleFocus}

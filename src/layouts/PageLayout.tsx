@@ -1,9 +1,9 @@
-import React, { ReactNode, useState, Children, isValidElement, cloneElement, Attributes } from 'react';
+import { Attributes, Children, ReactNode, cloneElement, isValidElement, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import AuthService from '../Services/AuthService.js';
-import HeaderBar from '../components/HeaderBar.tsx';
-import Sidebar from '../components/Sidebar.tsx';
-import UserPanel from '../components/UserPanel.tsx';
+import HeaderBar from '../components/HeaderBar';
+import Sidebar from '../components/Sidebar';
+import UserPanel from '../components/UserPanel';
 
 type PageLayoutProps = {
     children: ReactNode;

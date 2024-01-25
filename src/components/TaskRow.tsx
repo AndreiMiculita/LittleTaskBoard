@@ -1,9 +1,8 @@
 import { faBrain, faNoteSticky, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Task } from '../types';
-import Planning from './Planning.tsx';
+import Planning from './Planning';
 
 const STATUS_MAP = {
     1: 'To Do',

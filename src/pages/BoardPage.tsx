@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Column, { ColumnProps } from '../components/Column.tsx';
-import NewTaskForm from '../components/NewTaskForm.tsx';
+import Column, { ColumnProps } from '../components/Column';
+import NewTaskForm from '../components/NewTaskForm';
 import boardsData from '../example_responses/board.json';
 import '../styles/App.css';
 

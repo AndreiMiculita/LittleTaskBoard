@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Planning from '../components/Planning.tsx';
-import TaskAttributes from '../components/TaskAttributes.tsx';
+import AuthService from '../Services/AuthService';
+import Planning from '../components/Planning';
+import TaskAttributes from '../components/TaskAttributes';
 import { CommentProps, ReplyProps, Task } from '../types';
-import AuthService from '../Services/AuthService.tsx';
 
 const STATUS_MAP = {
     1: 'To Do',

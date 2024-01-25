@@ -1,5 +1,5 @@
 import { ReportHandler } from 'web-vitals';
-function reportWebVitals(onPerfEntry: ReportHandler) {
+function reportWebVitals(onPerfEntry?: ReportHandler) {
     if (onPerfEntry && typeof onPerfEntry === 'function') {
         import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
             getCLS(onPerfEntry);
