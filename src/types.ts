@@ -24,4 +24,4 @@ interface ReplyProps {
     author: string;
 }
 
-export { Task, CommentProps, ReplyProps };
+export type { Task, CommentProps, ReplyProps };

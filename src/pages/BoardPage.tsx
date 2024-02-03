@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Column, { ColumnProps } from '../components/Column';
 import NewTaskForm from '../components/NewTaskForm';
 import boardsData from '../example_responses/board.json';
-import '../styles/App.css';
 
 interface BoardPageProps {
     auth: any;
