@@ -8,8 +8,8 @@ interface DataPoint {
 
 function InsightsPage({ auth }: { auth: any }) {
     const [statusData, setStatusData] = useState<DataPoint[]>([]);
-    const [focusData, setFocusData] = useState<DataPoint[]>([]);
-    const [focusOverTimeData, setFocusOverTimeData] = useState<DataPoint[]>([]);
+    const [taskTypeData, setTaskTypeData] = useState<DataPoint[]>([]);
+    const [taskTypeOverTimeData, setTaskTypeOverTimeData] = useState<DataPoint[]>([]);
 
     // TODO: Implement this page.
     // We call the 
@@ -38,7 +38,7 @@ function InsightsPage({ auth }: { auth: any }) {
                 method: 'GET'
             })
             .then((data: any) => {
-                setFocusData(data);
+                setTaskTypeData(data);
             })
             .catch((err: Error) => {
                 console.error(err);
@@ -52,7 +52,7 @@ function InsightsPage({ auth }: { auth: any }) {
                 method: 'GET'
             })
             .then((data: any) => {
-                setFocusOverTimeData(data);
+                setTaskTypeOverTimeData(data);
             })
             .catch((err: Error) => {
                 console.error(err);
@@ -78,8 +78,34 @@ function InsightsPage({ auth }: { auth: any }) {
                     }
                 </div>
             </div>
-            <div className="insights__focus" style={{ width: '50%', height: '100px', display: 'inline-block' }}> Focus </div>
-            <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}> Focus over time </div>
+            <div className="insights__focus" style={{ width: '50%', height: '100px', display: 'inline-block' }}>
+                Focus
+                <div>
+                    {Array.isArray(taskTypeData) ?
+                        taskTypeData.map((item, index) => (
+                            <div key={index}>
+                                {item.status} {item.count}
+                            </div>
+                        ))
+                        :
+                        null
+                    }
+                </div>
+            </div>
+            <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}>
+                Focus over time
+                <div>
+                    {Array.isArray(taskTypeOverTimeData) ?
+                        taskTypeOverTimeData.map((item, index) => (
+                            <div key={index}>
+                                {item.status} {item.count}
+                            </div>
+                        ))
+                        :
+                        null
+                    }
+                </div>
+            </div>
         </div>
     );
 };
