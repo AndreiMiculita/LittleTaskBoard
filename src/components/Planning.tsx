@@ -1,4 +1,4 @@
-import React from 'react';
+import { Badge } from "./ui/badge";
 
 interface PlanningProps {
     planned_at: string;
@@ -51,14 +51,14 @@ function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
     }
 
     return (
-        <div className="planning w-full">
-            <div className="planned_at">
+        <Badge variant='outline' className="w-full justify-between">
+            <div>
                 {planned_atString}
             </div>
-            <div className="duration">
+            <div>
                 {duration_str}
             </div>
-        </div>
+        </Badge>
     );
 }
 

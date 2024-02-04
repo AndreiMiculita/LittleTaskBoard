@@ -334,16 +334,6 @@ body {
   color: rgb(255, 144, 129);
 }
 
-.planning {
-  background-color: var(--highlight-color);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.5rem;
-  gap: 0.5rem;
-}
-
 .filters {
   display: flex;
   flex-direction: row;
