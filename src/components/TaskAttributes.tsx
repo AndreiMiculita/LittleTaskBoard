@@ -11,13 +11,13 @@ function getPriorityColor(priority: number): string {
 }
 
 interface TaskAttributesProps {
-  type: number;
-  priority: number;
+    type: number;
+    priority: number;
 }
 
 function TaskAttributes({ type, priority }: TaskAttributesProps) {
     return (
-        <div className="taskAttributes">
+        <div>
             <div className="taskPriority">
                 <div className="taskPriorityColor" style={{ backgroundColor: getPriorityColor(priority) }}></div>
                 <div className="taskPriorityNumber">{priority}</div>

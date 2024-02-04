@@ -78,10 +78,6 @@ button {
   color: var(--text-color);
 }
 
-.App {
-  text-align: center;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -295,62 +291,6 @@ button {
   width: 100%;
 }
 
-.column {
-  flex: 1;
-  min-width: 100;
-  padding: 0 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  background-color: var(--background-color-highlight);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  transition: background-color 0.2s ease;
-}
-
-.draggingOver {
-  background-color: var(--highlight-color);
-}
-
-.column>div {
-  flex: auto;
-}
-
-.tasks {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 0.5rem;
-}
-
-.task {
-  background-color: var(--background-color-highlight);
-  border-radius: 10px;
-  box-shadow: 0 0px 5px rgba(9, 30, 66, 0.09);
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
-  gap: 0.5rem;
-  max-width: 100%;
-  min-height: 20px;
-  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-  position: relative;
-  text-decoration: none;
-  z-index: 0;
-}
-
-.task:hover {
-  box-shadow: 0 0px 10px rgba(9, 30, 66, 0.3);
-}
-
-.task:hover .planning {
-  background-color: var(--highlight-color-hover);
-}
-
-.task:hover .taskLinkButton {
-  background-color: var(--highlight-color-hover);
-}
-
 .taskPlaceholder {
   height: 118px;
 }
@@ -363,11 +303,6 @@ button {
   height: 32px;
   border-radius: 10px;
   padding-left: 0.75rem;
-}
-
-.dragging {
-  transition: box-shadow 0.2s ease;
-  box-shadow: 0 0px 10px rgba(9, 30, 66, 0.5);
 }
 
 .taskHeader {
@@ -392,15 +327,6 @@ button {
   border-radius: 10px;
   cursor: pointer;
   padding: 0.5rem;
-  color: rgb(153, 153, 153);
-}
-
-.taskAttributes {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 0.5rem;
   color: rgb(153, 153, 153);
 }
 

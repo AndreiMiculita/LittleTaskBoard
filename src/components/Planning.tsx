@@ -51,7 +51,7 @@ function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
     }
 
     return (
-        <div className="planning">
+        <div className="planning w-full">
             <div className="planned_at">
                 {planned_atString}
             </div>

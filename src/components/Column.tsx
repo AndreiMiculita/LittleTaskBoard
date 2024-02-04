@@ -1,6 +1,12 @@
 import { Task } from '../types';
 import { StrictModeDroppable } from './StrictModeDroppable';
 import TaskCard from './TaskCard';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "./ui/card"
 
 export interface ColumnProps {
     id: number;
@@ -15,17 +21,23 @@ function Column({ column }: { column: ColumnProps }) {
     return (
         <StrictModeDroppable droppableId={column.id.toString()}>
             {(provided, snapshot) => (
-                <div
-                    className={`column ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}
+                <Card
+                    className={`py-0 px-2 flex flex-col flex-1 transition-colors ${snapshot.isDraggingOver ? 'bg-accent' : ''}`}
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                 >
-                    <h2>{column.title}</h2>
-                    <div className={`tasks ${snapshot.isDraggingOver ? 'draggingOver' : ''}`}>
-                        {tasks.map((task, index) => <TaskCard key={task.id || Math.random()} task={task} index={index} />)}
-                    </div>
-                    {provided.placeholder}
-                </div>
+                    <CardHeader>
+                        <CardTitle className="text-xl text-center">
+                            {column.title}
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                        <div className={`h-full`}>
+                            {tasks.map((task, index) => <TaskCard key={task.id || Math.random()} task={task} index={index} />)}
+                        </div>
+                        {provided.placeholder}
+                    </CardContent>
+                </Card>
             )}
         </StrictModeDroppable>
     );

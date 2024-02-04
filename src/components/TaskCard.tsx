@@ -3,6 +3,14 @@ import { Task } from '../types';
 import Planning from './Planning';
 import TaskAttributes from './TaskAttributes';
 import TaskLinkButton from './TaskLinkButton';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "./ui/card"
 
 function TaskCard({ task, index }: { task: Task, index: number }) {
 
@@ -23,20 +31,33 @@ function TaskCard({ task, index }: { task: Task, index: number }) {
             {(provided, snapshot) => {
                 return (
                     <div
+                        className='pb-2'
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <div className={`task ${snapshot.isDragging ? 'dragging' : ''}`}>
-                            <div className="taskHeader">
-                                <div className="taskTitle">
+                        <Card className={`cursor-grab hover:shadow-xl ${snapshot.isDragging ? 'opacity-50' : ''}`}>
+                            <CardHeader className="p-3">
+                                <CardTitle className="font-medium flex justify-between items-center">
                                     {task.title}
-                                </div>
-                                <TaskLinkButton taskId={task.id} />
-                            </div>
-                            <TaskAttributes type={task.task_type} priority={task.priority} />
-                            <Planning planned_at={task.planned_at} duration={task.duration} />
-                        </div>
+                                    <TaskLinkButton taskId={task.id} />
+                                </CardTitle>
+                                {task.description ?
+                                    <CardDescription>
+                                        {task.description}
+                                    </CardDescription>
+                                    : null
+                                }
+                            </CardHeader>
+                            <CardContent className="p-3 pt-0">
+                                <TaskAttributes type={task.task_type} priority={task.priority} />
+                            </CardContent>
+                            {task.planned_at || task.duration ? (
+                                <CardFooter className="p-2 pt-0">
+                                    <Planning planned_at={task.planned_at} duration={task.duration} />
+                                </CardFooter>
+                            ) : null}
+                        </Card>
                     </div>
                 );
             }}
