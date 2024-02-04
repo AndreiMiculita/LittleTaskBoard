@@ -9,6 +9,7 @@
 Goal: Solve the surprisingly complex problem of managing work. This is intended to be a flexible tool that can scale from a simple personal todo list to a full ticket management system.
 
 ## Features
+
 | Feature                             | Description                                                     | Status |
 | :---------------------------------- | :-------------------------------------------------------------- | :----- |
 | Track tasks                         | Create, edit, delete, and move tasks between columns            | ✅      |
@@ -30,16 +31,21 @@ Goal: Solve the surprisingly complex problem of managing work. This is intended 
 | Calendar sync                       | Sync tasks with Google Calendar                                 | ❌      |
 
 # Tech Stack
+
 As this started a personal project to learn new technologies, the tech stack is a bit of a hodgepodge.
 
 ## Frontend
+
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn ui](https://ui.shadcn.com/)
 - [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd/)
 - [TypeScript](https://www.typescriptlang.org/)
 
 ## Backend
+
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 - [SQLite](https://www.sqlite.org/index.html)
 - [pytest](https://docs.pytest.org/en/6.2.x/)
