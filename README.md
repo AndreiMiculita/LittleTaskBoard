@@ -50,6 +50,15 @@ As this started a personal project to learn new technologies, the tech stack is 
 - [SQLite](https://www.sqlite.org/index.html)
 - [pytest](https://docs.pytest.org/en/6.2.x/)
 
+## Learnings
+
+- Setting up & serving arbitrary frontends & backends, CORS
+- Middleware, JWT authentication, routing, structuring a REST API
+- Thinking in React, state management, structuring DOM, avoiding re-renders, async...await
+- Data visualization, charting, calendar, drag & drop
+- Setting up databases, ORM, migrations, testing, CI/CD
+- Semantic HTML, CSS, BEM notation (eventually migrated to Tailwind to accommodate shadcn ui)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
