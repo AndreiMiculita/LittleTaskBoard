@@ -5,6 +5,7 @@ import AuthService from '../Services/AuthService';
 import Planning from '../components/Planning';
 import TaskAttributes from '../components/TaskAttributes';
 import { CommentProps, ReplyProps, Task } from '../types';
+import { Button } from '../components/ui/button';
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -83,7 +84,7 @@ function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: A
     return (
         <form className="commentForm" onSubmit={handleSubmit}>
             <textarea value={text} onChange={e => setText(e.target.value)} required />
-            <button type="submit">Add Comment</button>
+            <Button variant='outline' className='self-end' type="submit">Add Comment</Button>
         </form>
     );
 };
@@ -110,7 +111,7 @@ function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth:
     return (
         <form className="replyForm" onSubmit={handleSubmit}>
             <textarea value={text} onChange={e => setText(e.target.value)} required />
-            <button type="submit">Add Reply</button>
+            <Button variant='outline' className='self-end' type="submit">Add Reply</Button>
         </form>
     );
 };

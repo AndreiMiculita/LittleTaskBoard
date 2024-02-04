@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { Button } from './ui/button';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
@@ -154,7 +155,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         </div>
                     ))}
                 </div>
-                <button type="submit">Add Task</button>
+                <Button variant="outline" type="submit">Add Task</Button>
             </form>
         </div>
     );
