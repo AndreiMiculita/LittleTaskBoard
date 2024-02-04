@@ -35,7 +35,8 @@
     --radius: 0.5rem;
   }
  
-  .dark {
+  @media (prefers-color-scheme: dark) {
+  :root {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
  
@@ -63,6 +64,7 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+  }
   }
 }
  
