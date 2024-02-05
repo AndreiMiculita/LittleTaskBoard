@@ -1,27 +1,24 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { Badge } from './ui/badge';
 
-function getPriorityColor(priority: number): string {
-    const maxPriority = 4;
-    const minPriority = 1;
-    const ratio = (priority - minPriority) / (maxPriority - minPriority);
-    const hue = ratio * 120; // hue goes from 0 (red) to 120 (green)
-    return `hsl(${hue}, 100%, 50%)`;
-}
+const priorityColors = ['bg-red-600', 'bg-yellow-500', 'bg-green-600'];
 
 interface TaskAttributesProps {
     type: number;
     priority: number;
 }
 
+function getPriorityClassName(priority: number) {
+    return priorityColors[priority - 1] || 'bg-green-600';
+}
+
 function TaskAttributes({ type, priority }: TaskAttributesProps) {
     return (
         <div>
-            <div className="taskPriority">
-                <div className="taskPriorityColor" style={{ backgroundColor: getPriorityColor(priority) }}></div>
-                <div className="taskPriorityNumber">{priority}</div>
-            </div>
+            <Badge variant='outline' className={`${getPriorityClassName(priority)} text-white`}>
+                Priority {priority}
+            </Badge>
             {type === 1 && <FontAwesomeIcon icon={faBrain} className="taskType" />}
             {type === 2 && <FontAwesomeIcon icon={faUsers} className="taskType" />}
         </div>

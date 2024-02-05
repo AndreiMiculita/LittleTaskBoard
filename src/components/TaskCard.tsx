@@ -49,7 +49,7 @@ function TaskCard({ task, index }: { task: Task, index: number }) {
                                     : null
                                 }
                             </CardHeader>
-                            <CardContent className="p-3 pt-0">
+                            <CardContent className="p-2 pt-0">
                                 <TaskAttributes type={task.task_type} priority={task.priority} />
                             </CardContent>
                             {task.planned_at || task.duration ? (
