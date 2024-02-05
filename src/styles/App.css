@@ -85,13 +85,6 @@ body {
   }
 }
 
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -104,22 +97,6 @@ body {
   to {
     transform: rotate(360deg);
   }
-}
-
-.headerBar {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  z-index: 100;
-}
-
-.headerBar>* {
-  min-width: 200px;
-}
-
-.headerBar>h1 {
-  font-style: italic;
 }
 
 .userProfileButton,
@@ -202,7 +179,7 @@ body {
   max-width: 500px;
   margin: 0 auto;
   position: relative;
-  z-index: 10000;
+  z-index: 40;
 }
 
 @keyframes fadeIn {
@@ -222,7 +199,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  z-index: 30;
   backdrop-filter: blur(5px);
 }
 

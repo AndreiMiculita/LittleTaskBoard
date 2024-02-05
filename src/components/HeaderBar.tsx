@@ -9,14 +9,16 @@ interface HeaderBarProps {
 
 function HeaderBar({ onClickSidebarButton, onClickUserProfileButton }: HeaderBarProps) {
     return (
-        <div className="headerBar">
+        <header className="flex justify-between items-center w-full sticky backdrop-blur h-14 z-50 top-0">
             <button className='sidebarButton' onClick={onClickSidebarButton}>
                 <FontAwesomeIcon icon={faBars} />
                 Menu
             </button>
-            <h1>Little Task Board</h1>
+            <h1 className='text-2xl italic font-semibold'>
+                Little Task Board
+            </h1>
             <UserProfileButton onClickUserProfileButton={onClickUserProfileButton} />
-        </div>
+        </header>
     );
 };
 

@@ -29,12 +29,10 @@ function PageLayout({ children, auth }: PageLayoutProps) {
         <div className="App">
             {auth && auth.isLoggedIn() ? (
                 <>
-                    <header className="App-header">
-                        <HeaderBar
-                            onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
-                            onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
-                        />
-                    </header>
+                    <HeaderBar
+                        onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
+                        onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
+                    />
                     <div className="content">
                         <ToastContainer
                             position="bottom-right"
