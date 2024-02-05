@@ -38,7 +38,7 @@ function TaskCard({ task, index }: { task: Task, index: number }) {
                     >
                         <Card className={`cursor-grab hover:shadow-xl ${snapshot.isDragging ? 'opacity-50' : ''}`}>
                             <CardHeader className="p-3">
-                                <CardTitle className="font-medium flex justify-between items-center">
+                                <CardTitle className="font-normal flex justify-between items-center">
                                     {task.title}
                                     <TaskLinkButton taskId={task.id} />
                                 </CardTitle>
