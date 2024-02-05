@@ -191,12 +191,6 @@ body {
   background-color: var(--sidebar-hover);
 }
 
-.main {
-  flex: 1;
-  min-width: 0;
-  padding: 1rem 1rem;
-}
-
 .newTaskForm {
   background-color: var(--background-color-highlight);
   border-radius: 10px;
@@ -379,115 +373,6 @@ body {
 .taskRow td {
   padding: 0 30px;
   width: 100%;
-}
-
-.taskDetail {
-  background-color: var(--background-color-highlight);
-  border-radius: 10px;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  padding: 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.taskDetail__title {
-  font-size: 2rem;
-  font-weight: 700;
-  font-style: italic;
-  text-align: left;
-  margin: 2rem;
-  padding: 0;
-}
-
-.taskDetail__description {
-  font-size: 1rem;
-  text-align: left;
-  width: 60%;
-  margin: 0;
-  padding: 1rem;
-  border-bottom: 1px solid var(--text-color);
-}
-
-.comments {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.comment, .reply {
-  background-color: var(--background-color-highlight);
-  border-radius: 10px;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  padding: 1rem;
-  width: 90%;
-  margin: 1rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.comment__details-summary {
-  width: 100%;
-  text-align: left;
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.comment__details-summary::before {
-  content: ">";
-  display: inline-block;
-  margin-right: 5px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.comment__details[open] .comment__details-summary::before {
-  transform: rotate(90deg);
-}
-
-.reply {
-  margin-left: 2rem;
-}
-
-.comment__author, .reply__author {
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-}
-
-.comment__text, .reply__text {
-  font-size: 1rem;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-}
-
-.commentForm, .replyForm {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin: 1rem auto;
-  padding: 1rem;
-  background-color: var(--background-color-highlight);
-  border-radius: 10px;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-}
-
-.commentForm textarea, .replyForm textarea {
-  width: 100%;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.commentForm textarea{
-  height: 100px;
 }
 
 .Toastify__toast {

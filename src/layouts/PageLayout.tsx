@@ -47,7 +47,7 @@ function PageLayout({ children, auth }: PageLayoutProps) {
                         />
                         <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
 
-                        <div className="main">
+                        <div className='flex-1 p-4 min-w-0'>
                             {childrenWithProps}
                         </div>
 

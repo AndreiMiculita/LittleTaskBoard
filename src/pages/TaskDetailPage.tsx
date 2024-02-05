@@ -6,6 +6,21 @@ import Planning from '../components/Planning';
 import TaskAttributes from '../components/TaskAttributes';
 import { CommentProps, ReplyProps, Task } from '../types';
 import { Button } from '../components/ui/button';
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter
+} from '../components/ui/card';
+import { Textarea } from '../components/ui/textarea';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "../components/ui/collapsible"
+import { CaretSortIcon } from "@radix-ui/react-icons"
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -37,28 +52,39 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: AuthService }
     };
 
     return (
-        <article className="comment">
-            <h2 className="comment__author">{comment.author}</h2>
-            <p className="comment__text">{comment.text}</p>
-            <details className="comment__details" onToggle={e => setRepliesLoaded(e.currentTarget.open)}>
-                <summary onClick={loadReplies} className="comment__details-summary">
-                    {repliesLoaded ? 'Hide replies' : 'Show replies'}
-                </summary>
-                <section className="comment__replies">
-                    {repliesLoaded && replies.map(reply => <Reply key={'RE' + reply.id} reply={reply} />)}
-                    <ReplyForm commentId={comment.id} auth={auth} onReplyAdded={handleReplyAdded} />
-                </section>
-            </details>
-        </article>
+        <Card className='my-4'>
+            <CardHeader>
+                <CardTitle>{comment.author}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <p>{comment.text}</p>
+            </CardContent>
+            <CardFooter>
+                <Collapsible onOpenChange={setRepliesLoaded} className="w-full">
+                    <CollapsibleTrigger onClick={repliesLoaded ? undefined : loadReplies} className="flex items-center gap-1">
+                        <CaretSortIcon className="w-4 h-4" />
+                        {repliesLoaded ? 'Hide replies' : 'Show replies'}
+                    </CollapsibleTrigger>
+                    <CollapsibleContent >
+                        {repliesLoaded && replies.map(reply => <Reply key={'RE' + reply.id} reply={reply} />)}
+                        <ReplyForm commentId={comment.id} auth={auth} onReplyAdded={handleReplyAdded} />
+                    </CollapsibleContent>
+                </Collapsible>
+            </CardFooter>
+        </Card>
     );
 };
 
 function Reply({ reply }: { reply: ReplyProps }) {
     return (
-        <article className="reply">
-            <h3 className="reply__author">{reply.author}</h3>
-            <p className="reply__text">{reply.text}</p>
-        </article>
+        <Card className='my-4'>
+            <CardHeader>
+                <CardTitle>{reply.author}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                {reply.text}
+            </CardContent>
+        </Card>
     );
 };
 
@@ -82,10 +108,12 @@ function CommentForm({ taskId, auth, onCommentAdded }: { taskId: string, auth: A
     };
 
     return (
-        <form className="commentForm" onSubmit={handleSubmit}>
-            <textarea value={text} onChange={e => setText(e.target.value)} required />
-            <Button variant='outline' className='self-end' type="submit">Add Comment</Button>
-        </form>
+        <Card className='w-full'>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-2 p-3'>
+                <Textarea value={text} onChange={e => setText(e.target.value)} placeholder='Type your comment here...' required />
+                <Button variant='outline' className='self-end' type="submit">Add Comment</Button>
+            </form>
+        </Card>
     );
 };
 
@@ -109,10 +137,12 @@ function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth:
     };
 
     return (
-        <form className="replyForm" onSubmit={handleSubmit}>
-            <textarea value={text} onChange={e => setText(e.target.value)} required />
-            <Button variant='outline' className='self-end' type="submit">Add Reply</Button>
-        </form>
+        <Card className='w-full'>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-2 p-3'>
+                <Textarea value={text} onChange={e => setText(e.target.value)} placeholder='Type your reply here...' required />
+                <Button variant='outline' className='self-end' type="submit">Add Reply</Button>
+            </form>
+        </Card>
     );
 };
 
@@ -146,17 +176,23 @@ function TaskDetailPage({ auth }: { auth: AuthService }) {
     }, [auth, id]);
 
     return (
-        <article className="taskDetail">
-            <h1 className="taskDetail__title">{task.title}</h1>
-            <p className="taskDetail__description">{task.description}</p>
-            <div className="taskDetail__status">Status: {STATUS_MAP[task.status]}</div>
-            <TaskAttributes type={task.task_type} priority={task.priority} />
-            <Planning planned_at={task.planned_at} duration={task.duration} showFull={true} />
-            <section className="comments">
-                {comments.map(comment => <Comment key={comment.id} comment={comment} auth={auth} />)}
-            </section>
-            {id && <CommentForm taskId={id} auth={auth} onCommentAdded={(comment: CommentProps) => setComments([...comments, comment])} />}
-        </article>
+        <Card className='max-w-2xl mx-auto'>
+            <CardHeader>
+                <CardTitle>{task.title}</CardTitle>
+                <CardDescription>{task.description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div>Status: {STATUS_MAP[task.status]}</div>
+                <TaskAttributes type={task.task_type} priority={task.priority} />
+                <Planning planned_at={task.planned_at} duration={task.duration} showFull={true} />
+            </CardContent>
+            <CardFooter className='flex-col'>
+                <section className='w-full'>
+                    {comments.map(comment => <Comment key={comment.id} comment={comment} auth={auth} />)}
+                </section>
+                {id && <CommentForm taskId={id} auth={auth} onCommentAdded={(comment: CommentProps) => setComments([...comments, comment])} />}
+            </CardFooter>
+        </Card>
     );
 };
 
