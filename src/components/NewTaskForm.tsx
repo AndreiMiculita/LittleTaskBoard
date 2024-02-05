@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { Button } from './ui/button';
+import { Card } from './ui/card';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
@@ -95,68 +96,70 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
 
     return (
         <div>
-            {isFormFocused && <div className="overlay"></div>}
-            <form className="newTaskForm" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    placeholder="Task Title"
-                />
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    placeholder="Description"
-                />
-                <div className="taskDetails">
-                    {FIELDS.map((row, index) => (
-                        <div className="taskDetailsRow" key={index}>
-                            {row.map((field, index) => (
-                                <React.Fragment key={index}>
-                                    <div className="taskDetailsField">
-                                        {field.type === 'radio' ? (
-                                            field.options?.map(option => (
-                                                <label key={option}>
-                                                    <input
-                                                        id={`${field.state}-${option}`}
-                                                        type="radio"
-                                                        name={field.state}
-                                                        value={option}
-                                                        checked={type === option}
-                                                        onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
-                                                        onFocus={handleFocus}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {option}
-                                                </label>
-                                            ))
-                                        ) : (
-                                            <input
-                                                id={field.state}
-                                                type={field.type}
-                                                min={field.min}
-                                                max={field.max}
-                                                // @ts-ignore Lord forgive me (on Andrei's todo list)
-                                                value={field.state.value}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
-                                                onFocus={handleFocus}
-                                                onBlur={handleBlur}
-                                                placeholder={field.placeholder}
-                                            />
-                                        )}
-                                    </div>
-                                </React.Fragment>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-                <Button variant="outline" type="submit">Add Task</Button>
-            </form>
+            {/* {isFormFocused && <div className="overlay z-30"></div>} */}
+            <Card className='mx-auto max-w-lg p-4 z-40'>
+                <form className="flex flex-col z-40 gap-4" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        placeholder="Type a title here to add a new task."
+                    />
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        placeholder="Description"
+                    />
+                    <div className="taskDetails">
+                        {FIELDS.map((row, index) => (
+                            <div className="taskDetailsRow" key={index}>
+                                {row.map((field, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className="taskDetailsField">
+                                            {field.type === 'radio' ? (
+                                                field.options?.map(option => (
+                                                    <label key={option}>
+                                                        <input
+                                                            id={`${field.state}-${option}`}
+                                                            type="radio"
+                                                            name={field.state}
+                                                            value={option}
+                                                            checked={type === option}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
+                                                            onFocus={handleFocus}
+                                                            onBlur={handleBlur}
+                                                        />
+                                                        {option}
+                                                    </label>
+                                                ))
+                                            ) : (
+                                                <input
+                                                    id={field.state}
+                                                    type={field.type}
+                                                    min={field.min}
+                                                    max={field.max}
+                                                    // @ts-ignore Lord forgive me (on Andrei's todo list)
+                                                    value={field.state.value}
+                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
+                                                    onFocus={handleFocus}
+                                                    onBlur={handleBlur}
+                                                    placeholder={field.placeholder}
+                                                />
+                                            )}
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                    <Button variant="outline" type="submit">Add Task</Button>
+                </form>
+            </Card>
         </div>
     );
 };
