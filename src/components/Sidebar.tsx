@@ -44,7 +44,7 @@ function Sidebar({ auth, isSidebarOpen }: SidebarProps) {
     }, []);
 
     return (
-        <div className={`sidebar ${isSidebarOpen ? '' : 'hide'}`}>
+        <div className={`sidebar ${isSidebarOpen ? '' : 'flex-[0_0_0%]'}`}>
             {sidebar.linksByCategory.map(linkCategory => <SidebarLinkCategory key={linkCategory.id} linkCategory={linkCategory} />)}
         </div>
     );

@@ -99,25 +99,6 @@ body {
   }
 }
 
-.userProfileButton,
-.sidebarButton {
-  background-color: var(--background-color-highlight);
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.userProfileButton:hover,
-.sidebarButton:hover {
-  background-color: var(--sidebar-hover);
-}
-
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -126,46 +107,17 @@ body {
 
 .sidebar,
 .userPanel {
-  background-color: var(--background-color-highlight);
   flex: 0 0 200px;
-  box-shadow: 0 0px 15px var(--box-shadow-color);
   z-index: 1;
-  height: 100%;
   overflow: hidden;
   transition: flex 0.1s ease-in-out;
   white-space: nowrap;
-}
-
-.sidebar {
-  border-radius: 0 0 10px;
-}
-
-.userPanel {
-  border-radius: 0 0 0px 10px;
-}
-
-.sidebar.hide,
-.userPanel.hide {
-  flex: 0 0 0;
-}
-
-.sidebarLink,
-.userPanelRow {
-  padding: 1rem;
-  display: flex;
-  justify-content: left;
-  gap: 1rem;
 }
 
 .sidebarLinkPlaceholder {
   background: var(--placeholder-gradient);
   background-size: 800px 104px;
   animation: placeholderShimmer 4s linear infinite;  
-}
-
-.sidebarLink:hover,
-.userPanelRow:hover {
-  background-color: var(--sidebar-hover);
 }
 
 @keyframes fadeIn {

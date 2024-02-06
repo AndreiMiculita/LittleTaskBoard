@@ -2,6 +2,7 @@ import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { UserPanelRowProps } from './UserPanel';
+import { Button } from './ui/button';
 
 function UserPanelRow({ userPanelRow }: { userPanelRow: UserPanelRowProps }) {
     let icon: JSX.Element | null = null;
@@ -13,10 +14,10 @@ function UserPanelRow({ userPanelRow }: { userPanelRow: UserPanelRowProps }) {
     }
     return (
         <Link to={userPanelRow.url} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="userPanelRow">
+            <Button variant="link" className="p-6 flex justify-start gap-3 w-full text-base font-normal text-muted-foreground">
                 {icon}
                 {userPanelRow.title}
-            </div>
+            </Button>
         </Link>
     );
 };

@@ -37,7 +37,7 @@ function UserPanel({ auth, isUserPanelOpen }: UserPanelProps) {
     }, []);
 
     return (
-        <div className={`userPanel ${isUserPanelOpen ? '' : 'hide'}`}>
+        <div className={`userPanel ${isUserPanelOpen ? '' : 'flex-[0_0_0%]'}`}>
             {userPanel.links.map(userPanelRow => <UserPanelRow key={userPanelRow.id} userPanelRow={userPanelRow} />)}
         </div>
     );

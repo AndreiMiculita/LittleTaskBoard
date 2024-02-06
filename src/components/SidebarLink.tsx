@@ -2,6 +2,7 @@ import { faCalendarAlt, faChartSimple, faTableCells, faTableList } from '@fortaw
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { SidebarLinkProps } from '../components/Sidebar';
+import { Button } from './ui/button';
 
 function SidebarLink({ link }: { link: SidebarLinkProps }) {
     if (Object.keys(link).length === 0) {
@@ -28,10 +29,10 @@ function SidebarLink({ link }: { link: SidebarLinkProps }) {
 
     return (
         <Link to={link.url} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="sidebarLink">
+            <Button variant="link" className='p-6 flex justify-start gap-3 w-full text-base font-normal text-muted-foreground'>
                 {icon}
                 {link.title}
-            </div>
+            </Button>
         </Link>
     );
 }

@@ -4,6 +4,7 @@ import AuthService from '../Services/AuthService.js';
 import HeaderBar from '../components/HeaderBar';
 import Sidebar from '../components/Sidebar';
 import UserPanel from '../components/UserPanel';
+import { Separator } from '../components/ui/separator';
 
 type PageLayoutProps = {
     children: ReactNode;
@@ -44,10 +45,11 @@ function PageLayout({ children, auth }: PageLayoutProps) {
                             draggable
                         />
                         <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
-
+                        <Separator className='h-auto' orientation="vertical" />
                         <div className='flex-1 p-4 min-w-0'>
                             {childrenWithProps}
                         </div>
+                        <Separator className='h-auto' orientation="vertical" />
 
                         <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
                     </div>
