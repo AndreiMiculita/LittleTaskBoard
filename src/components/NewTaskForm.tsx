@@ -2,12 +2,22 @@ import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } fro
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Label } from './ui/label';
-import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import {
+    RadioGroup,
+    RadioGroupItem
+} from './ui/radio-group';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select"
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
 interface Field {
-    type: 'number' | 'radio' | 'datetime-local';
+    type: 'number' | 'radio' | 'datetime-local' | 'select';
     min?: number;
     max?: number;
     placeholder: string;
@@ -24,10 +34,10 @@ const taskTypes: TaskType[] = ['regular', 'focus', 'meeting'];
 const FIELDS: Field[][] = [
     [
         {
-            type: 'number',
+            type: 'select',
             min: 1,
             max: 4,
-            placeholder: 'Priority (1-4)',
+            placeholder: 'Priority (Optional)',
             state: 'priority',
         },
         {
@@ -119,26 +129,40 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                     />
                     <div className="taskDetails">
                         {FIELDS.map((row, index) => (
-                            <div className="taskDetailsRow" key={index}>
+                            <div className="flex flex-row justify-between gap-4 items-center" key={index}>
                                 {row.map((field, index) => (
                                     <React.Fragment key={index}>
-                                        <div className="taskDetailsField">
+                                        <div className="w-full">
                                             {field.type === 'radio' ? (
                                                 <RadioGroup
                                                     className="flex flex-row items-center"
                                                     onValueChange={(value: TaskType) => setType(value)}
-                                                    >
+                                                >
                                                     {field.options?.map((option, index) => (
                                                         <>
                                                             <RadioGroupItem
                                                                 key={index}
                                                                 value={option}
-                                                                checked={type === option} 
+                                                                checked={type === option}
                                                                 id={option} />
                                                             <Label htmlFor={option}>{option}</Label>
                                                         </>
                                                     ))}
                                                 </RadioGroup>
+                                            ) : field.type === 'select' ? (
+                                                <Select
+                                                    value={priority}
+                                                    onValueChange={(value: string) => setPriority(value)}
+                                                >
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder={field.placeholder}/>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {Array.from({ length: field.max! - field.min! + 1 }, (_, i) => (
+                                                            <SelectItem key={i} value={String(i + field.min!)}>Priority {i + field.min!}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
                                             ) : (
                                                 <input
                                                     id={field.state}
