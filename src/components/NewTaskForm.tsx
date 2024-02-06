@@ -1,6 +1,8 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
+import { Label } from './ui/label';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
@@ -122,21 +124,21 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                     <React.Fragment key={index}>
                                         <div className="taskDetailsField">
                                             {field.type === 'radio' ? (
-                                                field.options?.map(option => (
-                                                    <label key={option}>
-                                                        <input
-                                                            id={`${field.state}-${option}`}
-                                                            type="radio"
-                                                            name={field.state}
-                                                            value={option}
-                                                            checked={type === option}
-                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
-                                                            onFocus={handleFocus}
-                                                            onBlur={handleBlur}
-                                                        />
-                                                        {option}
-                                                    </label>
-                                                ))
+                                                <RadioGroup
+                                                    className="flex flex-row items-center"
+                                                    onValueChange={(value: TaskType) => setType(value)}
+                                                    >
+                                                    {field.options?.map((option, index) => (
+                                                        <>
+                                                            <RadioGroupItem
+                                                                key={index}
+                                                                value={option}
+                                                                checked={type === option} 
+                                                                id={option} />
+                                                            <Label htmlFor={option}>{option}</Label>
+                                                        </>
+                                                    ))}
+                                                </RadioGroup>
                                             ) : (
                                                 <input
                                                     id={field.state}
