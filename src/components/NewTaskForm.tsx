@@ -1,11 +1,6 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { Button } from './ui/button';
 import { Card } from './ui/card';
-import { Label } from './ui/label';
-import {
-    RadioGroup,
-    RadioGroupItem
-} from './ui/radio-group';
+import { Input } from './ui/input';
 import {
     Select,
     SelectContent,
@@ -13,6 +8,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select"
+import { Label } from './ui/label';
+import {
+    RadioGroup,
+    RadioGroupItem
+} from './ui/radio-group';
+import { Button } from './ui/button';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 
@@ -111,7 +112,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
             {/* {isFormFocused && <div className="overlay z-30"></div>} */}
             <Card className='mx-auto max-w-lg p-4 z-40'>
                 <form className="flex flex-col z-40 gap-4" onSubmit={handleSubmit}>
-                    <input
+                    <Input
                         type="text"
                         value={title}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
@@ -119,7 +120,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         onBlur={handleBlur}
                         placeholder="Type a title here to add a new task."
                     />
-                    <input
+                    <Input
                         type="text"
                         value={description}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
@@ -164,7 +165,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                                     </SelectContent>
                                                 </Select>
                                             ) : (
-                                                <input
+                                                <Input
                                                     id={field.state}
                                                     type={field.type}
                                                     min={field.min}
@@ -183,7 +184,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                             </div>
                         ))}
                     </div>
-                    <Button variant="outline" type="submit">Add Task</Button>
+                    <Button type="submit">Add Task</Button>
                 </form>
             </Card>
         </div>
