@@ -1,4 +1,4 @@
-import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { UserPanelRowProps } from './UserPanel';
@@ -6,6 +6,9 @@ import { Button } from './ui/button';
 
 function UserPanelRow({ userPanelRow }: { userPanelRow: UserPanelRowProps }) {
     let icon: JSX.Element | null = null;
+    if (userPanelRow.title === 'Your profile') {
+        icon = <FontAwesomeIcon icon={faUser} />
+    }
     if (userPanelRow.title === 'Settings') {
         icon = <FontAwesomeIcon icon={faCog} />
     }

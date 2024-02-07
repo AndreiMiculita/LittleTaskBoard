@@ -14,11 +14,16 @@ def get_user_panel():
         'links': [
             {
                 'id': 1,
+                'title': 'Your profile',
+                'url': '/profile'
+            },
+            {
+                'id': 2,
                 'title': 'Settings',
                 'url': '/settings'
             },
             {
-                'id': 2,
+                'id': 3,
                 'title': 'Log Out',
                 'url': '/logout'
             }
