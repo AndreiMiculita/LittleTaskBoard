@@ -8,8 +8,7 @@ import PageLayout from './layouts/PageLayout';
 import BoardPage from './pages/BoardPage';
 import CalendarPage from './pages/CalendarPage';
 import InsightsPage from './pages/InsightsPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import AuthPage from './pages/AuthPage';
 import TaskDetailPage from './pages/TaskDetailPage';
 import TasksPage from './pages/TasksPage';
 
@@ -36,8 +35,8 @@ function App() {
         <Router>
             <PageLayout auth={auth}>
                 <Routes>
-                    <Route path="/login" element={<LoginPage setAuth={setAuth} />} />
-                    <Route path="/register" element={<RegisterPage setAuth={setAuth} />} />
+                    <Route path="/login" element={<AuthPage setAuth={setAuth} isLogin={true}/>} />
+                    <Route path="/register" element={<AuthPage setAuth={setAuth} isLogin={false}/>} />
                     <Route path="/" element={
                         <PrivateRoute>
                             <BoardPage auth={auth} />
