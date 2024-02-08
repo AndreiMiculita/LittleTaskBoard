@@ -40,40 +40,6 @@ body {
   background-color: var(--background-color);
 }
 
-.login, .register {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background-color: var(--background-color-highlight);
-  border-radius: 10px;
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  margin: 30px auto;
-  padding: 1rem 2rem;
-  width: fit-content;
-}
-
-.login h1, .register h1 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin: 1rem 0;
-  padding: 0;
-}
-
-.login form, .register form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login input, .register input {
-  padding: 10px;
-  border-radius: 3px;
-  font-size: 15px;
-  border: 1px solid #ddd;
-  margin: 1rem 0;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;

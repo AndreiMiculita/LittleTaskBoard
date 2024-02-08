@@ -1,76 +1,40 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AuthService from '../Services/AuthService';
+import { UserLoginForm } from '../components/auth_forms/UserLoginForm';
+import { buttonVariants } from '../components/ui/button';
+import { cn } from '../lib/utils';
 
 function LoginPage({ setAuth }: { setAuth: (auth: AuthService) => void }) {
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [redirectToReferrer, setRedirectToReferrer] = useState<boolean>(false);
 
-    const auth = new AuthService();
-
-    if (auth.isLoggedIn()) {
-        setAuth(auth);
-        return <Navigate to="/" />;
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if (e.target.name === 'username') {
-            setUsername(e.target.value);
-        } else if (e.target.name === 'password') {
-            setPassword(e.target.value);
-        }
-    };
-
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-
-        auth.login(username, password)
-            .then(() => {
-                setRedirectToReferrer(true);
-            })
-            .catch((err) => {
-                alert(err);
-            });
-    };
-
-    if (redirectToReferrer) {
-        return <Navigate to="/" />;
-    }
+    document.title = 'Login - Little Task Board';
 
     return (
         <>
             <ToastContainer />
-            <div className="login">
-                <h1>Log in</h1>
-                <form onSubmit={handleFormSubmit}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
-                    <input type="submit" value="Submit" />
-                </form>
-                <p>
-                    <a href="/forgotpassword">Forgot password?</a>
-                </p>
-                <p>
-                    Don't have an account? <a href="/register">Register</a>
-                </p>
+            <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+                <Link
+                    to="/register"
+                    className={cn(
+                        buttonVariants({ variant: "ghost" }),
+                        "hidden md:block absolute right-4 top-4 md:right-8 md:top-8"
+                    )}
+                >
+                    Register
+                </Link>
+                <div className="relative hidden h-full flex-col bg-gradient-to-br from-zinc-900 to-amber-950 p-10 text-white lg:flex dark:border-r">
+                    <div className='relative z-20 flex items-center text-xl italic font-semibold'>
+                        Little Task Board
+                    </div>
+                    <div className="relative z-20 mt-auto">
+                        <p className="text-lg">
+                            Get working 👏
+                        </p>
+                    </div>
+                </div>
+                <div className="lg:p-8 mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                    {<UserLoginForm setAuth={setAuth} />}
+                </div>
             </div>
         </>
     );

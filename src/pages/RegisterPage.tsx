@@ -1,90 +1,40 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AuthService from '../Services/AuthService';
+import { UserRegisterForm } from '../components/auth_forms/UserRegisterForm';
+import { buttonVariants } from '../components/ui/button';
+import { cn } from '../lib/utils';
 
 function RegisterPage({ setAuth }: { setAuth: (auth: AuthService) => void }) {
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [redirectToReferrer, setRedirectToReferrer] = useState<boolean>(false);
 
-    const auth = new AuthService();
-
-    if (auth.isLoggedIn()) {
-        setAuth(auth);
-        return <Navigate to="/" />;
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if (e.target.name === 'username') {
-            setUsername(e.target.value);
-        } else if (e.target.name === 'password') {
-            setPassword(e.target.value);
-        } else if (e.target.name === 'confirmPassword') {
-            setConfirmPassword(e.target.value);
-        }
-    };
-
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            return;
-        }
-
-        auth.register(username, password)
-            .then(() => {
-                setRedirectToReferrer(true);
-            })
-            .catch((err) => {
-                alert(err);
-            });
-    };
-
-    if (redirectToReferrer) {
-        return <Navigate to="/" />;
-    }
+    document.title = 'Register - Little Task Board';
 
     return (
         <>
             <ToastContainer />
-            <div className="register">
-                <h1>Register</h1>
-                <form onSubmit={handleFormSubmit}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <br />
-                    <input type="submit" value="Submit" />
-                </form>
-                <p>
-                    Already have an account? <a href="/login">Log in</a>
-                </p>
+            <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+                <Link
+                    to="/login"
+                    className={cn(
+                        buttonVariants({ variant: "ghost" }),
+                        "hidden md:block absolute right-4 top-4 md:right-8 md:top-8"
+                    )}
+                >
+                    Login
+                </Link>
+                <div className="relative hidden h-full flex-col bg-gradient-to-br from-zinc-900 to-amber-950 p-10 text-white lg:flex dark:border-r">
+                    <div className='relative z-20 flex items-center text-xl italic font-semibold'>
+                        Little Task Board
+                    </div>
+                    <div className="relative z-20 mt-auto">
+                        <p className="text-lg">
+                            Get working 👏
+                        </p>
+                    </div>
+                </div>
+                <div className="lg:p-8 mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                    {<UserRegisterForm setAuth={setAuth} />}
+                </div>
             </div>
         </>
     );
