@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter
+} from '../components/ui/card';
 
 interface DataPoint {
     status: string;
@@ -12,13 +20,6 @@ function InsightsPage({ auth }: { auth: any }) {
     const [statusData, setStatusData] = useState<DataPoint[]>([]);
     const [taskTypeData, setTaskTypeData] = useState<DataPoint[]>([]);
     const [taskTypeOverTimeData, setTaskTypeOverTimeData] = useState<DataPoint[]>([]);
-
-    // TODO: Implement this page.
-    // We call the 
-    // * /api/insights/status
-    // * /api/insights/focus
-    // * /api/insights/focus_over_time to get the data we need to display the insights.
-    // Status and focus are two bar charts (side by side), focus over time is a line chart underneath.
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/insights/status',
@@ -44,7 +45,7 @@ function InsightsPage({ auth }: { auth: any }) {
             })
             .catch((err: Error) => {
                 console.error(err);
-                toast.error('Failed to load focus data');
+                toast.error('Failed to load task type data');
             });
     }, [auth]);
 
@@ -58,57 +59,71 @@ function InsightsPage({ auth }: { auth: any }) {
             })
             .catch((err: Error) => {
                 console.error(err);
-                toast.error('Failed to load focus over time data');
+                toast.error('Failed to load task type over time data');
             });
     }, [auth]);
 
     return (
-        <div className="insights">
-            <div className="insights__title">Insights</div>
-            <div className="insights__description">This is where we will display some insights.</div>
-            <div className="insights__status" style={{ width: '50%', height: '100px', display: 'inline-block' }}>
-                Status
-                <div>
-                    {Array.isArray(statusData) ?
-                        statusData.map((item, index) => (
-                            <div key={index}>
-                                {item.status} {item.count}
-                            </div>
-                        ))
-                        :
-                        null
-                    }
+        <>
+            <h1 className="text-3xl font-bold m-6">
+                Insights
+                </h1>
+            <div className="flex flex-column items-stretch justify-center flex-wrap w-full gap-4">
+                <div className="w-full flex flex-row items-stretch justify-center gap-4">
+                    <Card className="w-full md:w-1/2">
+                        <CardHeader>
+                            <CardTitle>Status</CardTitle>
+                            <CardDescription>Task status distribution</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {Array.isArray(statusData) ?
+                                statusData.map((item, index) => (
+                                    <div key={index}>
+                                        {item.status} {item.count}
+                                    </div>
+                                ))
+                                :
+                                null
+                            }
+                        </CardContent>
+                    </Card>
+                    <Card className="w-full md:w-1/2">
+                        <CardHeader>
+                            <CardTitle>Type</CardTitle>
+                            <CardDescription>Task type distribution</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {Array.isArray(taskTypeData) ?
+                                taskTypeData.map((item, index) => (
+                                    <div key={index}>
+                                        {item.status} {item.count}
+                                    </div>
+                                ))
+                                :
+                                null
+                            }
+                        </CardContent>
+                    </Card>
                 </div>
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Type over time</CardTitle>
+                        <CardDescription>Task type distribution over time</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {Array.isArray(taskTypeOverTimeData) ?
+                            taskTypeOverTimeData.map((item, index) => (
+                                <div key={index}>
+                                    {item.status} {item.count}
+                                </div>
+                            ))
+                            :
+                            null
+                        }
+                    </CardContent>
+                </Card>
             </div>
-            <div className="insights__focus" style={{ width: '50%', height: '100px', display: 'inline-block' }}>
-                Focus
-                <div>
-                    {Array.isArray(taskTypeData) ?
-                        taskTypeData.map((item, index) => (
-                            <div key={index}>
-                                {item.status} {item.count}
-                            </div>
-                        ))
-                        :
-                        null
-                    }
-                </div>
-            </div>
-            <div className="insights__focus_over_time" style={{ width: '100%', height: '100px', display: 'inline-block' }}>
-                Focus over time
-                <div>
-                    {Array.isArray(taskTypeOverTimeData) ?
-                        taskTypeOverTimeData.map((item, index) => (
-                            <div key={index}>
-                                {item.status} {item.count}
-                            </div>
-                        ))
-                        :
-                        null
-                    }
-                </div>
-            </div>
-        </div>
+        </>
     );
 };
 
