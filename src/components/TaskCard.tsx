@@ -36,7 +36,7 @@ function TaskCard({ task, index }: { task: Task, index: number }) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <Card className={`cursor-grab hover:shadow-xl ${snapshot.isDragging ? 'opacity-50' : ''}`}>
+                        <Card className={`cursor-grab hover:shadow-xl transition-shadow ${snapshot.isDragging ? 'opacity-50' : ''}`}>
                             <CardHeader className="p-3">
                                 <CardTitle className="font-normal flex justify-between items-center">
                                     {task.title}
