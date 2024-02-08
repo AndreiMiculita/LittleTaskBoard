@@ -113,6 +113,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
             <Card className='mx-auto max-w-lg p-4 z-40'>
                 <form className="flex flex-col z-40 gap-4" onSubmit={handleSubmit}>
                     <Input
+                        className='border-none shadow-none bg-transparent text-xl font-semibold'
                         type="text"
                         value={title}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
@@ -121,6 +122,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         placeholder="Type a title here to add a new task."
                     />
                     <Input
+                        className='border-none shadow-none bg-transparent'
                         type="text"
                         value={description}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
@@ -155,7 +157,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                                     value={priority}
                                                     onValueChange={(value: string) => setPriority(value)}
                                                 >
-                                                    <SelectTrigger>
+                                                    <SelectTrigger className='border-none shadow-none'>
                                                         <SelectValue placeholder={field.placeholder}/>
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -166,6 +168,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                                 </Select>
                                             ) : (
                                                 <Input
+                                                    className='border-none shadow-none'
                                                     id={field.state}
                                                     type={field.type}
                                                     min={field.min}
