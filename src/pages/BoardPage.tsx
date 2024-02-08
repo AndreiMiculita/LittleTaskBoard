@@ -15,6 +15,8 @@ interface BoardData {
 }
 
 function BoardPage({ auth }: BoardPageProps): JSX.Element {
+    document.title = 'Board - Little Task Board';
+
     const [board, setBoard] = useState<BoardData>(boardsData as BoardData);
     const [reload, setReload] = useState(false);
 

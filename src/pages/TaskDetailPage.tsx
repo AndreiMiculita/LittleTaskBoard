@@ -175,6 +175,10 @@ function TaskDetailPage({ auth }: { auth: AuthService }) {
             });
     }, [auth, id]);
 
+    useEffect(() => {
+        document.title = `${id} - Task Details - Little Task Board`;
+    }, [id]);
+
     return (
         <Card className='max-w-2xl mx-auto'>
             <CardHeader>

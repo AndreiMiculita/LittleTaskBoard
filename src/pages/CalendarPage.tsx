@@ -5,6 +5,8 @@ import '../styles/calendar_custom_styling.css';
 import { Task } from '../types';
 
 function CalendarPage({ auth }: { auth: AuthService }) {
+    document.title = 'Calendar - Little Task Board';
+
     const [config, setConfig] = useState({
         viewType: "Week",
         durationBarVisible: false,

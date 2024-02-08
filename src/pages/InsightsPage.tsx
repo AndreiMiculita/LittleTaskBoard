@@ -7,6 +7,8 @@ interface DataPoint {
 }
 
 function InsightsPage({ auth }: { auth: any }) {
+    document.title = 'Insights - Little Task Board';
+
     const [statusData, setStatusData] = useState<DataPoint[]>([]);
     const [taskTypeData, setTaskTypeData] = useState<DataPoint[]>([]);
     const [taskTypeOverTimeData, setTaskTypeOverTimeData] = useState<DataPoint[]>([]);

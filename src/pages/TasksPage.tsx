@@ -14,6 +14,8 @@ type Filter = {
 };
 
 function TasksPage({ auth }: { auth: AuthService }) {
+    document.title = 'Task Overview - Little Task Board';
+
     const [tasks, setTasks] = useState<Task[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [tasksPerPage, setTasksPerPage] = useState<number>(10);
