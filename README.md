@@ -21,7 +21,7 @@ Goal: Solve the surprisingly complex problem of managing work. This is intended 
 | Multiple boards                     | Create multiple boards                                          | ❌      |
 | Share boards                        | Share boards with others                                        | ❌      |
 | Notifications                       | Get notified when tasks are updated                             | ❌      |
-| Comments                            | Add comments to tasks                                           | ❌      |
+| Comments                            | Add comments to tasks                                           | ✅      |
 | Attachments                         | Attach files to tasks                                           | ❌      |
 | Email integration                   | Create tasks by sending an email                                | ❌      |
 | Slack integration                   | Create tasks by sending a Slack message                         | ❌      |
@@ -30,9 +30,9 @@ Goal: Solve the surprisingly complex problem of managing work. This is intended 
 | Task dependencies                   | Define dependencies (even chains) between tasks                 | ❌      |
 | Calendar sync                       | Sync tasks with Google Calendar                                 | ❌      |
 
-# Tech Stack
+## Tech Stack
 
-As this started a personal project to learn new technologies, the tech stack is a bit of a hodgepodge.
+As this started a personal project to learn new technologies, this is a hybrid React + Flask app.
 
 ## Frontend
 
@@ -59,15 +59,15 @@ As this started a personal project to learn new technologies, the tech stack is 
 - Setting up databases, ORM, migrations, testing, CI/CD
 - Semantic HTML, CSS, BEM notation (eventually migrated to Tailwind to accommodate shadcn ui)
 
-# Getting Started with Create React App
+## Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+#### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -75,12 +75,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+#### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -90,7 +90,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
@@ -100,7 +100,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
