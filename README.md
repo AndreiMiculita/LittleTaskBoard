@@ -40,6 +40,7 @@ As this started a personal project to learn new technologies, this is a hybrid R
 - [React Router](https://reactrouter.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn ui](https://ui.shadcn.com/)
+- [Tanstack React Table](https://tanstack.com/table)
 - [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd/)
 - [TypeScript](https://www.typescriptlang.org/)
