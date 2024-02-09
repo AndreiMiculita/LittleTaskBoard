@@ -2,6 +2,7 @@ import { faBrain, faNoteSticky, faUsers } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ColumnDef } from "@tanstack/react-table";
 import { Task } from "../types";
+import { Checkbox } from "../components/ui/checkbox";
 import { formatPlannedAt, formatDuration } from '../components/Planning';
 import {
     DropdownMenu,
@@ -12,7 +13,7 @@ import {
     DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
 import { Button } from "../components/ui/button";
-import { DotsVerticalIcon } from "@radix-ui/react-icons"
+import { DotsVerticalIcon, CaretSortIcon } from "@radix-ui/react-icons"
 import { useNavigate } from 'react-router-dom';
 
 const STATUS_MAP = {
@@ -29,11 +30,59 @@ const TASK_TYPE_MAP = {
 
 export const columns: ColumnDef<Task>[] = [
     {
-        header: "Title",
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                className="flex justify-center mx-auto"
+                checked={table.getIsAllPageRowsSelected()}
+                onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                className="flex justify-center mx-auto"
+                checked={row.getIsSelected()}
+                onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        header: () => (
+            <div className="flex justify-end">
+                Task ID
+            </div>
+        ),
+        accessorKey: "id",
+        cell: ({ row }) => (
+            <div className="flex justify-end">
+                {row.getValue("id")}
+            </div>
+        )
+    },
+    {
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Title
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
         accessorKey: "title",
     },
     {
-        header: "Priority",
+        header: () => (
+            <div className="flex justify-center">
+                Priority
+            </div>
+        ),
         accessorKey: "priority",
         cell: ({ row }) => (
             <div className="flex justify-center">
@@ -52,7 +101,11 @@ export const columns: ColumnDef<Task>[] = [
         cell: ({ row }) => row.getValue("duration") ? formatDuration(row.getValue("duration")) : "No Duration"
     },
     {
-        header: "Type",
+        header: () => (
+            <div className="flex justify-center">
+                Type
+            </div>
+        ),
         accessorKey: "task_type",
         cell: ({ row }) => (
             <div className="flex justify-center">
