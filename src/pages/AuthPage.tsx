@@ -28,8 +28,8 @@ function AuthPage({ setAuth, isLogin }: AuthPageProps) {
                 >
                     {isLogin ? "Register" : "Login"}
                 </Link>
-                <div className="relative hidden h-full flex-col bg-gradient-to-br from-zinc-900 to-amber-950 p-10 text-white lg:flex dark:border-r">
-                    <div className='relative z-20 flex items-center text-xl italic font-semibold'>
+                <div className="relative hidden h-full flex-col bg-zinc-900 p-10 text-white lg:flex dark:border-r">
+                    <div className='relative z-20 flex items-center text-6xl font-bold text-orange-600 [text-shadow:_2px_2px_0_rgb(255_250_200_/_80%)]'>
                         Little Task Board
                     </div>
                     <div className="relative z-20 mt-auto">
