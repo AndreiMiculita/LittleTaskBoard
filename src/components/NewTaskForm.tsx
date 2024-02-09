@@ -13,6 +13,12 @@ import {
     RadioGroup,
     RadioGroupItem
 } from './ui/radio-group';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./ui/tooltip"
 import { Button } from './ui/button';
 
 type TaskType = 'regular' | 'focus' | 'meeting';
@@ -137,28 +143,37 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                     <React.Fragment key={index}>
                                         <div className="w-full">
                                             {field.type === 'radio' ? (
-                                                <RadioGroup
-                                                    className="flex flex-row items-center"
-                                                    onValueChange={(value: TaskType) => setType(value)}
-                                                >
-                                                    {field.options?.map((option, index) => (
-                                                        <>
-                                                            <RadioGroupItem
-                                                                key={index}
-                                                                value={option}
-                                                                checked={type === option}
-                                                                id={option} />
-                                                            <Label htmlFor={option}>{option}</Label>
-                                                        </>
-                                                    ))}
-                                                </RadioGroup>
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <RadioGroup
+                                                                className="flex flex-row items-center"
+                                                                onValueChange={(value: TaskType) => setType(value)}
+                                                            >
+                                                                {field.options?.map((option, index) => (
+                                                                    <>
+                                                                        <RadioGroupItem
+                                                                            key={index}
+                                                                            value={option}
+                                                                            checked={type === option}
+                                                                            id={option} />
+                                                                        <Label htmlFor={option}>{option}</Label>
+                                                                    </>
+                                                                ))}
+                                                            </RadioGroup>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p>Select the type of the task</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
                                             ) : field.type === 'select' ? (
                                                 <Select
                                                     value={priority}
                                                     onValueChange={(value: string) => setPriority(value)}
                                                 >
                                                     <SelectTrigger className='border-none shadow-none'>
-                                                        <SelectValue placeholder={field.placeholder}/>
+                                                        <SelectValue placeholder={field.placeholder} />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {Array.from({ length: field.max! - field.min! + 1 }, (_, i) => (
