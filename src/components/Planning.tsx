@@ -6,15 +6,15 @@ interface PlanningProps {
     showFull?: boolean;
 }
 
-function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
-    function builtInFormatTime(date: Date) {
-        return date.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
-    }
+export function builtInFormatTime(date: Date) {
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+}
 
-    function builtInFormatDate(date: Date) {
-        return date.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' });
-    }
+export function builtInFormatDate(date: Date) {
+    return date.toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' });
+}
 
+export function formatPlannedAt(planned_at: string, showFull: boolean) {
     if (!planned_at) {
         return null;
     }
@@ -36,7 +36,10 @@ function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
         }
     }
 
-    // Duration should be shown in minutes, or hours and minutes if it is more than 60 minutes
+    return planned_atString;
+}
+
+export function formatDuration(duration: number) {
     let duration_str: string;
     if (duration > 60) {
         const hours = Math.floor(duration / 60);
@@ -49,6 +52,13 @@ function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
     } else {
         duration_str = `${duration}m`;
     }
+
+    return duration_str;
+}
+
+function Planning({ planned_at, duration, showFull = false }: PlanningProps) {
+    const planned_atString = formatPlannedAt(planned_at, showFull);
+    const duration_str = formatDuration(duration);
 
     return (
         <Badge variant='outline' className="w-full justify-between">

@@ -2,7 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService.js';
 import Select from '../components/Select';
-import TaskRow from '../components/TaskRow';
+import { DataTable } from '../components/ui/data-table';
+import { columns } from '../table_defs/TaskTableColumns';
 import { Task } from '../types';
 
 type Filter = {
@@ -157,13 +158,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
                     className="search"
                 />
             </div>
-            <table className="tasksList">
-                <tbody>
-                    {currentTasks.map((task: Task) => (
-                        <TaskRow key={task.id} task={task} />
-                    ))}
-                </tbody>
-            </table>
+            <DataTable columns={columns} data={currentTasks} />
         </>
     );
 };
