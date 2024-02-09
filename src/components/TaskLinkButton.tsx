@@ -2,6 +2,12 @@ import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./ui/tooltip"
 
 interface TaskLinkButtonProps {
     taskId: number;
@@ -14,9 +20,18 @@ function TaskLinkButton({ taskId }: TaskLinkButtonProps) {
     };
 
     return (
-        <Button variant='ghost' onClick={handleClick} className='aspect-square'>
-            <FontAwesomeIcon icon={faUpRightFromSquare} />
-        </Button>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant='ghost' onClick={handleClick} className='aspect-square'>
+                        <FontAwesomeIcon icon={faUpRightFromSquare} />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>View task details</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 };
 

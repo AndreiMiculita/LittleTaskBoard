@@ -1,7 +1,12 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from './ui/button';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./ui/tooltip";
 
 interface UserProfileButtonProps {
   onClickUserProfileButton: () => void;
@@ -9,10 +14,20 @@ interface UserProfileButtonProps {
 
 function UserProfileButton({ onClickUserProfileButton }: UserProfileButtonProps) {
     return (
-        <Button variant='ghost' className='flex gap-4 items-center' onClick={onClickUserProfileButton}>
-            <FontAwesomeIcon icon={faUser} />
-            Profile
-        </Button>
+
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant='ghost' className='flex gap-4 items-center' onClick={onClickUserProfileButton}>
+                        <FontAwesomeIcon icon={faUser} />
+                        Profile
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p> Your account </p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 }
 
