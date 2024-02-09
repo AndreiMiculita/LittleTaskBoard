@@ -33,7 +33,7 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: AuthService }
     const [repliesLoaded, setRepliesLoaded] = useState(false);
 
     const loadReplies = (e) => {
-        if (!e.currentTarget.parentNode.open) {
+        if (!e.currentTarget.parentNode.open && comment.reply_count > 0) {
             auth.fetch(`http://localhost:5000/api/tasks/comments/${comment.id}/replies`, { method: 'GET' })
                 .then((repliesData: ReplyProps[]) => {
                     setReplies(repliesData);
@@ -62,8 +62,16 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: AuthService }
             <CardFooter>
                 <Collapsible onOpenChange={setRepliesLoaded} className="w-full">
                     <CollapsibleTrigger onClick={repliesLoaded ? undefined : loadReplies} className="flex items-center gap-1">
-                        <CaretSortIcon className="w-4 h-4" />
-                        {repliesLoaded ? 'Hide replies' : 'Show replies'}
+                        <Button variant='ghost' className="flex items-center gap-1">
+                            {comment.reply_count > 0 ?
+                                <CaretSortIcon />
+                                : null}
+                            {comment.reply_count > 0 ?
+                                repliesLoaded ?
+                                    'Hide Replies'
+                                    : 'Show ' + comment.reply_count + ' Replies'
+                                : 'Add Reply'}
+                        </Button>
                     </CollapsibleTrigger>
                     <CollapsibleContent >
                         {repliesLoaded && replies.map(reply => <Reply key={'RE' + reply.id} reply={reply} />)}
@@ -77,7 +85,7 @@ function Comment({ comment, auth }: { comment: CommentProps, auth: AuthService }
 
 function Reply({ reply }: { reply: ReplyProps }) {
     return (
-        <Card className='my-4'>
+        <Card className='mt-4'>
             <CardHeader>
                 <CardTitle>{reply.author}</CardTitle>
             </CardHeader>
@@ -137,7 +145,7 @@ function ReplyForm({ commentId, auth, onReplyAdded }: { commentId: number, auth:
     };
 
     return (
-        <Card className='w-full'>
+        <Card className='w-full mt-4'>
             <form onSubmit={handleSubmit} className='flex flex-col gap-2 p-3'>
                 <Textarea value={text} onChange={e => setText(e.target.value)} placeholder='Type your reply here...' required />
                 <Button variant='outline' className='self-end' type="submit">Add Reply</Button>

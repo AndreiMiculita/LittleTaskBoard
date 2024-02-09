@@ -326,7 +326,9 @@ def get_comments(id):
     if task is None or task['author_id'] != g.user['id']:
         return 'Task not found.', 404
     comments = get_db().execute(
-        'SELECT comment.*, user.username AS author FROM comment JOIN user ON comment.author_id = user.id WHERE task_id = ?', (
+        'SELECT comment.*, user.username AS author, COUNT(reply.id) AS reply_count FROM comment JOIN user ON '
+        'comment.author_id = user.id LEFT JOIN reply ON comment.id = reply.comment_id WHERE task_id = ? GROUP BY '
+        'comment.id', (
             id,)
     ).fetchall()
     comments = [dict(comment) for comment in comments]

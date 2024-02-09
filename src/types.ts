@@ -15,6 +15,7 @@ interface CommentProps {
     id: number;
     text: string;
     author: string;
+    reply_count: number;
     replies?: ReplyProps[];
 }
 
