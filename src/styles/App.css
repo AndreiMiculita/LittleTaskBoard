@@ -29,6 +29,7 @@
   0% {
     background-position: -800px 0;
   }
+
   100% {
     background-position: 800px 0;
   }
@@ -49,7 +50,7 @@ body {
 .sidebarLinkPlaceholder {
   background: var(--placeholder-gradient);
   background-size: 800px 104px;
-  animation: placeholderShimmer 4s linear infinite;  
+  animation: placeholderShimmer 4s linear infinite;
 }
 
 .overlay {
@@ -89,7 +90,7 @@ body {
   /* animate a loop */
   background: var(--placeholder-gradient);
   background-size: 800px 104px;
-  animation: placeholderShimmer 4s linear infinite;  
+  animation: placeholderShimmer 4s linear infinite;
   height: 32px;
   border-radius: 10px;
   padding-left: 0.75rem;
