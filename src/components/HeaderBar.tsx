@@ -16,7 +16,7 @@ function HeaderBar({ onClickSidebarButton, onClickUserProfileButton }: HeaderBar
                 <Button variant='ghost' onClick={onClickSidebarButton}>
                     <FontAwesomeIcon icon={faBars} />
                 </Button>
-                <h1 className='text-xl italic font-semibold'>
+                <h1 className='text-xl font-semibold text-orange-600 [text-shadow:_1px_1px_0_rgb(255_250_200_/_80%)]'>
                     Little Task Board
                 </h1>
             </div>
