@@ -1,7 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,6 +34,7 @@
     --ring: 240 10% 3.9%;
  
     --radius: 0.5rem;
+    --font-family: 'Inter', Arial, Helvetica, sans-serif;
   }
  
   @media (prefers-color-scheme: dark) {
@@ -71,6 +73,7 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: var(--font-family);
   }
   body {
     @apply bg-background text-foreground;
