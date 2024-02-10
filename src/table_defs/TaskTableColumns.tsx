@@ -1,9 +1,12 @@
 import { faBrain, faNoteSticky, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
-import { Task } from "../types";
+import { useNavigate } from 'react-router-dom';
+import { formatDuration, formatPlannedAt } from '../components/Planning';
+import { Button } from "../components/ui/button";
 import { Checkbox } from "../components/ui/checkbox";
-import { formatPlannedAt, formatDuration } from '../components/Planning';
+import { DataTableColumnHeader } from '../components/ui/data-table-column-header';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,10 +14,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
-import { Button } from "../components/ui/button";
-import { DotsVerticalIcon, CaretSortIcon } from "@radix-ui/react-icons"
-import { useNavigate } from 'react-router-dom';
+} from "../components/ui/dropdown-menu";
+import { Task } from "../types";
 
 const STATUS_MAP = {
     1: 'To Do',
@@ -66,23 +67,17 @@ export const columns: ColumnDef<Task>[] = [
     {
         header: ({ column }) => {
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Title
-                    <CaretSortIcon className="ml-2 h-4 w-4" />
-                </Button>
+                <DataTableColumnHeader column={column} title="Title" />
             )
         },
         accessorKey: "title",
     },
     {
-        header: () => (
-            <div className="flex justify-center">
-                Priority
-            </div>
-        ),
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader className='flex justify-center' column={column} title="Priority" />
+            )
+        },
         accessorKey: "priority",
         cell: ({ row }) => (
             <div className="flex justify-center">
@@ -91,21 +86,29 @@ export const columns: ColumnDef<Task>[] = [
         )
     },
     {
-        header: "Planned At",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Planned At" />
+            )
+        },
         accessorKey: "planned_at",
         cell: ({ row }) => row.getValue("planned_at") ? formatPlannedAt(row.getValue("planned_at"), false) : "Not Planned"
     },
     {
-        header: "Duration",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Duration" />
+            )
+        },
         accessorKey: "duration",
         cell: ({ row }) => row.getValue("duration") ? formatDuration(row.getValue("duration")) : "No Duration"
     },
     {
-        header: () => (
-            <div className="flex justify-center">
-                Type
-            </div>
-        ),
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader className='flex justify-center' column={column} title="Type" />
+            )
+        },
         accessorKey: "task_type",
         cell: ({ row }) => (
             <div className="flex justify-center">
@@ -114,7 +117,11 @@ export const columns: ColumnDef<Task>[] = [
         )
     },
     {
-        header: "Status",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Status" />
+            )
+        },
         accessorKey: "status",
         cell: ({ row }) => STATUS_MAP[row.getValue("status")?.toString()] || "No Status"
     },
