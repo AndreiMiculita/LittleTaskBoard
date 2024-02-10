@@ -76,6 +76,6 @@
     font-family: var(--font-family);
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen;
   }
 }

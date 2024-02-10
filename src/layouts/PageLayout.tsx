@@ -29,12 +29,12 @@ function PageLayout({ children, auth }: PageLayoutProps) {
     return (
         <div>
             {auth && auth.isLoggedIn() ? (
-                <>
+                <div className="min-h-screen flex flex-col flex-grow">
                     <HeaderBar
                         onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
                         onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
                     />
-                    <div className="flex flex-wrap justify-center">
+                    <div className="grow flex flex-wrap justify-center items-stretch">
                         <ToastContainer
                             position="bottom-right"
                             autoClose={5000}
@@ -46,14 +46,15 @@ function PageLayout({ children, auth }: PageLayoutProps) {
                         />
                         <Sidebar auth={auth} isSidebarOpen={isSidebarOpen} />
                         <Separator className='h-auto' orientation="vertical" />
-                        <div className='flex-1 p-4 min-w-0'>
+
+                        <div className='grow p-4 min-w-0'>
                             {childrenWithProps}
                         </div>
-                        <Separator className='h-auto' orientation="vertical" />
 
+                        <Separator className='h-auto' orientation="vertical" />
                         <UserPanel auth={auth} isUserPanelOpen={isUserPanelOpen} />
                     </div>
-                </>
+                </div>
             ) : (
                 <>
                     {childrenWithProps}
