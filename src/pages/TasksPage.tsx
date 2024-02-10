@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import AuthService from '../Services/AuthService.js';
+import AuthService from '../Services/AuthService';
 import Select from '../components/Select';
 import { DataTable } from '../components/ui/data-table';
 import { columns } from '../table_defs/TaskTableColumns';
 import { Task } from '../types';
+import { Input } from '../components/ui/input';
 
 type Filter = {
     id: string;
@@ -138,7 +139,7 @@ function TasksPage({ auth }: { auth: AuthService }) {
 
     return (
         <>
-            <div className="filters">
+            <div className="flex flex-row justify-between items-center p-8 mx-auto">
                 {filters.map((filter: Filter) => (
                     <Select
                         key={filter.id}
@@ -149,13 +150,13 @@ function TasksPage({ auth }: { auth: AuthService }) {
                         options={filter.options}
                     />
                 ))}
-                <input
+                <Input
                     type="text"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Search by text"
-                    className="search"
+                    className="max-w-sm"
                 />
             </div>
             <DataTable columns={columns} data={currentTasks} />
