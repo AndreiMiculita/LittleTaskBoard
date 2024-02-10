@@ -136,7 +136,7 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         onBlur={handleBlur}
                         placeholder="Description"
                     />
-                    <div className="taskDetails">
+                    <div className="flex gap-4 flex-col">
                         {FIELDS.map((row, index) => (
                             <div className="flex flex-row justify-between gap-4 items-center" key={index}>
                                 {row.map((field, index) => (

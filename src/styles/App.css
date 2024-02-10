@@ -31,12 +31,6 @@ body {
   background-color: var(--background-color);
 }
 
-.content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -46,24 +40,6 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 30;
   backdrop-filter: blur(5px);
-}
-
-.taskDetails {
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
-}
-
-.board {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px 0;
-  list-style: none;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .filters {

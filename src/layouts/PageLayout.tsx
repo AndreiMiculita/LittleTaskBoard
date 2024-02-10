@@ -34,7 +34,7 @@ function PageLayout({ children, auth }: PageLayoutProps) {
                         onClickSidebarButton={() => setIsSidebarOpen(!isSidebarOpen)}
                         onClickUserProfileButton={() => setIsUserPanelOpen(!isUserPanelOpen)}
                     />
-                    <div className="content">
+                    <div className="flex flex-wrap justify-center">
                         <ToastContainer
                             position="bottom-right"
                             autoClose={5000}

@@ -90,7 +90,7 @@ function BoardPage({ auth }: BoardPageProps): JSX.Element {
         <>
             <NewTaskForm onCreateTask={onCreateTask} />
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="board">
+                <div className="flex flex-wrap gap-4 max-w-4xl mx-auto py-4">
                     {board.columns.map((column: ColumnProps) => <Column key={column.id} column={column as ColumnProps} />)}
                 </div>
             </DragDropContext>
