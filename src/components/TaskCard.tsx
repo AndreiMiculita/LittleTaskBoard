@@ -10,18 +10,28 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "./ui/card"
+} from "./ui/card";
+import { Skeleton } from './ui/skeleton';
 
 function TaskCard({ task, index }: { task: Task, index: number }) {
 
     // Before the api call, task is an empty object, so we show a placeholder
     if (Object.keys(task).length === 0) {
         return (
-            <div className="task taskPlaceholder">
-                <div className="taskHeader">
-                    <div className="taskTitle">
-                    </div>
-                </div>
+            <div className='pb-2'>
+                <Card>
+                    <CardHeader className="p-3">
+                        <CardTitle className="font-normal flex justify-between items-center">
+                            <Skeleton className="w-full h-8" />
+                        </CardTitle>
+                        <CardDescription>
+                            <Skeleton className="w-1/2 h-4" />
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                        <Skeleton className="h-4" />
+                    </CardContent>
+                </Card>
             </div>
         );
     }

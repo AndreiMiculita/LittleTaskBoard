@@ -25,16 +25,6 @@
   }
 }
 
-@keyframes placeholderShimmer {
-  0% {
-    background-position: -800px 0;
-  }
-
-  100% {
-    background-position: 800px 0;
-  }
-}
-
 body {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   color: var(--text-color);
@@ -74,36 +64,6 @@ body {
   list-style: none;
   justify-content: space-between;
   width: 100%;
-}
-
-.taskPlaceholder {
-  height: 118px;
-}
-
-.taskPlaceholder .taskHeader {
-  /* animate a loop */
-  background: var(--placeholder-gradient);
-  background-size: 800px 104px;
-  animation: placeholderShimmer 4s linear infinite;
-  height: 32px;
-  border-radius: 10px;
-  padding-left: 0.75rem;
-}
-
-.taskHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.taskTitle {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.2;
-  margin: 0;
-  padding: 0;
-  word-wrap: break-word;
-  text-align: left;
 }
 
 .filters {
