@@ -1,20 +1,10 @@
 import { faBrain, faNoteSticky, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
-import { useNavigate } from 'react-router-dom';
 import { formatDuration, formatPlannedAt } from '../components/Planning';
-import { Button } from "../components/ui/button";
 import { Checkbox } from "../components/ui/checkbox";
 import { DataTableColumnHeader } from '../components/ui/data-table-column-header';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+import { DataTableRowActions } from '../components/ui/data-table-row-actions';
 import { Task } from "../types";
 
 const STATUS_MAP = {
@@ -23,7 +13,7 @@ const STATUS_MAP = {
     3: 'Done'
 };
 
-const TASK_TYPE_MAP = {
+export const TASK_TYPE_MAP = {
     '0': <div><FontAwesomeIcon icon={faNoteSticky} /> Regular</div>,
     '1': <div><FontAwesomeIcon icon={faBrain} /> Focus</div>,
     '2': <div><FontAwesomeIcon icon={faUsers} /> Meeting</div>
@@ -128,35 +118,8 @@ export const columns: ColumnDef<Task>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const task = row.original
-
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <DotsVerticalIcon className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(task.id.toString())}
-                        >
-                            Copy task ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            onClick={() => {
-                                const navigate = useNavigate();
-                                navigate(`/tasks/${task.id}`);
-                            }
-                            }
-                        >View task</DropdownMenuItem>
-                        <DropdownMenuItem>Delete task</DropdownMenuItem>
-                        <DropdownMenuItem>Assign task</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <DataTableRowActions row={row}/>
             )
         },
     },
