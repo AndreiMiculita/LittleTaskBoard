@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import AuthService from "../../Services/AuthService";
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 function UserLoginForm({ setAuth }: { setAuth: (auth: AuthService) => void }) {
     const [username, setUsername] = useState<string>('');

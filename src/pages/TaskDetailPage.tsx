@@ -1,26 +1,26 @@
+import { CaretSortIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService';
 import Planning from '../components/Planning';
 import TaskAttributes from '../components/TaskAttributes';
-import { CommentProps, ReplyProps, Task } from '../types';
 import { Button } from '../components/ui/button';
 import {
     Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
     CardContent,
-    CardFooter
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle
 } from '../components/ui/card';
-import { Textarea } from '../components/ui/textarea';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "../components/ui/collapsible"
-import { CaretSortIcon } from "@radix-ui/react-icons"
+} from "../components/ui/collapsible";
+import { Textarea } from '../components/ui/textarea';
+import { CommentProps, ReplyProps, Task } from '../types';
 
 const STATUS_MAP = {
     1: 'To Do',

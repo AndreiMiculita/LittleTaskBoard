@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { SidebarLinkProps } from '../components/Sidebar';
 import { Button } from './ui/button';
-import { Skeleton } from "./ui/skeleton"
+import { Skeleton } from "./ui/skeleton";
 
 function SidebarLink({ link }: { link: SidebarLinkProps }) {
     if (Object.keys(link).length === 0) {

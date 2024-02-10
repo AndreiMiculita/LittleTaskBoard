@@ -6,7 +6,7 @@ import {
     CardContent,
     CardHeader,
     CardTitle,
-} from "./ui/card"
+} from "./ui/card";
 
 export interface ColumnProps {
     id: number;

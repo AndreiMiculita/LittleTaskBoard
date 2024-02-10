@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Badge } from './ui/badge';
 
 const priorityColors = ['bg-red-600', 'bg-yellow-500', 'bg-green-600'];

@@ -7,7 +7,7 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "./ui/tooltip"
+} from "./ui/tooltip";
 
 interface TaskLinkButtonProps {
     taskId: number;

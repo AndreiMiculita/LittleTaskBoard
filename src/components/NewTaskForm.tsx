@@ -1,25 +1,25 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "./ui/select"
 import { Label } from './ui/label';
 import {
     RadioGroup,
     RadioGroupItem
 } from './ui/radio-group';
 import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
+import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "./ui/tooltip"
-import { Button } from './ui/button';
+} from "./ui/tooltip";
 
 type TaskType = 'regular' | 'focus' | 'meeting';
 

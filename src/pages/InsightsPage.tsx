@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
     Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
     CardContent,
-    CardFooter
+    CardDescription,
+    CardHeader,
+    CardTitle
 } from '../components/ui/card';
 
 interface DataPoint {

@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import AuthService from '../Services/AuthService';
 import Select from '../components/Select';
 import { DataTable } from '../components/ui/data-table';
+import { Input } from '../components/ui/input';
 import { columns } from '../table_defs/TaskTableColumns';
 import { Task } from '../types';
-import { Input } from '../components/ui/input';
 
 type Filter = {
     id: string;
