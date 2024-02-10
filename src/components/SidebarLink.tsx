@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { SidebarLinkProps } from '../components/Sidebar';
 import { Button } from './ui/button';
+import { Skeleton } from "./ui/skeleton"
 
 function SidebarLink({ link }: { link: SidebarLinkProps }) {
     if (Object.keys(link).length === 0) {
         return (
-            <div className="sidebarLink sidebarLinkPlaceholder">
-                &nbsp;
-            </div>
+            <div className="w-full p-1" >
+                <Skeleton className="h-8" />
+            </div >
         );
     }
 

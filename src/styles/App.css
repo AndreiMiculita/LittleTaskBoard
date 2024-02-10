@@ -47,12 +47,6 @@ body {
   justify-content: center;
 }
 
-.sidebarLinkPlaceholder {
-  background: var(--placeholder-gradient);
-  background-size: 800px 104px;
-  animation: placeholderShimmer 4s linear infinite;
-}
-
 .overlay {
   position: fixed;
   top: 0;
