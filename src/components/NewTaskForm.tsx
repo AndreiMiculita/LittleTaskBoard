@@ -76,15 +76,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
     const [type, setType] = useState<TaskType>('regular');
     const [planned_at, setPlannedAt] = useState('');
     const [duration, setDuration] = useState('');
-    const [isFormFocused, setIsFormFocused] = useState(false);
-
-    const handleFocus = () => {
-        if (!isFormFocused) setIsFormFocused(true);
-    };
-
-    const handleBlur = () => {
-        if (isFormFocused) setIsFormFocused(false);
-    };
 
     const stateSetters: { [key: string]: Dispatch<SetStateAction<string | TaskType>> } = {
         description: setDescription,
@@ -115,7 +106,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
 
     return (
         <div>
-            {/* {isFormFocused && <div className="overlay z-30"></div>} */}
             <Card className='mx-auto max-w-lg p-4 z-40'>
                 <form className="flex flex-col z-40 gap-4" onSubmit={handleSubmit}>
                     <Input
@@ -123,8 +113,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         type="text"
                         value={title}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
                         placeholder="Type a title here to add a new task."
                     />
                     <Input
@@ -132,8 +120,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                         type="text"
                         value={description}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
                         placeholder="Description"
                     />
                     <div className="flex gap-4 flex-col">
@@ -191,8 +177,6 @@ function NewTaskForm({ onCreateTask }: NewTaskFormProps) {
                                                     // @ts-ignore Lord forgive me (on Andrei's todo list)
                                                     value={field.state.value}
                                                     onChange={(e: ChangeEvent<HTMLInputElement>) => stateSetters[field.state](e.target.value)}
-                                                    onFocus={handleFocus}
-                                                    onBlur={handleBlur}
                                                     placeholder={field.placeholder}
                                                 />
                                             )}
