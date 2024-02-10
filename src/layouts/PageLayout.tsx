@@ -27,7 +27,7 @@ function PageLayout({ children, auth }: PageLayoutProps) {
     const childrenWithProps = mapChildrenWithProps(children, auth);
 
     return (
-        <div className="App">
+        <div>
             {auth && auth.isLoggedIn() ? (
                 <>
                     <HeaderBar
