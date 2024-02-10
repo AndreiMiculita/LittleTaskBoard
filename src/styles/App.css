@@ -66,29 +66,6 @@ body {
   border: 1px solid rgb(221, 221, 221);
 }
 
-.tasksList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0 auto;
-  max-width: 900px;
-}
-
-.taskRow {
-  border-radius: 10px;
-  background-color: var(--background-color-highlight);
-  box-shadow: 0 0px 10px var(--box-shadow-color);
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  height: 70px;
-}
-
-.taskRow td {
-  padding: 0 30px;
-  width: 100%;
-}
-
 .Toastify__toast {
   border-radius: 10px;
   padding: 1rem;
