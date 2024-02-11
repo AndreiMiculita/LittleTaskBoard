@@ -1,18 +1,23 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
+import withDragAndDrop, { withDragAndDropProps } from "react-big-calendar/lib/addons/dragAndDrop";
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../Services/AuthService';
 import '../styles/calendar_custom_styling.css';
 import { Task } from '../types';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+const localizer = dayjsLocalizer(dayjs);
+const DnDCalendar = withDragAndDrop(Calendar);
+
 function CalendarPage({ auth }: { auth: AuthService }) {
     document.title = 'Calendar - Little Task Board';
 
     const [myEventsList, setMyEventsList] = useState([]);
 
-    const localizer = dayjsLocalizer(dayjs);
+    const navigate = useNavigate();
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/tasks/',
@@ -48,12 +53,15 @@ function CalendarPage({ auth }: { auth: AuthService }) {
             });
     }, [auth]);
 
-    function onEventMoved(args) {
-        auth.fetch(`http://localhost:5000/api/tasks/${args.e.id()}`, {
+    function onEventDrop(args: withDragAndDropProps['onEventDrop']) {
+        const formattedStart = dayjs(args.start).format("YYYY-MM-DDTHH:mm");
+        const formattedEnd = dayjs(args.end).format("YYYY-MM-DDTHH:mm");
+
+        auth.fetch(`http://localhost:5000/api/tasks/${args.event.id}`, {
             method: 'PATCH',
             data: JSON.stringify({
-                planned_at: args.newStart.toString('yyyy-MM-ddTHH:MM'),
-                end: args.newEnd.toString('yyyy-MM-ddTHH:MM'),
+                planned_at: formattedStart,
+                end: formattedEnd,
             })
         })
             .then(data => {
@@ -64,14 +72,24 @@ function CalendarPage({ auth }: { auth: AuthService }) {
             });
     }
 
+    function onDoubleClickEvent(event: any) {
+        navigate(`/tasks/${event.id}`);
+    }
+
     return (
         <div className="h-full min-h-[600px]">
-            <Calendar
+            <DnDCalendar
+                defaultDate={dayjs().toDate()}
+                defaultView="week"
                 localizer={localizer}
                 events={myEventsList}
                 startAccessor="start"
                 endAccessor="end"
                 className="h-full grow"
+                onEventDrop={onEventDrop}
+                onEventResize={onEventDrop}
+                resizable
+                onDoubleClickEvent={onDoubleClickEvent}
             />
         </div>
     );
