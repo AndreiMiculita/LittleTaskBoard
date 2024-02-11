@@ -44,6 +44,7 @@ As this started a personal project to learn new technologies, this is a hybrid R
 - [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
 - [React Beautiful DND](https://github.com/atlassian/react-beautiful-dnd/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [React Big Calendar](https://github.com/jquense/react-big-calendar)
 
 ## Backend
 

@@ -1,21 +1,18 @@
-import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
-import { useEffect, useRef, useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import AuthService from '../Services/AuthService';
 import '../styles/calendar_custom_styling.css';
 import { Task } from '../types';
 
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
 function CalendarPage({ auth }: { auth: AuthService }) {
     document.title = 'Calendar - Little Task Board';
 
-    const [config, setConfig] = useState({
-        viewType: "Week",
-        durationBarVisible: false,
-        timeRangeSelectedHandling: "Enabled",
-        onEventMoved: onEventMoved,
-        onEventResized: onEventMoved,
-        startDate: DayPilot.Date.today(),
-    });
-    const calendarRef = useRef(null);
+    const [myEventsList, setMyEventsList] = useState([]);
+
+    const localizer = dayjsLocalizer(dayjs);
 
     useEffect(() => {
         auth.fetch('http://localhost:5000/api/tasks/',
@@ -37,15 +34,14 @@ function CalendarPage({ auth }: { auth: AuthService }) {
                     const text = emoji + task.title + " (" + new Date(task.planned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " to " + new Date(new Date(task.planned_at).getTime() + task.duration * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ")";
                     return {
                         id: task.id,
-                        text: text,
-                        start: new Date(task.planned_at).toISOString(),
-                        end: new Date(new Date(task.planned_at).getTime() + task.duration * 60000).toISOString(),
-                        backColor: "#fff",
-                        participants: 4,
+                        title: text,
+                        start: new Date(task.planned_at),
+                        end: new Date(new Date(task.planned_at).getTime() + task.duration * 60000),
                     }
                 });
 
-                setConfig(prevConfig => ({ ...prevConfig, events }));
+                setMyEventsList(events);
+
             })
             .catch(err => {
                 console.error(err);
@@ -69,8 +65,14 @@ function CalendarPage({ auth }: { auth: AuthService }) {
     }
 
     return (
-        <div>
-            <DayPilotCalendar {...config} ref={calendarRef} />
+        <div className="h-full min-h-[600px]">
+            <Calendar
+                localizer={localizer}
+                events={myEventsList}
+                startAccessor="start"
+                endAccessor="end"
+                className="h-full grow"
+            />
         </div>
     );
 };
